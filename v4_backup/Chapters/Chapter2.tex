@@ -1,0 +1,59 @@
+% Chapter 2
+
+\chapter{Method} % Main chapter title
+\label{Chapter2} % For referencing the chapter elsewhere, use \ref{Chapter1} 
+
+\startcontents[chapters]
+\Mprintcontents
+
+
+%----------------------------------------------------------------------------------------
+
+% Define some commands to keep the formatting separated from the content 
+%\newcommand{\keyword}[1]{\textbf{#1}}
+%\newcommand{\tabhead}[1]{\textbf{#1}}
+%\newcommand{\code}[1]{\texttt{#1}}
+%\newcommand{\file}[1]{\texttt{\bfseries#1}}
+%\newcommand{\option}[1]{\texttt{\itshape#1}}
+
+%----------------------------------------------------------------------------------------
+
+\section{General flowchart}
+
+With respect to the methods mentioned above, it appears that there are no forest stand segmentation method, based on tree species, that can satisfactorily handle a large number of classes ($>$5). The proposed framework is a fully automatic and modular method for species-based forest stand segmentation. The method is composed of four main steps; over-segmentation feature computation, vegetation type (mainly tree species) classification and regularization (see Figure \ref{fig:flowchart}).
+
+\begin{figure}
+\includegraphics[width=\textwidth]{Figures/method.eps}
+\caption{Flowchart of the proposed method.}
+\label{fig:flowchart}
+\end{figure}
+
+Features are first derived at the pixel and at the object level. The most relevant ones are subsequently selected in a supervised way. The objects are extracted using various segmentation methods, since they appear to be sufficient for subsequent steps. A classification is performed at the object level as it significantly improves the discrimination results (about $10\%$ better than the pixel-based approach). This classification is then smoothed. The smoothing may produce homogeneous vegetation type (mainly tree species) areas with smooth borders. The contributions of this method are two-fold:
+\begin{itemize}
+\item Such framework can be fed with specific constraints allowing to tailor the results to specific criteria (height, age, specie, maturity, density,~\ldots).
+\item Here, the training set is automatically derived from an existing forest land-cover geodatabase. Specific attention is paid to the extraction of the most relevant training pixels, which is highly challenging with outdated and generalized vector databases.
+\end{itemize}
+
+\section{Over-segmentation}
+
+\subsection{Lidar-based methods}
+
+\subsection{Image-based methods}
+
+\section{Feature extraction}
+
+\section{Classification}
+
+\subsection{Training set design}
+
+\subsection{Feature selection}
+
+\subsection{Classification}
+
+\section{Smoothing}
+
+\subsection{Local methods}
+
+\subsection{Global methods}
+
+\stopcontents[chapters]
