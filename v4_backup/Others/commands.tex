@@ -14,6 +14,31 @@
 \pagebreak
 }
 
+%%%
+
+\usetikzlibrary{arrows,shapes,snakes,spy,trees,decorations,shadows,positioning}
+%\usetikzlibrary{shadows}
+%\usetikzlibrary{arrows}
+
+%%%
+
+% Mise en forme Tikz (schéma général + logo lupin)
+\definecolor{IGNVert}{RGB}{148, 192,  22}
+\definecolor{IGNGris}{RGB}{112, 119, 122}
+\definecolor{IGNRouge}{RGB}{255, 100, 100}
+\definecolor{IGNFonce}{RGB}{55, 58, 60}
+
+
+\tikzset{
+    myArrowIGNGris/.style={->, >=latex,rounded corners, color = IGNGris, thick,font=\scriptsize},
+    myArrowDotIGNGris/.style={->, >=latex, densely dashed, shorten >=1pt, rounded corners, color = IGNGris, thick,font=\scriptsize},
+    myArrowIGNRouge/.style={-, >=latex, densely dashed, shorten >=1pt, rounded corners, color = IGNRouge, thick,font=\scriptsize},
+    myNodeIGNGris/.style={rectangle,rounded corners,draw=black, top color=white, bottom color=IGNGris!80, inner sep=0.5em, minimum size=0.5em, text centered,font=\normalsize },
+    myNodeIGNVert/.style={rectangle,rounded corners,draw=black, top color=white, bottom color=IGNVert!80, inner sep=0.5em, minimum size=0.5em, text centered,font=\normalsize },
+    myNodeIGNRouge/.style={rectangle,rounded corners,draw=black, top color=white, bottom color=IGNRouge!80, inner sep=0.5em, minimum size=0.5em, text centered,font=\normalsize },
+    myNodeIGNRouge1/.style={rectangle,rounded corners, top color=IGNRouge!50, bottom color=IGNRouge, inner sep=0.5em, minimum size=0.5em, text centered,font=\normalsize }
+}
+
 %%% Minitoc
 
 \newcommand\ToCrule{\noindent\rule[5pt]{\textwidth}{1.5pt}}

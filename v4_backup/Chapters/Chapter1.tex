@@ -1,5 +1,4 @@
 % Chapter 1
-\checktoopen
 \chapter{State of the art} % Main chapter title
 \label{Chapter1} % For referencing the chapter elsewhere, use \ref{Chapter1} 
 
@@ -64,9 +63,88 @@ Superpixels algorithms have then been developed. One can control the number of s
 A classification is a process that aim to categorize observation. The idea is to assign an observation to one or more classes. This can be done manually or algorithmically. The classification can be unsupervised, the classes need to be learned and the observation assigned. Such classification is similar to segmentation (see section \ref{sec:C1_seg}). The classification can be supervised, the target classes are known and observations with labels are available.
 
 \subsection{Supervised classification}
+A great number of supervised classification algorithms have been developed and used for remote sensing issues \citep{landgrebe2005signal, lu2007survey, mather2016classification}. There are two kind of algorithms: the parametric and the non-parametric methods.
 
-\subsection{Feature selection}
+The parametric method assume that each class follow a specific distribution (mainly gaussian). The parameters of the distribution are estimated using the learning set. This is the case for the maximum likelihood \citep{strahler1980use}, maximum a posteriori \citep{fauvel2015fast} or in \cite{trias2005high}.
 
+The non parametric method do not make any assumption on the classes distribution. In this category of algorithms, the most popular are the Support Vector Machines (SVM) \citep{boser1992training, scholkopf2001learning} and the Random Forest (RF) \citep{breiman2001random}. The artificial neural networks are also efficient algorithms \citep{hepner1990artificial, atkinson1997mapping}. Simpler methods exist, such as the k-nearest neighbor \citep{indyk1998approximate} or the decision trees \citep{breiman1984classification}. The non parametric methods are more efficient  for the discrimination of complex classes \citep{paola1995review, foody2002status}, and are considered as a basis for land cover classification \citep{camps2009kernel}.
+
+We chose to use the RF, which besides their widespread use, since they also offer the possibility of obtaining the probability of belonging of a pixel to a class. This posterior probabilities can be then integrated into a smoothing process. The RF are described in the following paragraph.
+
+\subsection*{RF}
+The RF have been introduced by \cite{breiman2001random} and are defined by the aggregation of collection of predictor (decision trees). Here, we refer to the RF with random inputs proposed in this article.
+
+The idea is to create an ensemble of samples $\mathcal{S}_{n}^{\Theta_{1}}$, ..., $\mathcal{S}_{n}^{\Theta_{k}}$. A Classification and Regression Tree (CART) \citep{breiman1984classification} is built on each sample $\mathcal{S}_{n}^{\Theta_{i}}$. Each tree is built using a a random pool of $m$ features. The final classification is obtained by majority vote; each tree vote for a class, the class with the most vote wins (see Figure \ref{fig:RF_method}. This algorithm has two parameters: the number of trees $k$ and the number of features $m$ used to build a tree. The first parameter is arbitrary fixed to a high value. The second is generally fixed to the square root of the total number of feature \citep{gislason2006random}.
+RF have shown better classification performances than traditional Boosting methods \citep{breiman2001random} or SVM \citep{pal2005random}. They are also able to handle big dataset with large number of feature. Furthermore, a measure of feature importance have been introduced in \cite{breiman2001random}. It allows to qualify the relevance of the feature in the classification process \citep{strobl2007bias}.
+
+The importance of a feature $\mathbf{X}_{j}$, $j\in\{1,...,q\}$ (with $q$ the number of feature) is defined as follow. Let $\mathcal{S}_{n}^{\Theta_{i}}$ be a sample and $OOB_{i}$ all the observations that does not belong to $\mathcal{S}_{n}^{\Theta_{i}}$. $errOOB_{i}$, the error on $OOB_{i}$ using $\mathcal{S}_{n}^{\Theta_{i}}$, is then computed. A random permutation on the value of the $j^{\text{th}}$ feature of $OOB_{i}$ is performed in order to obtain $\widetilde{OOB_{i}}^j$. $err\widetilde{OOB_{i}^{j}}$ is then computed. The importance of the feature $j$, $FI(\mathbf{X_{j}})$ is the mean of the difference of the errors (see Equation \ref{eq:FI}).
+
+\begin{equation}
+\label{eq:FI}
+FI(\mathbf{X_{j}})=\frac{1}{k}\sum_{i=1}^{k}(err\widetilde{OOB_{i}^{j}}-errOOB_{i})
+\end{equation}
+where $k$ is the number of CART.
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}
+	[shape=circle,cap=round,scale=1]
+	%
+	\draw (0,4.5)  node[myNodeIGNGris] (data) {Dataset};
+	\draw (-4,1.5)  node[myNodeIGNVert] (bootstrap1) {$\mathcal{S}_n^{\Theta_1}$};
+	\node (ldots) at (0,1.5) {\textbf{\ldots}};
+	\draw (4,1.5) node[myNodeIGNVert] (bootstrapN) {$\mathcal{S}_n^{\Theta_k}$};	
+	
+	\draw[thick,color=gray,rounded corners](-6.75,-5)--(-6.75,-1)--(-1.25,-1)--(-1.25,-5)--cycle;
+	\node[color=gray] at (-5.25,-1.5) {CART 1};
+	\node (first tree) at (-4,-3) {\tikz{%
+	\node[draw,top color=blue!10,bottom color=blue,minimum size=6pt,circular drop shadow] {} 
+	 child  foreach \A in {red,red,red}{  
+	   node[draw,top color=\A!10,bottom color=\A,minimum size=4pt,circular drop shadow] {} 
+	     child foreach \B in {green,green}{
+	       node[draw,top color=\B!10,bottom color=\B,minimum size=3pt,circular drop shadow] {} 
+	    }%
+	 };%
+	}};%
+	
+	\draw[thick,color=gray,rounded corners](1.25,-5)--(1.25,-1)--(6.75,-1)--(6.75,-5)--cycle;
+	\node[color=gray] (cartk) at (2.75,-1.5) {CART K};
+	\node (second tree) at (4,-3) {\tikz{%
+	\node[draw,top color=blue!10,bottom color=blue,minimum size=6pt,circular drop shadow] {} 
+	 child  foreach \A in {red,red,red}{  
+	   node[draw,top color=\A!10,bottom color=\A,minimum size=4pt,circular drop shadow] {} 
+	     child foreach \B in {green,green}{
+	       node[draw,top color=\B!10,bottom color=\B,minimum size=3pt,circular drop shadow] {} 
+	    }
+	 };
+	}};
+	
+	\draw (0,-7.5)  node[myNodeIGNGris] (vote) {Majority vote};
+	
+	\draw[myArrowIGNGris] (data.south) -- (0,3) -- (-4,3)  -- (bootstrap1.north);
+	\draw[myArrowIGNGris] (data.south) -- (0,3) -- (4,3)  -- (bootstrapN.north);
+	
+	\draw[myArrowIGNGris] (bootstrap1.south) -- (-4,-1);
+	\draw[myArrowIGNGris] (bootstrapN.south) -- (4,-1);
+	
+	\draw[myArrowIGNGris] (-4,-5) -- (-4,-6) -- (0,-6)  -- (vote.north);
+	\draw[myArrowIGNGris] (4,-5) -- (4,-6) -- (0,-6)  -- (vote.north);
+
+\end{tikzpicture}
+\end{center}
+\caption{General diagram of the operation of the Random Forest}
+\label{fig:RF_method}
+\end{figure}
+
+
+\subsection{Dimension reduction and feature selection}
+The feature selection methods try to overcome the curse of high dimensionality \citep{bellman2015adaptive, hughes1968mean}. Indeed, the increasing number of feature available tends to decrease the accuracy of the classifiers. Furthermore, the computation times increase with the number of feature. Thus, reducing the feature dimension is beneficial for the classification task.
+
+Two approaches exist, first the ones based on the transformation of the data, generally using a projection in a space of lower dimensionality. Secondly, there are approaches based on the feature selection, that aim to search for an optimal subset of the features.
+
+\subsubsection{Dimension reduction}
+
+\subsubsection{Feature selection}
 
 \section{Smoothing methods}
 

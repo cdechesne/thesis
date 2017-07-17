@@ -98,16 +98,6 @@
 		\begin{center}
 		\chapterfont #1 \par\nobreak
 		\vspace*{-20pt}
-
-		\let\dt\adu
-		\let\ft\afu	
-		\let\adu\add
-		\let\afu\afd	
-		\let\add\dt
-		\let\afd\ft
-		
-		%\tikz\draw[line width=1.5pt, black] (0,0) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1)  arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1);
-		%\hrule height 1.5pt
 		\end{center}
 		\chapterbelowskip
 	}
