@@ -143,6 +143,7 @@ The feature selection methods try to overcome the curse of high dimensionality \
 Two approaches exist, first the ones based on the transformation of the data, generally using a projection in a space of lower dimensionality. Secondly, there are approaches based on the feature selection, that aim to search for an optimal subset of the features.
 
 \subsubsection{Dimension reduction}
+The most popular dimension reduction method is the Principal Component Analysis (PCA). It is an unsupervised method that aim to maximize the variance between data \citep{jolliffe2011principal}. However, it has been demonstrated that PCA is not optimal for the purpose of classification \citep{cheriyadat2003principal}. Other methods have been developed based on the PCA: the Independent Component Analysis (ICA) \citep{jutten1991blind} maximize the statistical independence between data, and the Maximum Autocorrelation Factor (MAF) \citep{larsen2002decomposition} maximize the spatial auto-correlation.
 
 \subsubsection{Feature selection}
 
