@@ -71,7 +71,7 @@ The non parametric method do not make any assumption on the classes distribution
 
 We chose to use the RF, which besides their widespread use, since they also offer the possibility of obtaining the probability of belonging of a pixel to a class. This posterior probabilities can be then integrated into a smoothing process. The RF are described in the following paragraph.
 
-\subsection*{RF}
+\subsubsection{Random Forest}
 The RF have been introduced by \cite{breiman2001random} and are defined by the aggregation of collection of predictor (decision trees). Here, we refer to the RF with random inputs proposed in this article.
 
 The idea is to create an ensemble of samples $\mathcal{S}_{n}^{\Theta_{1}}$, ..., $\mathcal{S}_{n}^{\Theta_{k}}$. A Classification and Regression Tree (CART) \citep{breiman1984classification} is built on each sample $\mathcal{S}_{n}^{\Theta_{i}}$. Each tree is built using a a random pool of $m$ features. The final classification is obtained by majority vote; each tree vote for a class, the class with the most vote wins (see Figure \ref{fig:RF_method}. This algorithm has two parameters: the number of trees $k$ and the number of features $m$ used to build a tree. The first parameter is arbitrary fixed to a high value. The second is generally fixed to the square root of the total number of feature \citep{gislason2006random}.
@@ -143,9 +143,10 @@ The feature selection methods try to overcome the curse of high dimensionality \
 Two approaches exist, first the ones based on the transformation of the data, generally using a projection in a space of lower dimensionality. Secondly, there are approaches based on the feature selection, that aim to search for an optimal subset of the features.
 
 \subsubsection{Dimension reduction}
-The most popular dimension reduction method is the Principal Component Analysis (PCA). It is an unsupervised method that aim to maximize the variance between data \citep{jolliffe2011principal}. However, it has been demonstrated that PCA is not optimal for the purpose of classification \citep{cheriyadat2003principal}. Other methods have been developed based on the PCA: the Independent Component Analysis (ICA) \citep{jutten1991blind} maximize the statistical independence between data, and the Maximum Autocorrelation Factor (MAF) \citep{larsen2002decomposition} maximize the spatial auto-correlation.
+The most popular dimension reduction method is the Principal Component Analysis (PCA). It is an unsupervised method that aim to maximize the variance between data \citep{jolliffe2011principal}. However, it has been demonstrated that PCA is not optimal for the purpose of classification \citep{cheriyadat2003principal}. Other methods have been developed based on the PCA: the Independent Component Analysis (ICA) \citep{jutten1991blind} maximize the statistical independence between data, and the Maximum Autocorrelation Factor (MAF) \citep{larsen2002decomposition} maximize the spatial auto-correlation. When training samples are available, the linear discriminant analysis try to maximize the intra-class homogeneity and the inter-class variance \citep{fisher1936use, lebart1997multidimensional}.
 
 \subsubsection{Feature selection}
+
 
 \section{Smoothing methods}
 
