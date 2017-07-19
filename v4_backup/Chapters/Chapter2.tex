@@ -35,10 +35,16 @@ Features are first derived at the pixel and at the object level. The most releva
 \end{itemize}
 
 \section{Over-segmentation}
+The over-segmentation aims to extract small object that are consistent according to the input data. They are detected so as to ease or strengthen subsequent classification task. A precise extraction is not mandatory since the labels would be refined after.
 
-\subsection{Lidar-based methods}
+\subsection{Segmentation of lidar data}
+Two approaches could be envisaged: the direct segmentation of the point cloud or the segmentation of a rasterized lidar feature using image-based segmentation algorithms. \\
 
-\subsection{Image-based methods}
+The tree extraction from the point cloud is a complex task that has been widely discussed \citep{dalponte2014tree, vega2014ptrees, kandare2014new}. However, a precise tree extraction is not needed here, since the extracted trees are only needed to improve the classification task. A coarse method is therefore adopted: the tree tops are first extracted from the lidar point clouds using a local maximum filter. A point is considered as a tree top when it has the highest height value within a 5 meter radius. Only the points above 3$\:$meters are retained as it is a common threshold of the literature \citep{eysn2012forest}, and appears to be highly discriminative in non-urban areas. Points belonging to a tree are obtained through two criteria. (i) If the height of a point within a 5$\:$m radius is greater or equal than 80\% the height of the closest tree top, it is aggregated to the tree top. (ii) If the distance in the  $(x,y)$ plane between an unlabelled point and the closest tree point is smaller than 3$\:$m  they are also aggregated. This delineation method allows to discard low vegetation, but buildings might be extracted and considered as trees. \\
+
+The image-based segmentation are also very efficient for the over-segmentation of lidar data. They are mainly applied on the normalized digital surface model (height). Thus a method using a single band is needed. The watershed algorithm \citep{vincent1991watersheds} with specific parameters allow to obtain quickly a consistent over-segmentation of the image. A hierarchical segmentation \citep{guigues2006scale} is more adapted since only one parameter that control the segmentation level needs to be provided.
+
+\subsection{Segmentation of optical images}
 
 \section{Feature extraction}
 

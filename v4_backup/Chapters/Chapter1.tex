@@ -75,25 +75,16 @@ We chose to use the RF, which besides their widespread use, since they also offe
 The RF have been introduced by \cite{breiman2001random} and are defined by the aggregation of collection of predictor (decision trees). Here, we refer to the RF with random inputs proposed in this article.
 
 The idea is to create an ensemble of samples $\mathcal{S}_{n}^{\Theta_{1}}$, ..., $\mathcal{S}_{n}^{\Theta_{k}}$. A Classification and Regression Tree (CART) \citep{breiman1984classification} is built on each sample $\mathcal{S}_{n}^{\Theta_{i}}$. Each tree is built using a a random pool of $m$ features. The final classification is obtained by majority vote; each tree vote for a class, the class with the most vote wins (see Figure \ref{fig:RF_method}. This algorithm has two parameters: the number of trees $k$ and the number of features $m$ used to build a tree. The first parameter is arbitrary fixed to a high value. The second is generally fixed to the square root of the total number of feature \citep{gislason2006random}.
-RF have shown better classification performances than traditional Boosting methods \citep{breiman2001random} or SVM \citep{pal2005random}. They are also able to handle big dataset with large number of feature. Furthermore, a measure of feature importance have been introduced in \cite{breiman2001random}. It allows to qualify the relevance of the feature in the classification process \citep{strobl2007bias}.
 
-The importance of a feature $\mathbf{X}_{j}$, $j\in\{1,...,q\}$ (with $q$ the number of feature) is defined as follow. Let $\mathcal{S}_{n}^{\Theta_{i}}$ be a sample and $OOB_{i}$ all the observations that does not belong to $\mathcal{S}_{n}^{\Theta_{i}}$. $errOOB_{i}$, the error on $OOB_{i}$ using $\mathcal{S}_{n}^{\Theta_{i}}$, is then computed. A random permutation on the value of the $j^{\text{th}}$ feature of $OOB_{i}$ is performed in order to obtain $\widetilde{OOB_{i}}^j$. $err\widetilde{OOB_{i}^{j}}$ is then computed. The importance of the feature $j$, $FI(\mathbf{X_{j}})$ is the mean of the difference of the errors (see Equation \ref{eq:FI}).
-
-\begin{equation}
-\label{eq:FI}
-FI(\mathbf{X_{j}})=\frac{1}{k}\sum_{i=1}^{k}(err\widetilde{OOB_{i}^{j}}-errOOB_{i})
-\end{equation}
-where $k$ is the number of CART.
-
-\begin{figure}
+\begin{figure}[htbp]
 \begin{center}
 \begin{tikzpicture}
 	[shape=circle,cap=round,scale=1]
 	%
-	\draw (0,4.5)  node[myNodeIGNGris] (data) {Dataset};
-	\draw (-4,1.5)  node[myNodeIGNVert] (bootstrap1) {$\mathcal{S}_n^{\Theta_1}$};
-	\node (ldots) at (0,1.5) {\textbf{\ldots}};
-	\draw (4,1.5) node[myNodeIGNVert] (bootstrapN) {$\mathcal{S}_n^{\Theta_k}$};	
+	\draw (0,2.5)  node[myNodeIGNGris] (data) {Dataset};
+	\draw (-4,0.5)  node[myNodeIGNVert] (bootstrap1) {$\mathcal{S}_n^{\Theta_1}$};
+	\node (ldots) at (0,0.5) {\textbf{\ldots}};
+	\draw (4,0.5) node[myNodeIGNVert] (bootstrapN) {$\mathcal{S}_n^{\Theta_k}$};	
 	
 	\draw[thick,color=gray,rounded corners](-6.75,-5)--(-6.75,-1)--(-1.25,-1)--(-1.25,-5)--cycle;
 	\node[color=gray] at (-5.25,-1.5) {CART 1};
@@ -119,22 +110,33 @@ where $k$ is the number of CART.
 	 };
 	}};
 	
-	\draw (0,-7.5)  node[myNodeIGNGris] (vote) {Majority vote};
+	\draw (0,-6.5)  node[myNodeIGNGris] (vote) {Majority vote};
 	
-	\draw[myArrowIGNGris] (data.south) -- (0,3) -- (-4,3)  -- (bootstrap1.north);
-	\draw[myArrowIGNGris] (data.south) -- (0,3) -- (4,3)  -- (bootstrapN.north);
+	\draw[myArrowIGNGris] (data.south) -- (0,1.5) -- (-4,1.5)  -- (bootstrap1.north);
+	\draw[myArrowIGNGris] (data.south) -- (0,1.5) -- (4,1.5)  -- (bootstrapN.north);
 	
 	\draw[myArrowIGNGris] (bootstrap1.south) -- (-4,-1);
 	\draw[myArrowIGNGris] (bootstrapN.south) -- (4,-1);
 	
-	\draw[myArrowIGNGris] (-4,-5) -- (-4,-6) -- (0,-6)  -- (vote.north);
-	\draw[myArrowIGNGris] (4,-5) -- (4,-6) -- (0,-6)  -- (vote.north);
+	\draw[myArrowIGNGris] (-4,-5) -- (-4,-5.5) -- (0,-5.5)  -- (vote.north);
+	\draw[myArrowIGNGris] (4,-5) -- (4,-5.5) -- (0,-5.5)  -- (vote.north);
 
 \end{tikzpicture}
 \end{center}
 \caption{General diagram of the operation of the Random Forest}
 \label{fig:RF_method}
 \end{figure}
+
+
+RF have shown better classification performances than traditional Boosting methods \citep{breiman2001random} or SVM \citep{pal2005random}. They are also able to handle big dataset with large number of feature. Furthermore, a measure of feature importance have been introduced in \cite{breiman2001random}. It allows to qualify the relevance of the feature in the classification process \citep{strobl2007bias}.
+
+The importance of a feature $\mathbf{X}_{j}$, $j\in\{1,...,q\}$ (with $q$ the number of feature) is defined as follow. Let $\mathcal{S}_{n}^{\Theta_{i}}$ be a sample and $OOB_{i}$ all the observations that does not belong to $\mathcal{S}_{n}^{\Theta_{i}}$. $errOOB_{i}$, the error on $OOB_{i}$ using $\mathcal{S}_{n}^{\Theta_{i}}$, is then computed. A random permutation on the value of the $j^{\text{th}}$ feature of $OOB_{i}$ is performed in order to obtain $\widetilde{OOB_{i}}^j$. $err\widetilde{OOB_{i}^{j}}$ is then computed. The importance of the feature $j$, $FI(\mathbf{X_{j}})$ is the mean of the difference of the errors (see Equation \ref{eq:FI}).
+
+\begin{equation}
+\label{eq:FI}
+FI(\mathbf{X_{j}})=\frac{1}{k}\sum_{i=1}^{k}(err\widetilde{OOB_{i}^{j}}-errOOB_{i})
+\end{equation}
+where $k$ is the number of CART.
 
 
 \subsection{Dimension reduction and feature selection}
@@ -146,12 +148,25 @@ Two approaches exist, first the ones based on the transformation of the data, ge
 The most popular dimension reduction method is the Principal Component Analysis (PCA). It is an unsupervised method that aim to maximize the variance between data \citep{jolliffe2011principal}. However, it has been demonstrated that PCA is not optimal for the purpose of classification \citep{cheriyadat2003principal}. Other methods have been developed based on the PCA: the Independent Component Analysis (ICA) \citep{jutten1991blind} maximize the statistical independence between data, and the Maximum Autocorrelation Factor (MAF) \citep{larsen2002decomposition} maximize the spatial auto-correlation. When training samples are available, the linear discriminant analysis try to maximize the intra-class homogeneity and the inter-class variance \citep{fisher1936use, lebart1997multidimensional}.
 
 \subsubsection{Feature selection}
+The feature selection aims to search for an optimal subset of features without modifying them. To obtain such subset, one can explore the subsets of features or define a criteria to evaluate the subsets. Furthermore, the selection can be supervised or unsupervised. The first aims to discriminate the better the classes while the second are looking for an optimal subset that regroup the data into homogeneous classes while maximizing the distance between classes. The unsupervised methods are more related to clustering algorithms.
 
+Many exploration methods for feature selection have been proposed in the literature. The naive exhaustive exploration of all the subsets can be envisaged when the number of feature is not important. Thus, many non-exhaustive methods for the exploration of subsets have been proposed. There are two kinds of methods : the heuristic methods and the random methods. \\
+
+Using heuristic rules for feature selection allows to quickly converge to an optimal subset. It could be approaches that add features step by step (forward approaches), also called Sequential Forward Selection (SFS) \citep{marill1963effectiveness}. It could also be methods that start from the entire feature set and remove feature step by step (backward approaches), also called Sequential Backward Selection (SBS) \citep{whitney1971direct}. A generalization of these methods have been proposed in \cite{kittler1978feature}. Finally, the forward and backward methods could be combined in order to improve the process. The Sequential Floating Forward Selection (SFFS) and the Sequential Floating Backward Selection (SFBS) \citep{pudil1994floating} propose such improvement. \\
+
+The search can be performed randomly. The generation of the subset can be totally random \citep{liu1997feature}. Genetic algorithms propose a ponderation of the subsets according to their importance \citep{goldberg1989genetic}. They allow a faster convergence to a more stable solution. \\
 
 \section{Smoothing methods}
+Pixel-wise classification is not sufficient for both accurate and smooth land-cover mapping with VHR remote sensing data. This is particularly true in forested areas: the large intra-class and low inter-class variabilities of classes result in noisy label maps at pixel or tree levels. This is why various regularization solutions can be adopted from the literature (from simple smoothing to probabilistic graphical models).\\
+According to \cite{SCH12}, both local and global methods can provide a regularization framework, with their own advantages and drawbacks.
 
 \subsection{Local methods}
+In local methods, the neighborhood of each element is analyzed by a filtering technique. The labels of the neighboring pixels (or the posterior class probabilities) are combined so as to derive a new label for the central pixel. Majority voting, Gaussian and bilateral filtering can be employed if it is not targeted to smooth class edges.\\
+The probabilistic relaxation is an other local smoothing method that aims at homogenizing probabilities of a pixel according to its neighboring pixels. The relaxation is an iterative algorithm in which the probability at each pixel is updated at each iteration in order to have it closer to the probabilities of its neighbors \citep{Gong198933}. It reports good accuracies with decent computing time and offers an alternative to edge aware/gradient-based techniques that may not be adapted in semantically unstructured environments.
 
 \subsection{Global methods}
+Global methods consider the full area of interest at the same time. They are based on Markov Random Fields (MRF), the labels at different locations are not considered to be independent. The optimal configuration of labels is retrieved when finding the Maximum A Posteriori over the entire field \cite{Gab_MRF}. The problem is therefore considered as the minimization procedure of an energy $E$ over the full image $I$. Despite a simple neighborhood encoding (pairwise relations are often preferred), the optimization procedure propagates over large distances. Depending on the formulation of the energy, the global minimum may be reachable. However, a large range of optimization techniques allow to reach local minima close to the real solution, in particular for random fields with pairwise terms \cite{kolmogorov2004energy}. For genuine structured predictions, in the family of graphical probabilistic models, Conditional Random Fields (CRF) have been massively adopted during the last decade. Interactions between neighboring objects, and subsequently the local context can be modeled and learned. In particular, Discriminative Random Fields (DRF, \cite{DRF}) are CRF defined over 2D regular grids, and both unary/association and binary/interaction potentials are based on labeling procedure outputs. Many techniques extending this concept or focusing on the learning or inference steps have been proposed in the literature \cite{ijcv_kohli09,Ladicky2012}. A very recent trend even consists in jointly considering CRF and deep-learning techniques for the labeling task \cite{CNN_CRF}.\\
+In standard LC classification tasks, global methods are known to provide significantly more accurate results \cite{SCH12} since contextual knowledge is integrated. This is all the more true for VHR remote sensing data, especially in case of a large number of classes (e.g., 10, \cite{isprs-archives-XLI-B4-11-2016}), but presents two disadvantages. For large datasets, their learning and inference steps are expensive to compute. Furthermore, parameters should often be carefully chosen for optimal performance, and authors that managed to alleviate the latter problem still report a significant computation cost \cite{Lucchi_ICCV2011}.
+
 \stopcontents[chapters]
 
