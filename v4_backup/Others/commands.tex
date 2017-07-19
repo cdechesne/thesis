@@ -14,11 +14,17 @@
 \pagebreak
 }
 
+\newcommand{\includetex}[1]{\openchapter\include{#1}}
+
 %%%
 
 \usetikzlibrary{arrows,shapes,snakes,spy,trees,decorations,shadows,positioning}
 %\usetikzlibrary{shadows}
 %\usetikzlibrary{arrows}
+
+%%%
+
+\usepackage{amsmath}
 
 %%%
 
@@ -43,18 +49,18 @@
 
 \newcommand\ToCrule{\noindent\rule[5pt]{\textwidth}{1.5pt}}
 
-\newcommand\ToCrulev{\tikz\draw[line width=1.5pt, black] (0,0) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1)  arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1);}
+\newcommand\ToCrulev{\tikz\draw[line width=1.5pt, black] (0,0) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1)  arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1);}
 
-\newcommand\ToCruleiv{\tikz\draw[line width=1.5pt, black] (0,0) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1)  arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1);}
+\newcommand\ToCruleiv{\tikz\draw[line width=1.5pt, black] (0,0) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1)  arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1);}
 
 
 \makeatletter
 \newcommand\Mprintcontents{%
   \vspace*{-1cm}
   \vfill
-  \ToCrulev
+  \hfill\ToCrulev\hfill
   \ttl@printlist[chapters]{toc}{}{1}{}\par\nobreak
-  \ToCruleiv
+  \hfill\ToCruleiv\hfill
   \vfill
   \pagebreak}
 \makeatother

@@ -53,9 +53,12 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 
 %%%
 
-\usepackage[maxbibnames=99, maxcitenames=1, backend=bibtex,style=alphabetic-verb,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
+%\usepackage[maxbibnames=99, maxcitenames=1, backend=bibtex,style=alphabetic-verb,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
 
-%\usepackage[maxbibnames=99, maxcitenames=1, backend=bibtex,style=authoryear,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
+\usepackage[maxbibnames=99, maxcitenames=1, backend=bibtex,style=authoryear,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
+
+%\usepackage[maxbibnames=99, maxcitenames=1, backend=bibtex,style=numeric,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
+
 
 \addbibresource{example.bib} % The filename of the bibliography
 
@@ -67,8 +70,8 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 
 \geometry{
 	paper=a4paper, % Change to letterpaper for US letter
-	inner=1.0cm, % Inner margin 2.5 b4
-	outer=2.0cm, % Outer margin 4.0 b4
+	inner=2.5cm, % Inner margin 2.5 or 1.0
+	outer=4.0cm, % Outer margin 4.0 or 2.0
 	bindingoffset=0.5cm, % Binding offset
 	top=2.5cm, % Top margin
 	bottom=2.5cm, % Bottom margin
@@ -159,14 +162,10 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 \openchapter
 \setcounter{page}{0}
 \include{Chapters/Introduction}
-\openchapter
-\include{Chapters/Chapter1}
-\openchapter
-\include{Chapters/Chapter2} 
-\openchapter
-\include{Chapters/Chapter3} 
-\openchapter
-\include{Chapters/Conclusion}
+\includetex{Chapters/Chapter1}
+\includetex{Chapters/Chapter2} 
+\includetex{Chapters/Chapter3} 
+\includetex{Chapters/Conclusion}
 
 %----------------------------------------------------------------------------------------
 %	THESIS CONTENT - APPENDICES
@@ -177,10 +176,8 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 % Include the appendices of the thesis as separate files from the Appendices folder
 % Uncomment the lines as you write the Appendices
 
-\openchapter
-\include{Appendices/AppendixA}
-\openchapter
-\include{Appendices/AppendixB}
+%\includetex{Appendices/AppendixA}
+\includetex{Appendices/AppendixB}
 
 %----------------------------------------------------------------------------------------
 %	BIBLIOGRAPHY

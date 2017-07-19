@@ -156,6 +156,14 @@ Using heuristic rules for feature selection allows to quickly converge to an opt
 
 The search can be performed randomly. The generation of the subset can be totally random \citep{liu1997feature}. Genetic algorithms propose a ponderation of the subsets according to their importance \citep{goldberg1989genetic}. They allow a faster convergence to a more stable solution. \\
 
+The other methods for feature selection are the evaluation methods. They estimate a feature or a subset of feature in order to evaluate the different methods of feature selection. Three kinds of methods have been proposed : the filter, wrapper and embedded methods. \\
+
+The filter methods weight the features according to their capacity to bring together elements of the same class and separate the different elements \citep{john1997enhancements}. Such methods are independent from a classifier and are used as preliminary step to classification. Such methods are very fast but, since they are independent from the classifier, they are not adapted for a specific classification task.
+
+The wrapper methods weight the features according to their pertinence for the prediction \citep{kohavi1997wrappers}. This weighting is related to the performance of a classifier. Data are separated into two subset. The first is used for the training, while the second evaluate the classifier. The use of a classifier is a big advantage as it fits more to the envisaged problem. However, the use of a classifier significantly increase the computation times.
+
+Eventually, the embedded methods select the features during the training process. They have two advantages: since they use the data as training, they are robust. Furthermore, the feature selection and the classification are performed together, thus, they are faster than the wrapper methods. Many methods have been proposed. The RF allow to assess to the feature importance \citep{breiman2001random}. Other methods are based on the SVM classifiers, the SVM-RFE (Recursive Feature Elimination) \citep{tuia2009classification} recursively removes the less pertinent features according to a weight estimated with a SVM.
+
 \section{Smoothing methods}
 Pixel-wise classification is not sufficient for both accurate and smooth land-cover mapping with VHR remote sensing data. This is particularly true in forested areas: the large intra-class and low inter-class variabilities of classes result in noisy label maps at pixel or tree levels. This is why various regularization solutions can be adopted from the literature (from simple smoothing to probabilistic graphical models).\\
 According to \cite{SCH12}, both local and global methods can provide a regularization framework, with their own advantages and drawbacks.

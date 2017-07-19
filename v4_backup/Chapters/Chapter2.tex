@@ -40,26 +40,180 @@ The over-segmentation aims to extract small object that are consistent according
 \subsection{Segmentation of lidar data}
 Two approaches could be envisaged: the direct segmentation of the point cloud or the segmentation of a rasterized lidar feature using image-based segmentation algorithms. \\
 
-The tree extraction from the point cloud is a complex task that has been widely discussed \citep{dalponte2014tree, vega2014ptrees, kandare2014new}. However, a precise tree extraction is not needed here, since the extracted trees are only needed to improve the classification task. A coarse method is therefore adopted: the tree tops are first extracted from the lidar point clouds using a local maximum filter. A point is considered as a tree top when it has the highest height value within a 5 meter radius. Only the points above 3$\:$meters are retained as it is a common threshold of the literature \citep{eysn2012forest}, and appears to be highly discriminative in non-urban areas. Points belonging to a tree are obtained through two criteria. (i) If the height of a point within a 5$\:$m radius is greater or equal than 80\% the height of the closest tree top, it is aggregated to the tree top. (ii) If the distance in the  $(x,y)$ plane between an unlabelled point and the closest tree point is smaller than 3$\:$m  they are also aggregated. This delineation method allows to discard low vegetation, but buildings might be extracted and considered as trees. \\
+The tree extraction from the point cloud is a complex task that has been widely discussed \citep{dalponte2014tree, vega2014ptrees, kandare2014new}. However, a precise tree extraction is not needed here, since the extracted trees are only needed to improve the classification task. A coarse method is therefore adopted: the tree tops are first extracted from the lidar point clouds using a local maximum filter. A point is considered as a tree top when it has the highest height value within a 5 meter radius. Only the points above 3$\:$meters are retained as it is a common threshold of the literature \citep{eysn2012forest}, and appears to be highly discriminative in non-urban areas. Points belonging to a tree are obtained through two criteria. (i) If the height of a point within a 5$\:$m radius is greater or equal than 80\% the height of the closest tree top, it is aggregated to the tree top. (ii) If the distance in the  $(x,y)$ plane between an unlabeled point and the closest tree point is smaller than 3$\:$m  they are also aggregated. This delineation method allows to discard low vegetation, but buildings might be extracted and considered as trees. \\
 
 The image-based segmentation are also very efficient for the over-segmentation of lidar data. They are mainly applied on the normalized digital surface model (height). Thus a method using a single band is needed. The watershed algorithm \citep{vincent1991watersheds} with specific parameters allow to obtain quickly a consistent over-segmentation of the image. A hierarchical segmentation \citep{guigues2006scale} is more adapted since only one parameter that control the segmentation level needs to be provided.
 
 \subsection{Segmentation of optical images}
+Several algorithms have been developed for the over-segmentation of optical RGB (Red-Green-Blue) images. The most common are the superpixels methods \citep{achanta2012slic}.
 
 \section{Feature extraction}
+\subsection{Point-based lidar features.}
+Lidar-derived features require a consistent neighborhood for their computation. For each lidar point, 3 cylindrical neighborhoods, aligned with the vertical axis, are used (1$\:$m, 3$\:$m and 5$\:$m radii, infinite height). A cylinder appears to be the most relevant environment in forested areas so as to take into account the variance of altitudes of the lidar points. Three radius values are considered so as to handle the various sizes of the trees and assuming a feature selection step will prune the initial set of attributes. {Two vegetation density features, $\mathcal{D}_{1}$ and $\mathcal{D}_{2}$, are computed: the first one based on the number of local maxima within the neighborhoods, and the second one related to the number of non-ground points within the neighborhoods (ground points were previously determined by a filtering step). $\mathcal{D}_{1}$ and $\mathcal{D}_{2}$ are calculated as follows:
+\begin{eqnarray}
+\mathcal{D}_{1} & = & \sum_{r_{1} \in \{1,3,5\}}\sum_{r_{2} \in \{1,3,5\}}Nt_{r_{1},r_{2}}, \\
+\mathcal{D}_{2} & = & \frac{1}{3}\sum_{r \in \{1,3,5\}}\frac{Ns_{r}}{Ntot_{r}},
+\end{eqnarray}
+where $Nt_{r_{1},r_{2}}$ is the number of local maxima retrieved from a $r_{1}$ maximum filter within the cylindrical neighborhood of radius $r_{2}$. $Ns_{r}$ is the number of points classified as ground points within the cylindrical neighborhood of radius $r$ and $Ntot_{r}$ is the total number of points within the cylindrical neighborhood of radius $r$.} Additionally, the scatter $\mathcal{S}$ and the planarity $\mathcal{P}$ features are computed following \citet{Weinmann2015286}:
+\begin{eqnarray}
+\mathcal{S} & = & \frac{1}{3}\sum_{r \in \{1,3,5\}}\frac{\lambda_{3,r}}{\lambda_{1,r}}, \\
+\mathcal{P} & = & \frac{1}{3}\sum_{r \in \{1,3,5\}}2\times(\lambda_{2,r}-\lambda_{3,r}),
+\end{eqnarray}
+where $\lambda_{1,r}\geq\lambda_{2,r}\geq\lambda_{3,r}$ are the eigenvalues of the covariance matrix within the cylindrical neighborhood of radius $r$. They are retrieved with a standard Principal Component Analysis. \\
+Statistical features, known to be relevant for vegetation type (mainly tree species) classification \citep{dalponte2014tree,torabzadeh2015optimal}, are also derived. For each lidar point, the same 3 cylindrical neighborhoods are used. Two basic information from the lidar data, namely height and intensity, are used to derive statistical features. A statistical feature $f_{d}$, derived from an original feature $f_{o}$, (height or intensity) is computed as follows: \\
+\begin{equation}
+f_{d} = \frac{1}{3}\sum_{r \in \{1,3,5\}}f_{s}(\mathbf{p_{r,f_{o}}}), 
+\label{eq:derive_features}
+\end{equation}
+where $f_{s}$ is a statistical function (minimum; maximum; mean; median; standard deviation; median absolute deviation from median (medADmed); mean absolute deviation from median (meanADmed); skewness; kurtosis; 10$^{\text{th}}$, 20$^{\text{th}}$, 30$^{\text{th}}$, 40$^{\text{th}}$, 50$^{\text{th}}$, 60$^{\text{th}}$, 70$^{\text{th}}$, 80$^{\text{th}}$, 90$^{\text{th}}$ and 95$^{\text{th}}$ percentiles), and $\mathbf{p_{r,f_{o}}}$ a vector containing the sorted values of the original feature $f_{o}$ within the cylindrical neighborhoods of radius~$r$. All the statistical functions are used for the height. Only the mean is used for the intensity: it is hard to know how well the sensor is calibrated and a suitable correction of intensity values within tree canopies has not yet been proposed. \\
+24 features are extracted during this step; 2 related to vegetation density, 2 related to the 3D local distribution of the point cloud (planarity and scatter), and 20 statistical features.
+
+\subsection{Pixel-based multispectral features.}
+The original 4 spectral bands of the image are kept and considered as multispectral features. The Normalized Difference Vegetation Index (NDVI), \citep{tucker1979red},
+the Difference Vegetation Index (DVI), \citep{bacour2006normalization}
+and the Ratio Vegetation Index (RVI) \citep{jordan1969derivation}
+are computed as they are relevant vegetation indices. Indeed, they can provide more information about the species than the original bands alone \citep{zargar2011review}. As the point-based lidar features, statistical features are also derived from each band and each vegetation index according to Equation~\ref{eq:derive_features} (3 circular neighborhoods of 1$\:$m, 3$\:$m and 5$\:$m radii). Other statistical functions are used (minimum; maximum; mean; median; standard deviation; mean absolute deviation from median (meanADmed); mean absolute deviation from mean (meanADmean); median absolute deviation from median (medADmed); median absolute deviation from mean (medADmean). Finally, the pixel-based multispectral feature set is composed of 70 attributes.
+
+\subsection{Pixel-based lidar features.}
+The lidar features are rasterized at the same resolution of the multispectral image using a pit-free method proposed in \citep{khosravipour2014generating}. This rasterization method is interesting because it produces smooth images that will lead to better results for classification and regularization \citep{Li2013104}. Such data fusion process at the feature level is valid since both datasets have approximately the same spatial resolution. The Canopy Height Model (CHM) is also computed using this method, at the same spatial resolution using an existing 1$\:$m Digital Terrain Model provided with the filtered point cloud \citep{Ferraz201623}. The CHM is very important as it allows to derive the height above the ground and is known as a very discriminative feature for classification \citep{Mallet2011S71,Martin}.
+
+\subsection{Object-based feature map.}
+The pixel-based multispectral and lidar maps are merged so as to obtain a pixel-based feature map. Then, an object-based feature map is created using the over-segmentation and the pixel-based feature map. The value $v_{t}$ of a pixel belonging to an object $t$ in the object-based feature map is computed as follows:
+\begin{equation}
+v_{t}=\frac{1}{N_{t}}\sum_{p \in t} v_{p},
+\end{equation}
+where $N_{t}$ is the number of pixels in object $t$ ,and $v_{p}$ is the value of the pixel $p$.
+If a pixel does not belong to a tree, it keeps the value of the pixel-based feature map. Here, only the mean value of the pixels within the tree is envisaged but one can also consider other statistical values (minimum, maximum, percentiles etc.). \\
+Other morphological features could also be directly derived from the lidar cloud point at the object-level. For instance, an alpha-shape can be performed on the individual trees \citep{vauhkonen2010imputation} and a penetration feature can be derived as it can help to classify vegetation type (mainly tree species). However, low point densities (1-5 points/m$^{2}$) compatible with large-scale lidar surveys are not sufficient in order to derive a significant penetration indicator.
 
 \section{Classification}
+The classification is performed using a supervised classifier, in order to discriminate the vegetation type (mainly tree species) provided by an existing forest land-cover database. The classifier used in this study is the Random Forest (RF), implemented in OpenCV \citep{opencv}, as it has been shown relevant in the literature \citep{belgiu2016random} and in a previous study compared to SVM \citep{dechesne2016forest}, since it provide similar results while being faster. The outputs of the classification are (i) label map and (ii) probability map (posterior class probabilities for each pixel/object). This probability map is the main input for the subsequent regularization step. \\
+In order to reduce the computation times, a feature selection is carried out to identify an "optimal" feature subset. Additionally, a strategy is proposed in order to select the most suitable training pixels for an existing land-cover forest maps, subsequently improving the classification accuracy.
 
 \subsection{Training set design}
+Using an existing forest land-cover (LC) database for training a model is not straightforward \citep{isprsannals-II-3-W2-13-2013,rs6053965,isprs-annals-III-7-133-2016}. First, locally it can suffer from a lack of information (not all the classes of interest are present). Secondly, this database may also be semantically and, more frequently, geometrically incorrect (see Figure~\ref{fig:delineation_errors}): changes may have happened (forest cut or grow) and the geodatabase may have been generalized, resulting in sharp polygon vertices that do not exactly correspond to the class borders. Thirdly, in many forest LC databases, polygons of a given vegetation type (mainly tree species) may contain other vegetation type (mainly tree species) in a small proportion. Two strategies are employed to overcome these problems: 
 
-\subsection{Feature selection}
+Firstly, in order to increase the knowledge on existing class labels, the model could be trained on a larger area. The size of the training area has been chosen arbitrarily. However, when it is too large, we observe that the quality of the classification decreases. The optimal choice of the training area has not been investigated yet. {The model has therefore been trained on a larger area than the ones of interest}. The areas selected for the training are the ones maximizing the number of classes within a 5$\:$km search zone.
 
-\subsection{Classification}
+Secondly, in order to correct the potential errors of the LC database, a k-means clustering has been therefore performed on each of the labels in the training area. We assume that erroneous pixels are present in a small proportion and that therefore the main cluster corresponds to the class of interest. Let $p_{i-c,t}$ be the $i^{\text{th}}$ pixel of the vegetation type (mainly tree species) $t$ in the cluster $c$ of the k-means. The pixels $P_{t}$ used to train the model for the vegetation type (mainly tree species) $t$ correspond to the set:
+\begin{equation}
+P_{t} = \{{p_{i-c,t} \quad | \quad \underset{c \in [1,k]}{c=\text{argmax }}\text{Card} ( \cup_{i} p_{i-c,t} ) } \}.
+\end{equation}
+That is to say, only samples belonging to the main k-mean cluster among training pixels for one class are kept in the training dataset. \\
+In practice, $k=3$: the main cluster corresponds to the label of interest whereas the two other ones correspond to the ground and minority vegetation type (mainly tree species) within the polygons. 1000 samples per class are then randomly selected in order to design the final training set.
+
+\subsubsection{Feature selection}
+Due to the high number of features involved, an automatic Feature Selection (FS) has been integrated. This selection is composed of two steps: the choice of the number of features to select and the feature selection itself. Indeed, the choice of the number of features is very important because it enables to greatly decrease the computation times. \\
+The Sequential Forward Floating Search (SFFS) \citep{pudil1994floating} algorithm is used for both steps. The SFFS algorithm has two main advantages: (i) it can be used with many classification score (in this study, the Kappa coefficient), (ii) it enables to access to the evolution of the classification score/accuracy according to the number of selected features. The accuracy of the classification is assessed through the Kappa coefficient of the RF classifier. The SFFS algorithm selects $p$ features by maximizing FS score criterion (the Kappa coefficient). In order to retrieve the optimal number of features, the SFFS algorithm is performed $n$ times on different training sets with $p$ equal to the total number of features (95). The classification accuracy is conserved for each selection of $s$ features ($s \in [1, p]$) and averaged over the $n$ iterations. The number of optimal features $n_{\text{opt}}$ corresponds to the size of the selection of $s$ features having the maximal mean accuracy. In order to reduce the computation times, the optimal number of features was computed for a single 1$\:$km$^{2}$ area and used for all the areas of interest. \\
+The feature selection is then carried out for each area of interest (one selection for each area) with $p=n_{\text{opt}}$. The selected features are used for both the classification and the energy minimization framework. The feature selection could be carried out only once on a single area or on multiple areas in order to reduce the computation times.
 
 \section{Smoothing}
+The proposed method assumes that a label map is provided for the areas of interest, and is accompanied with a class membership probability map, which provides, for each pixel of the image, the posterior class membership for all classes of interest. These are the necessary inputs for all methods described below. In practice, the strategy proposed in \cite{clement_IJPRS} is as followed: a supervised classification is performed on a selection of features extracted both from 3D lidar point clouds and aerial multispectral images. The training pixels are selected according to an existing forest LC geodatabase. The used classifier is the Random Forest (RF) classifier. This is an efficient classifier, that directly handles multiple classes, and provides posterior probabilities for each class.\\
+Here, both local and global methods are tested. For local techniques, majority voting and probabilistic relaxation are selected. For global methods, various energy formulations based on a feature-sensitive Potts model are proposed.
 
 \subsection{Local methods}
+\subsubsection{Filtering}
+An easy way to smooth a probability map is to filter it. All the pixels in a $r \times r$ pixels moving window $\mathcal{W}$ are combined in order to generate an output label of the central pixel. The most popular filter is the majority filter. Firstly, the class probabilities are converted into labels, assuming that the label of pixel $\mathbf{x}$ is the label of the most probable class.\\
+\begin{equation}
+C(\mathbf{x})=[c_{i}|P(\mathbf{x},c_{i}) \geq P(\mathbf{x},c_{j}) \forall j],
+\end{equation}
+with $i,j \in [1,n_{c}]$, where $n_{c}$ is the number of classes. From this label image, the final smoothed result is obtained by taking the majority vote in a local neighborhood.
+\begin{equation}
+C_{smooth}(\mathbf{x})=\underset{i}{\text{arg max}}\left[ \sum_{\mathbf{u}\in\mathcal{W}}\left[C(\mathbf{u})=c_{i}\right] \right].
+\end{equation}
+Many other filters have been developed.
 
-\subsection{Global methods}
+\subsubsection{Probabilistic relaxation}
+The probabilistic relaxation aims at homogenizing probabilities of a pixel according to its neighboring pixels. The relaxation is an iterative algorithm in which the probability at each pixel is updated at each iteration in order to have it closer to the probabilities of its neighbors \cite{Gong198933}. It was adopted for simplicity reasons. First, good accuracies are reported with decent computing time, which is beneficial over large scales. Secondly, it offers an alternative to edge aware/gradient-based techniques that may not be adapted in semantically unstructured environments like forests. The probability $P_{k}^{t}(\mathbf{u})$ of class $k$ at a pixel $\mathbf{u}$ at the iteration $t$ is defined by  $\delta P_{k}^{t}(\mathbf{u})$ which depends on:
+\begin{itemize}
+\item The distance $d_{\mathbf{u},\mathbf{v}}$ between the pixel $\mathbf{u}$ and its neighbors $\mathbf{v}$ (the pixels that are distant of less than $r$ pixels from $\mathbf{u}$).
+\item A co-occurrence matrix $T_{k,l}$ defining a priori correlation between the probabilities of neighboring pixels. The local co-occurrence matrix has been tuned arbitrarily, but can also be estimated using training pixels \cite{VolpiCVPR2015}. The matrix is expressed as follow: \\
+$T_{k,l}=\begin{bmatrix}
+0.8 & p & \cdots & p \\
+p & \ddots & \ddots & \vdots \\
+\vdots & \ddots & \ddots & p \\
+p & \cdots & p & 0.8
+\end{bmatrix}$, with $p=\frac{0.2}{n_{c}-1}$.
+\end{itemize}
+The update factor is then defined as:
+\begin{equation}
+\delta P_{k}^{t}(\mathbf{u})=\sum_{\mathbf{v} \in \mathcal{N_{\mathbf{u}}}} d_{\mathbf{u},\mathbf{v}} \sum_{l=1}^{n_{c}} T_{k,l}(\mathbf{u},\mathbf{v}) \times P_{l}^{t}(\mathbf{v}).
+\end{equation}
+In order to keep the probabilities normalized, the update is performed in two steps using the unnormalized probability $Q_{k}^{t+1}(\mathbf{u})$ of class $k$ at a pixel $\mathbf{u}$ at the iteration $t+1$:
+\begin{equation}
+Q_{k}^{t+1}(\mathbf{u})=P_{k}^{t}(\mathbf{u}) \times \big(1 + \delta P_{k}^{t}(\mathbf{u})\big),
+\end{equation}
+\begin{equation}
+P_{k}^{t+1}(\mathbf{u})=\frac{Q_{k}^{t+1}(\mathbf{u})}{\sum_{l=1}^{n_{c}}Q_{l}^{t+1}(\mathbf{u})}.
+\end{equation}
+
+\subsection{Global smoothing}
+The global smoothing method uses only a small number of pairwise cliques between neighboring pixels (4-neighbors or 8-neighbors) to describe the smoothness. Over the entire resulting first order random fields, the maximization of the posterior probability leads to a smoothed results. This can be done by finding the minimum of the negative log-likelihood, $\underset{C}{\text{arg min}}E(I,C,A)$ with
+\begin{equation}
+\begin{aligned}
+& E(I,C,A)=\sum_{\mathbf{u}\in I}E_{\text{data}}(\mathbf{u},P(\mathbf{u})) + \\
+& \gamma\sum_{\mathbf{u} \in I, \mathbf{v} \in \mathcal{N}_{\mathbf{u}}} E_{\text{pairwise}}(\mathbf{u}, \mathbf{v}, C(\mathbf{u}), C(\mathbf{v}), A(\mathbf{u}), A(\mathbf{v})),
+\end{aligned}
+\end{equation}
+where $P(\mathbf{u})=[P(\mathbf{u},c_{i})|P(\mathbf{u},c_{i}) \geq P(\mathbf{u},c_{j}) \forall j]$, $A(\mathbf{u})$ are the values of the features at pixel $\mathbf{u}$ (such as height, reflectance...) and $\mathcal{N}_{\mathbf{u}}$ is the 8-connected neighborhood of the pixel $\mathbf{u}$ (only the 8-connected neighborhood is investigated in this paper). When $\gamma=0$, the pairwise term has no effect in the energy formulation; the most probable class is attributed to the pixel, leading to the same result as the classification output. When $\gamma \neq 0$, the resulting label map becomes more homogeneous, and the borders of the segments/stands are smoother. However, if $\gamma$ is too high, the small areas are bound to be merged into larger areas, removing a part of the useful information provided by the classification step. The automatic tuning of the parameter $\gamma$ has been addressed in \cite{Gab_MRF} but is not used here.\\
+In this paper, two formulations of $E_{\text{data}}$ (unary term) and four formulations of $E_{\text{pariwise}}$ (prior) are investigated. \\
+\subsubsection{Unary term}
+A widely used formulation for the unary term is the log-inverse formulation using the natural logarithm. It corresponds to the information content in information theory and is formulated as follow:
+\begin{equation}
+E_{\text{data}}=-\text{log}(P(\mathbf{u})).
+\label{eq:data1}
+\end{equation}
+It highly penalizes the low-probability classes but increase the complexity with potential infinite values.\\
+An other simple formulation for the unary term is the linear formulation,
+\begin{equation}
+E_{\text{data}}=1-P(\mathbf{u}).
+\label{eq:data2}
+\end{equation}
+It penalizes less than the log-inverse formulation but has the advantage of having values lying in $[0,1]$. \\
+\subsubsection{Prior}
+In this work, the prior has a value depending on the class of neighboring pixels. In the four formulations, two neighboring pixels pay no penalty if they are assigned to the same class. Two basic and popular priors, the \textit{Potts model} and the \textit{contrast-sensitive Potts model} (called here \textit{z-Potts model}), are investigated. In the \textit{Potts model}, two neighboring pixels pay the same penalty if they are assigned to different labels, the prior for the \textit{Potts model} is:
+\begin{equation}
+\begin{aligned}
+& E_{\text{pairwise}}(C(\mathbf{u}) = C(\mathbf{v}))=0, \\
+& E_{\text{pairwise}}(C(\mathbf{u}) \neq C(\mathbf{v}))=1.
+\end{aligned}
+\label{eq:prior1}
+\end{equation}\\
+In the \textit{z-Potts model}, the penalty for a change of label depends on the gradient of height between two neighboring pixels. The \textit{z-Potts model} is a standard \textit{contrast-sensitive Potts model} applied to the height obtained from the point clouds. Here, since we are dealing with forest stands that are likely to exhibit distinct heights, the gradient of the height map (given with the 3D lidar point cloud) is computed for each of the four directions separately. The maximum $M_{g}$ over the whole image in the four directions is used to compute the final pairwise energy. A linear function has been used: the penalty is highest when the gradient is 0, and decreases until the gradient reaches its maximum value. The prior of the \textit{z-Potts model} is therefore:
+\begin{equation}
+\begin{aligned}
+& E_{\text{pairwise}}(C(\mathbf{u}) = C(\mathbf{v}))=0, \\
+& E_{\text{pairwise}}(C(\mathbf{u}) \neq C(\mathbf{v}))=1-\frac{g_{\mathbf{u} \rightarrow \mathbf{v}}}{M_{g}},
+\end{aligned}
+\label{eq:prior2}
+\end{equation}
+where $g_{\mathbf{u} \rightarrow \mathbf{v}}$ is the gradient between pixel $\mathbf{u}$ and pixel $\mathbf{v}$, i.e., the absolute value of the height difference of the two pixels.\\
+An other pairwise energy investigated is a global feature sensitive energy (called here \textit{Exponential-features model}). The pairwise energy is computed with respect to a pool of $n$ features. When the features have close values, the penalty is high and decreases when the features tends to be very different. The pairwise energy in this case is expressed as follows:
+\begin{equation}
+\begin{aligned}
+& E_{\text{pairwise}}(C(\mathbf{u}) = C(\mathbf{v}))=0, \\
+& E_{\text{pairwise}}(C(\mathbf{u}) \neq C(\mathbf{v}))=\frac{1}{n}\sum_{i=1}^{n}\exp({-|A_{i}(\mathbf{u})-A_{i}(\mathbf{v})|}),
+\end{aligned}
+\label{eq:prior3}
+\end{equation}
+where $A_{i}(\mathbf{u})$ is the value of the $i^{\text{th}}$ feature of the pixel $\mathbf{u}$. To compute such energy, the features need to be first normalized (i.e., zero mean, unit standard deviation) in order ensure that they all have the same dynamic.\\
+The last formulation investigated is also a global feature sensitive energy (called here \textit{Distance-features model}). The pairwise energy is still computed with respect to a pool of $n$ features. In this case, the energy is computed according to the distance between the two neighboring pixels in the feature space, the penalty is high when the pixels are close in the feature space and decrease when they get distant. The pairwise energy in this case is expressed as follow:
+\begin{equation}
+\begin{aligned}
+& E_{\text{pairwise}}(C(\mathbf{u}) = C(\mathbf{v}))=0, \\
+& E_{\text{pairwise}}(C(\mathbf{u}) \neq C(\mathbf{v}))=1-||A(\mathbf{u});A(\mathbf{v})||_{n,2},
+\end{aligned}
+\label{eq:prior4}
+\end{equation}
+with
+\begin{equation}
+||A(\mathbf{u});A(\mathbf{v})||_{n,2}=\frac{1}{\sqrt{n}}\sqrt{\sum_{i=1}^{n}\big(A_{i}(\mathbf{u})-A_{i}(\mathbf{v})\big)^{2}}.
+\end{equation}
+To compute such energy, the features need to be first normalized (i.e., zero mean, unit standard deviation) in order ensure that they all have the same dynamic. They are then rescaled between $0$ and $1$ to ensure that $||A(\mathbf{u});A(\mathbf{v})||_{n,2}$ lies in $[0;1]$ $\forall (\mathbf{u},\mathbf{v})$.
+
+In \cite{clement_IJPRS}, a high number of features was extracted from available lidar and optical images ($\sim$ 100) but can be selected. They can also be weighted according to their importance, computed through the Random Forest classification process. Since the most important features (20) are almost all equally weighted, it does not bring additional discriminative information for the global feature sensitive energy.
+
+\subsubsection{Energy minimization}
+The energy minimization is performed using graph-cut methods. The graph-cut algorithm employed is the quadratic pseudo-boolean optimization (QPBO). The QPBO is a popular and efficient graph-cut method as it efficiently solves energy minimization problems (such as the proposed ones) by constructing a graph and computing the min-cut \cite{kolmogorov2007minimizing}. $\alpha$-expansion moves are used, as they are an efficient way to deal with the multi-class problems \cite{kolmogorov2004energy}. \\
 
 \stopcontents[chapters]
