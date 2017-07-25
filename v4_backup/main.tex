@@ -53,11 +53,11 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 
 %%%
 
-%\usepackage[maxbibnames=99, maxcitenames=1, backend=bibtex,style=alphabetic-verb,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
+\usepackage[maxbibnames=99, maxcitenames=1, backend=bibtex,style=alphabetic-verb,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
 
 %\usepackage[maxbibnames=99, maxcitenames=1, backend=bibtex,style=authoryear,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
 
-\usepackage[maxbibnames=99, maxcitenames=1, backend=bibtex,style=numeric,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
+%\usepackage[maxbibnames=99, maxcitenames=1, backend=bibtex,style=numeric,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
 
 
 \addbibresource{example.bib} % The filename of the bibliography
@@ -128,10 +128,10 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 %----------------------------------------------------------------------------------------
 %	LIST OF CONTENTS/FIGURES/TABLES PAGES
 %----------------------------------------------------------------------------------------
-
+%\addchaptertocentry{Contents}
 \tableofcontents % Prints the main table of contents
 
-%\listoffigures % Prints the list of figures
+\listoffigures % Prints the list of figures
 
 %\listoftables % Prints the list of tables
 
@@ -161,11 +161,20 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 
 \openchapter
 \setcounter{page}{0}
+\setcounter{chapter}{0}
 \include{Chapters/Introduction}
-\includetex{Chapters/Chapter1}
-\includetex{Chapters/Chapter2} 
-\includetex{Chapters/Chapter3} 
-\includetex{Chapters/Conclusion}
+\openchapter
+\include{Chapters/Chapter1}
+\openchapter
+\include{Chapters/Chapter2}
+\openchapter
+\include{Chapters/Chapter3}
+\openchapter
+\include{Chapters/Conclusion}
+%\includetex{Chapters/Chapter1}
+%\includetex{Chapters/Chapter2} 
+%\includetex{Chapters/Chapter3} 
+%\includetex{Chapters/Conclusion}
 
 %----------------------------------------------------------------------------------------
 %	THESIS CONTENT - APPENDICES

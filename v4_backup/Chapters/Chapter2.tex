@@ -22,10 +22,12 @@
 
 With respect to the methods mentioned above, it appears that there are no forest stand segmentation method, based on tree species, that can satisfactorily handle a large number of classes ($>$5). The proposed framework is a fully automatic and modular method for species-based forest stand segmentation. The method is composed of four main steps; over-segmentation feature computation, vegetation type (mainly tree species) classification and regularization (see Figure \ref{fig:flowchart}).
 
-\begin{figure}
+\begin{figure}[htbp]
+\begin{center}
 \includegraphics[width=\textwidth]{Figures/method.eps}
 \caption{Flowchart of the proposed method.}
 \label{fig:flowchart}
+\end{center}
 \end{figure}
 
 Features are first derived at the pixel and at the object level. The most relevant ones are subsequently selected in a supervised way. The objects are extracted using various segmentation methods, since they appear to be sufficient for subsequent steps. A classification is performed at the object level as it significantly improves the discrimination results (about $10\%$ better than the pixel-based approach). This classification is then smoothed. The smoothing may produce homogeneous vegetation type (mainly tree species) areas with smooth borders. The contributions of this method are two-fold:
@@ -102,7 +104,7 @@ P_{t} = \{{p_{i-c,t} \quad | \quad \underset{c \in [1,k]}{c=\text{argmax }}\text
 That is to say, only samples belonging to the main k-mean cluster among training pixels for one class are kept in the training dataset. \\
 In practice, $k=3$: the main cluster corresponds to the label of interest whereas the two other ones correspond to the ground and minority vegetation type (mainly tree species) within the polygons. 1000 samples per class are then randomly selected in order to design the final training set.
 
-\subsubsection{Feature selection}
+\subsection{Feature selection}
 Due to the high number of features involved, an automatic Feature Selection (FS) has been integrated. This selection is composed of two steps: the choice of the number of features to select and the feature selection itself. Indeed, the choice of the number of features is very important because it enables to greatly decrease the computation times. \\
 The Sequential Forward Floating Search (SFFS) \citep{pudil1994floating} algorithm is used for both steps. The SFFS algorithm has two main advantages: (i) it can be used with many classification score (in this study, the Kappa coefficient), (ii) it enables to access to the evolution of the classification score/accuracy according to the number of selected features. The accuracy of the classification is assessed through the Kappa coefficient of the RF classifier. The SFFS algorithm selects $p$ features by maximizing FS score criterion (the Kappa coefficient). In order to retrieve the optimal number of features, the SFFS algorithm is performed $n$ times on different training sets with $p$ equal to the total number of features (95). The classification accuracy is conserved for each selection of $s$ features ($s \in [1, p]$) and averaged over the $n$ iterations. The number of optimal features $n_{\text{opt}}$ corresponds to the size of the selection of $s$ features having the maximal mean accuracy. In order to reduce the computation times, the optimal number of features was computed for a single 1$\:$km$^{2}$ area and used for all the areas of interest. \\
 The feature selection is then carried out for each area of interest (one selection for each area) with $p=n_{\text{opt}}$. The selected features are used for both the classification and the energy minimization framework. The feature selection could be carried out only once on a single area or on multiple areas in order to reduce the computation times.
