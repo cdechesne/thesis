@@ -31,7 +31,7 @@ Forests at different latitudes and elevations form distinctly different ecozones
 
 Forests are the dominant terrestrial ecosystem of Earth, and are distributed across the globe \citep{pan2013structure}. Forests account for 75\% of the gross primary productivity of the Earth's biosphere, and contain 80\% of the Earth's plant biomass \citep{pan2013structure}. They also hold about 90\% of terrestrial biodiversity.
 
-Forests are also benefit for the environment; they capt and store the CO$_{2}$ \citep{fahey2010forest}. About 45\% of the total global carbon is held by forests. They also filter dust and microbial pollution of the air \citep{smith2012air}. Finally, They also play an important role in hydrological regulation and water purification \citep{lempriere2008importance} (see Figure~\ref{fig:carbon_cycle}).
+Forests are also benefit for the environment; they capt and store the CO$_{2}$ \citep{fahey2010forest} (see Figure~\ref{fig:carbon_cycle}). About 45\% of the total global carbon is held by forests. They also filter dust and microbial pollution of the air \citep{smith2012air}. Finally, They also play an important role in hydrological regulation and water purification \citep{lempriere2008importance} (see Figure~\ref{fig:carbon_cycle}).
 
 \begin{figure}[htbp]
 \begin{center}
@@ -41,10 +41,10 @@ Forests are also benefit for the environment; they capt and store the CO$_{2}$ \
 \end{center}
 \end{figure}
 
-
 Human society and forests influence each other in both positive and negative ways \citep{vogt2006global}. Forests provide ecosystem services to humans and serve as tourist attractions. Forests can also affect people's health. Human activities, including harvesting forest resources, can negatively affect forest ecosystems. Wood from forest has many uses. It has been widely used for fuel \citep{sterrett1994alternative}. In this case, hardwood is preferred over softwood because it creates less smoke and burns longer.  Wood is still an important construction material \citep{ramage2017wood}: Elm was used for the construction of wood boats. In Europe, oak is still the the wood of choice for all wood constructions, including beams, walls, doors, and floors. A wider variety of woods is also used such as poplar, small-knotted pine, and Douglas fir. Wood is also needed in the paper industry since wood fibers are an important component of most paper. Eventually, wood is also extensively used for furniture or for making tools or music instruments.
 
-Forest are complex structures \citep{pommerening2002approaches}, for which informations are needed for management. The information can be the tree species or the tree maturity of the forest. There are two ways to extract such information from forest; field inventory or remote sensing. The field inventories are very expensive to set up and are also not adapted for a national study. A more adapted to obtain such information is remote sensing since it allows to extract them at a large scale. \\
+In order to exploit the forest resources, a precise mapping of forests is needed.
+Forests are complex structures \citep{pommerening2002approaches}, for which informations are needed for management and exploitation. The information can be the tree species or the tree maturity of the forest. There are two ways to extract such information from forest; field inventory or remote sensing. The field inventories are very expensive to set up and are also not adapted for a national study. A more adapted to obtain such information is remote sensing since it allows to extract them at a large scale. \\
 
 \section{Remote sensing for forested areas}
 
@@ -52,22 +52,69 @@ The analysis of forested areas from a remote sensing point of view can be perfor
 
 From a remote sensing point of view, the delineation of the stands is a segmentation problem. Forest stands are interesting in order to extract reliable and statistically meaningful features and to provide an input for multi-source statistical inventory. For land-cover mapping, this is highly helpful for forest database updating \citep{Kim09}, whether the labels of interest are \textit{vegetated areas} {(e.g., \textit{deciduous/evergreen/mixed/non-forested)}}, or, even more precisely, the tree species. Most of the time in national forestry inventory institutes, for reliability purposes, each area is manually interpreted by human operators with very high resolution (VHR) geospatial images focusing on the infra-red channel \citep{Malatamo}. This work is extremely time consuming and subjective \citep{Wulder2008}. Furthermore, in many countries, the wide variety of tree species (e.g., $>$20) significantly complicates the problem. The design of an automatic procedure based on remote sensing data would fasten such process. Additionally, the standard manual delineation procedure only takes into account the species, and few characteristics (alternatively height, age, stem density or crown closure), while an automatic method could offer more flexibility and would allow to combine characteristics extracted from all complementary data sources. \\
 
-The use of remote sensing data for the automatic analysis of forests has been growing in the last 15 years, especially with the synergistic use of airborne laser scanning (ALS) and optical VHR imagery (multispectral imagery and hyperspectral imagery) \citep{torabzadeh2014fusion,White2016CJRS}. They appear to be both well adapted and complementary inputs for stand segmentation \citep{dalponte2012tree,dalponte2015delineation,7500049}. ALS provides a direct access to the vertical distribution of the trees and to the ground underneath. Hyperspectral and multispectral images are particularly relevant for tree species classification: spectral and textural information from VHR  images can allow a fine discrimination of many species, respectively. Multispectral images are often preferred due to their higher availability, and higher spatial resolution. \\
+The use of remote sensing data for the automatic analysis of forests has been growing in the last 15 years, especially with the synergistic use of airborne laser scanning (ALS) and optical VHR imagery (multispectral imagery and hyperspectral imagery) \citep{torabzadeh2014fusion,White2016CJRS}. They appear to be both well adapted and complementary inputs for stand segmentation \citep{dalponte2012tree,dalponte2015delineation,7500049}. ALS provides a direct access to the vertical distribution of the trees and to the ground underneath. Hyperspectral and multispectral images are particularly relevant for tree species classification: spectral and textural information from VHR  images can allow a fine discrimination of many species, respectively. Multispectral images are often preferred due to their higher availability, and higher spatial resolution. Multispectral images can be acquired from airplanes or satellites. Spaceborne sensors allows to capture large areas with a high repeatability but suffer from a low spatial resolution (see Table~\ref{table:spatial_satellites}). For a better spatial resolution, airborne multispectral images are preferred. The airborne linear lidar has been widely used for remote sensing tasks \citep{lim2003lidar, shan2008topographic, vosselman2010airborne}. The new geiger mode lidar is also very promising, allowing a hight point density with different angles at a higher altitude \citep{ullrich2016linear}. \\
+
+\begin{sidewaystable}
+\begin{center}
+%\todo[inline]{http://fr.wikipedia.org/wiki/SPOT http://www.satimagingcorp.com/gallery.html}
+
+\begin{small}
+\begin{tabular}{l|c|c|c|c|c|c|c}
+
+%Images
+%& \includegraphics[height=2cm]{Figures/satellites/spot_123} & \includegraphics[height=2cm]{Figures/satellites/spot_4} & \includegraphics[height=2cm]{Figures/satellites/spot_5} & \includegraphics[height=2cm]{Figures/satellites/spot_67} & & & \includegraphics[height=2cm]{Figures/satellites/pleiades} \\
+
+%Nom
+& \textbf{SPOT 1,2,3} & \textbf{SPOT 4} & \textbf{SPOT 5} & \textbf{SPOT 6,7} & \textbf{Ikonos} & \textbf{Quickbird} &\textbf{Pléiades} \\
+\hline
+%
+Swath & & 60 km & 60 km & 60 km & 11 km & 16.5 km & 20 km \\
+%
+Revisit time & 3 d & 2 d & 2 d & 2 d & 3 d & 1-3.5 d & 1 d \\
+%
+Resolution PAN & 10 m & 10 m & 2,5 m or 5 m & 1,5 m & 1 m & 0.61-0.72 m & 0,7 m \\
+%
+Resolution XS & 20 m & 20 m & 10 m & 6 m & 4 m & 2.44-2.88 m & 2,8 m \\
+%
+Spectral Bands (nm) & & & & & & \\
+%
+- PAN & 500-730 & 610-680 & 480-710 & 450-750 & 450-900 & 450-900 & 470-830 \\
+%
+- Blue & - & - & - & 455-520 & 450-530 & 450-520 & 430-550 \\
+%
+- Green & 500-590 & 500-590 & 500-590 & 530-600 & 520-610 & 520-600 & 500-620 \\
+%
+- Red & 610-680 & 610-680 & 610-680 & 620-690 & 640-720 & 630-690 & 590-710 \\
+%
+- NIR & 780-890 & 780-890 & 780-890 & 760-890 & 760-880 & 760-900 & 740-940 \\
+\end{tabular}
+\end{small}
+\end{center}
+\caption{Principal multispectral spatial optical sensors.}
+\label{table:spatial_satellites}
+\end{sidewaystable}
 
 A prerequisite for data fusion is the most accurate alignment of the two data \citep{torabzadeh2014fusion}. A frequently used technique is to geo-rectify images using ground controls points (GCPS). A geometric transformation is established between the coordinates of GCPs and their corresponding pixels in the image. It is then applied for each pixel, so that coordinate differences on those checkpoints are reduced to the lowest possible level. This method can be easily applied and is relatively fast in terms of computation time. However the use of GCPs can still cause that the unknowns in the trajectory of the platforms produce some remarkable residual errors. Automatic methods for data registration have also been developed \citep{habib2005photogrammetric,mastin2009automatic}. \\
 
 \section{Context of the thesis}
-In France, the study of forests is two fold. They need to be mapped and inventoried. The forest inventory allows to obtain an estimation of the wood stock at a national scale. Statistics such as volume per hectare, deciduous volume or conifer volume can then be derived. The inventory is performed through field inventory and extrapolated using the forest mapping. Thus, the mapping of forest is very important in order to derive accurate statistics. \\
-The forest mapping is given by a national forest LC database. It is manually interpreted by human operators using VHR infra-red colored (IRC) ortho-images. It assigns a vegetation type to each mapped beach of more than 5000$\:$m$^{2}$. The nomenclature is composed of 32 classes based on hierarchical criteria such as pure stands of the main tree species of the French forest. The forest LC should be updated in a 10 years cycle.
+In France, the study of forests is two fold. They need to be mapped and inventoried. The forest inventory allows to obtain an estimation of the wood stock and the forestation rate at a national scale (see Figures~\ref{fig:wood_volume}~\&~\ref{fig:forestation}). Statistics such as volume per hectare, deciduous volume or conifer volume can then be derived. The inventory is performed through field inventory and extrapolated using the forest mapping. Thus, the mapping of forest is very important in order to derive accurate statistics.	
+The forest mapping is given by a national forest LC database (see Figure~\ref{fig:FLC}). It is manually interpreted by human operators using VHR infra-red colored (IRC) ortho-images. It assigns a vegetation type to each mapped beach of more than 5000$\:$m$^{2}$. The nomenclature is composed of 32 classes based on hierarchical criteria such as pure stands of the main tree species of the French forest. The forest LC should be updated in a 10 years cycle.
 
-\section{Objectives}
-Currently, the forest LC is obtained through remote sensing (namely photo-inter\-pretation), an method could be developed to update it automatically. Since an old version of the forest LC is available, it can be used as a ground truth input for subsequent classification \citep{gressin2013updating}. However, the learning process should be carried out carefully \citep{gressin2014updating}. Indeed, some area might have change (e.g. forest cuts). Furthermore, the database is designed generalized \citep{smith1977database}. A simple classification would then not be sufficient in order to retrieve homogeneous patches similar to the forest LC. Such results could be obtained using smoothing methods \citep{schindler2012overview}. Furthermore, an automatic method would allow to enrich the LC, i.e. retrieve homogeneous tree species stands also homogeneous in terms of height \citep{gressin2014unified}.
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=\textwidth]{Figures/BD_foret_France}
+\end{center}
+\caption{The French forest LC.}
+\label{fig:FLC}
+\end{figure}
+
 
 \begin{figure}[htbp]
 \begin{center}
 \begin{tikzpicture}
 \def\rb{3}
 \def\re{4}
+\newcommand{\col}{red}
 
 \newcommand{\arccam}[3]
 {
@@ -79,185 +126,215 @@ Currently, the forest LC is obtained through remote sensing (namely photo-inter\
 \draw[fill=\co,draw=none] (0,0) -- (\ab:\re) arc (\ab:\ae:\re) -- (0,0);
 }
 
+\definecolor{perso}{RGB}{255,0,0}
+\renewcommand{\col}{perso}
+
+
 \pgfmathsetmacro\abb{0}
 \pgfmathsetmacro\aee{0.12*360}
-\arccam{\abb+0.5}{\aee-0.5}{red}
+\arccam{\abb+0.5}{\aee-0.5}{\col}
 \pgfmathsetmacro\amid{(\abb+\aee)/2}
 \pgfmathsetmacro\px{3.5*cos(\amid)}
 \pgfmathsetmacro\py{3.5*sin(\amid)}
 \node[color=white] at (\px,\py) {12\%};
 \pgfmathsetmacro\px{5*cos(\amid)}
 \pgfmathsetmacro\py{5*sin(\amid)}
-\node[color=red,text width=50, text centered] at (\px,\py) {European oak};
+\node[color=\col,text width=50, text centered] at (\px,\py) {European oak};
 
 
+\definecolor{perso}{RGB}{255,0,0}
 \pgfmathsetmacro\abb{\aee}
 \pgfmathsetmacro\aee{\abb+0.11*360}
-\arccam{\abb+0.5}{\aee-0.5}{red}
+\arccam{\abb+0.5}{\aee-0.5}{\col}
 \pgfmathsetmacro\amid{(\abb+\aee)/2}
 \pgfmathsetmacro\px{3.5*cos(\amid)}
 \pgfmathsetmacro\py{3.5*sin(\amid)}
 \node[color=white] at (\px,\py) {11\%};
-\pgfmathsetmacro\px{5*cos(\amid)}
-\pgfmathsetmacro\py{5*sin(\amid)}
-\node[color=red,text width=50, text centered] at (\px,\py) {Sessile oak};
+\pgfmathsetmacro\px{4.0*cos(\amid)}
+\pgfmathsetmacro\py{4.0*sin(\amid)}
+\node[color=\col,text width=75, text centered, anchor=south west] at (\px,\py) {Sessile oak};
 
 
+\definecolor{perso}{RGB}{255,0,0}
 \pgfmathsetmacro\abb{\aee}
 \pgfmathsetmacro\aee{\abb+0.10*360}
-\arccam{\abb+0.5}{\aee-0.5}{red}
+\arccam{\abb+0.5}{\aee-0.5}{\col}
 \pgfmathsetmacro\amid{(\abb+\aee)/2}
 \pgfmathsetmacro\px{3.5*cos(\amid)}
 \pgfmathsetmacro\py{3.5*sin(\amid)}
 \node[color=white] at (\px,\py) {10\%};
-\pgfmathsetmacro\px{5*cos(\amid)}
-\pgfmathsetmacro\py{5*sin(\amid)}
-\node[color=red,text width=50, text centered] at (\px,\py) {Beech};
+\pgfmathsetmacro\px{4.5*cos(\amid)}
+\pgfmathsetmacro\py{4.5*sin(\amid)}
+\node[color=\col,text width=50, text centered] at (\px,\py) {Beech};
 
 
+\definecolor{perso}{RGB}{255,0,0}
 \pgfmathsetmacro\abb{\aee}
 \pgfmathsetmacro\aee{\abb+0.05*360}
-\arccam{\abb+0.5}{\aee-0.5}{red}
+\arccam{\abb+0.5}{\aee-0.5}{\col}
 \pgfmathsetmacro\amid{(\abb+\aee)/2}
 \pgfmathsetmacro\px{3.5*cos(\amid)}
 \pgfmathsetmacro\py{3.5*sin(\amid)}
 \node[color=white] at (\px,\py) {5\%};
-\pgfmathsetmacro\px{5*cos(\amid)}
-\pgfmathsetmacro\py{5*sin(\amid)}
-\node[color=red,text width=50, text centered] at (\px,\py) {Chestnut};
+\pgfmathsetmacro\px{4.0*cos(\amid)}
+\pgfmathsetmacro\py{4.0*sin(\amid)}
+\node[color=\col,text width=50, text centered, anchor=south east] at (\px,\py) {Chestnut};
 
 
+\definecolor{perso}{RGB}{255,0,0}
 \pgfmathsetmacro\abb{\aee}
 \pgfmathsetmacro\aee{\abb+0.04*360}
-\arccam{\abb+0.5}{\aee-0.5}{red}
+\arccam{\abb+0.5}{\aee-0.5}{\col}
+\pgfmathsetmacro\amid{(\abb+\aee)/2}
+\pgfmathsetmacro\px{3.5*cos(\amid)}
+\pgfmathsetmacro\py{3.5*sin(\amid)}
+\node[color=white] at (\px,\py) {4\%};
+\pgfmathsetmacro\px{4.1*cos(\amid)}
+\pgfmathsetmacro\py{4.1*sin(\amid)}
+\node[color=\col,text width=50, text centered,anchor=south east] at (\px,\py) {Hornbeam};
+
+
+\definecolor{perso}{RGB}{255,0,0}
+\pgfmathsetmacro\abb{\aee}
+\pgfmathsetmacro\aee{\abb+0.04*360}
+\arccam{\abb+0.5}{\aee-0.5}{\col}
+\pgfmathsetmacro\amid{(\abb+\aee)/2}
+\pgfmathsetmacro\px{3.5*cos(\amid)}
+\pgfmathsetmacro\py{3.5*sin(\amid)}
+\node[color=white] at (\px,\py) {4\%};
+\pgfmathsetmacro\px{4.0*cos(\amid)}
+\pgfmathsetmacro\py{4.0*sin(\amid)}
+\node[color=\col,text width=85, text centered,anchor=south east] at (\px,\py) {Pubescent oak};
+
+
+\definecolor{perso}{RGB}{255,0,0}
+\pgfmathsetmacro\abb{\aee}
+\pgfmathsetmacro\aee{\abb+0.04*360}
+\arccam{\abb+0.5}{\aee-0.5}{\col}
 \pgfmathsetmacro\amid{(\abb+\aee)/2}
 \pgfmathsetmacro\px{3.5*cos(\amid)}
 \pgfmathsetmacro\py{3.5*sin(\amid)}
 \node[color=white] at (\px,\py) {4\%};
 \pgfmathsetmacro\px{5*cos(\amid)}
 \pgfmathsetmacro\py{5*sin(\amid)}
-\node[color=red,text width=50, text centered] at (\px,\py) {Hornbeam};
+\node[color=\col,text width=50, text centered] at (\px,\py) {Ash};
 
 
-\pgfmathsetmacro\abb{\aee}
-\pgfmathsetmacro\aee{\abb+0.04*360}
-\arccam{\abb+0.5}{\aee-0.5}{red}
-\pgfmathsetmacro\amid{(\abb+\aee)/2}
-\pgfmathsetmacro\px{3.5*cos(\amid)}
-\pgfmathsetmacro\py{3.5*sin(\amid)}
-\node[color=white] at (\px,\py) {4\%};
-\pgfmathsetmacro\px{5*cos(\amid)}
-\pgfmathsetmacro\py{5*sin(\amid)}
-\node[color=red,text width=50, text centered] at (\px,\py) {Pubescent oak};
-
-
-\pgfmathsetmacro\abb{\aee}
-\pgfmathsetmacro\aee{\abb+0.04*360}
-\arccam{\abb+0.5}{\aee-0.5}{red}
-\pgfmathsetmacro\amid{(\abb+\aee)/2}
-\pgfmathsetmacro\px{3.5*cos(\amid)}
-\pgfmathsetmacro\py{3.5*sin(\amid)}
-\node[color=white] at (\px,\py) {4\%};
-\pgfmathsetmacro\px{5*cos(\amid)}
-\pgfmathsetmacro\py{5*sin(\amid)}
-\node[color=red,text width=50, text centered] at (\px,\py) {Ash};
-
-
+\definecolor{perso}{RGB}{255,0,0}
 \pgfmathsetmacro\abb{\aee}
 \pgfmathsetmacro\aee{\abb+0.14*360}
-\arccam{\abb+0.5}{\aee-0.5}{red}
+\arccam{\abb+0.5}{\aee-0.5}{\col}
 \pgfmathsetmacro\amid{(\abb+\aee)/2}
 \pgfmathsetmacro\px{3.5*cos(\amid)}
 \pgfmathsetmacro\py{3.5*sin(\amid)}
 \node[color=white] at (\px,\py) {14\%};
 \pgfmathsetmacro\px{5*cos(\amid)}
 \pgfmathsetmacro\py{5*sin(\amid)}
-\node[color=red,text width=70, text centered] at (\px,\py) {Other hardwood};
+\node[color=\col,text width=70, text centered] at (\px,\py) {Other hardwood};
 
 
+\definecolor{perso}{RGB}{255,0,0}
 \pgfmathsetmacro\abb{\aee}
 \pgfmathsetmacro\aee{\abb+0.08*360}
-\arccam{\abb+0.5}{\aee-0.5}{red}
+\arccam{\abb+0.5}{\aee-0.5}{\col}
 \pgfmathsetmacro\amid{(\abb+\aee)/2}
 \pgfmathsetmacro\px{3.5*cos(\amid)}
 \pgfmathsetmacro\py{3.5*sin(\amid)}
 \node[color=white] at (\px,\py) {8\%};
-\pgfmathsetmacro\px{5*cos(\amid)}
-\pgfmathsetmacro\py{5*sin(\amid)}
-\node[color=red,text width=50, text centered] at (\px,\py) {Pectinated fir};
+\pgfmathsetmacro\px{4.0*cos(\amid)}
+\pgfmathsetmacro\py{4.0*sin(\amid)}
+\node[color=\col,text width=85, text centered, anchor=north east] at (\px,\py) {Pectinated fir};
 
 
+\definecolor{perso}{RGB}{255,0,0}
 \pgfmathsetmacro\abb{\aee}
 \pgfmathsetmacro\aee{\abb+0.08*360}
-\arccam{\abb+0.5}{\aee-0.5}{red}
+\arccam{\abb+0.5}{\aee-0.5}{\col}
 \pgfmathsetmacro\amid{(\abb+\aee)/2}
 \pgfmathsetmacro\px{3.5*cos(\amid)}
 \pgfmathsetmacro\py{3.5*sin(\amid)}
 \node[color=white] at (\px,\py) {8\%};
-\pgfmathsetmacro\px{5*cos(\amid)}
-\pgfmathsetmacro\py{5*sin(\amid)}
-\node[color=red,text width=50, text centered] at (\px,\py) {Spruce};
+\pgfmathsetmacro\px{4.5*cos(\amid)}
+\pgfmathsetmacro\py{4.5*sin(\amid)}
+\node[color=\col,text width=50, text centered] at (\px,\py) {Spruce};
 
 
+\definecolor{perso}{RGB}{255,0,0}
 \pgfmathsetmacro\abb{\aee}
 \pgfmathsetmacro\aee{\abb+0.06*360}
-\arccam{\abb+0.5}{\aee-0.5}{red}
+\arccam{\abb+0.5}{\aee-0.5}{\col}
 \pgfmathsetmacro\amid{(\abb+\aee)/2}
 \pgfmathsetmacro\px{3.5*cos(\amid)}
 \pgfmathsetmacro\py{3.5*sin(\amid)}
 \node[color=white] at (\px,\py) {6\%};
-\pgfmathsetmacro\px{5*cos(\amid)}
-\pgfmathsetmacro\py{5*sin(\amid)}
-\node[color=red,text width=50, text centered] at (\px,\py) {Scots pine};
+\pgfmathsetmacro\px{4.0*cos(\amid)}
+\pgfmathsetmacro\py{4.0*sin(\amid)}
+\node[color=\col,text width=75, text centered, anchor=north west] at (\px,\py) {Scots pine};
 
 
+\definecolor{perso}{RGB}{255,0,0}
 \pgfmathsetmacro\abb{\aee}
 \pgfmathsetmacro\aee{\abb+0.05*360}
-\arccam{\abb+0.5}{\aee-0.5}{red}
+\arccam{\abb+0.5}{\aee-0.5}{\col}
 \pgfmathsetmacro\amid{(\abb+\aee)/2}
 \pgfmathsetmacro\px{3.5*cos(\amid)}
 \pgfmathsetmacro\py{3.5*sin(\amid)}
 \node[color=white] at (\px,\py) {5\%};
-\pgfmathsetmacro\px{5*cos(\amid)}
-\pgfmathsetmacro\py{5*sin(\amid)}
-\node[color=red,text width=50, text centered] at (\px,\py) {Maritime pine};
+\pgfmathsetmacro\px{4.0*cos(\amid)}
+\pgfmathsetmacro\py{4.0*sin(\amid)}
+\node[color=\col,text width=85, text centered, anchor=north west] at (\px,\py) {Maritime pine};
 
 
+\definecolor{perso}{RGB}{255,0,0}
 \pgfmathsetmacro\abb{\aee}
 \pgfmathsetmacro\aee{\abb+0.04*360}
-\arccam{\abb+0.5}{\aee-0.5}{red}
+\arccam{\abb+0.5}{\aee-0.5}{\col}
 \pgfmathsetmacro\amid{(\abb+\aee)/2}
 \pgfmathsetmacro\px{3.5*cos(\amid)}
 \pgfmathsetmacro\py{3.5*sin(\amid)}
 \node[color=white] at (\px,\py) {4\%};
-\pgfmathsetmacro\px{5*cos(\amid)}
-\pgfmathsetmacro\py{5*sin(\amid)}
-\node[color=red,text width=50, text centered] at (\px,\py) {Douglas fir};
+\pgfmathsetmacro\px{4.0*cos(\amid)}
+\pgfmathsetmacro\py{4.0*sin(\amid)}
+\node[color=\col,text width=75, text centered, anchor=north west] at (\px,\py) {Douglas fir};
 
 
+\definecolor{perso}{RGB}{255,0,0}
 \pgfmathsetmacro\abb{\aee}
 \pgfmathsetmacro\aee{\abb+0.05*360}
-\arccam{\abb+0.5}{\aee-0.5}{red}
+\arccam{\abb+0.5}{\aee-0.5}{\col}
 \pgfmathsetmacro\amid{(\abb+\aee)/2}
 \pgfmathsetmacro\px{3.5*cos(\amid)}
 \pgfmathsetmacro\py{3.5*sin(\amid)}
 \node[color=white] at (\px,\py) {5\%};
 \pgfmathsetmacro\px{5*cos(\amid)}
 \pgfmathsetmacro\py{5*sin(\amid)}
-\node[color=red,text width=50, text centered] at (\px,\py) {Other conifers};
+\node[color=\col,text width=50, text centered] at (\px,\py) {Other conifers};
 
 
 \draw[fill=white,draw=none] (0,0) circle (\rb);
 
-\node[color=red] at (0,1.5) {\textbf{Conifers: }};
-\node[color=red] at (0,1) {\textbf{920 millions m$^{2}$}};
-\node[color=red] at (0,-1) {\textbf{Hardwood: }};
-\node[color=red] at (0,-1.5) {\textbf{1647 millions m$^{2}$}};
+\definecolor{perso}{RGB}{0,255,0}
+\node[color=\col] at (0,1.5) {\textbf{Conifers: }};
+\node[color=\col] at (0,1) {\textbf{920 millions m$^{2}$}};
+\node[color=\col] at (0,-1) {\textbf{Hardwood: }};
+\node[color=\col] at (0,-1.5) {\textbf{1647 millions m$^{2}$}};
 
 \end{tikzpicture}
 \caption{Distribution wood volume per species.}
+\label{fig:wood_volume}
 \end{center}
 \end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Figures/boisement}
+\end{center}
+\caption{Forestation rate in France.}
+\label{fig:forestation}
+\end{figure}
+
+\section{Objectives}
+Currently, the forest LC is obtained through remote sensing (namely photo-inter\-pretation), an method could be developed to update it automatically. Since an old version of the forest LC is available, it can be used as a ground truth input for subsequent classification \citep{gressin2013updating}. However, the learning process should be carried out carefully \citep{gressin2014updating}. Indeed, some area might have change (e.g. forest cuts). Furthermore, the database is designed generalized \citep{smith1977database}. A simple classification would then not be sufficient in order to retrieve homogeneous patches similar to the forest LC. Such results could be obtained using smoothing methods \citep{schindler2012overview}. Furthermore, an automatic method would allow to enrich the LC, i.e. retrieve homogeneous tree species stands also homogeneous in terms of height \citep{gressin2014unified}.
 
 \section{Strategy}
 Two remote sensing modalities are available for the mapping of forested areas at IGN; VHR optical images and lidar cloud points. The VHR images are a part of a national database. In this thesis, the images used have a spatial resolution of 50$\:$cm. Two type of ortho-images are available, a color image (3 bands; red: 600-720$\:$nm, green: 490-610$\:$nm and blue: 430-550$\:$nm) and and IRC image (3 bands; near infra-red: 750-950$\:$nm, red and green) captured by the IGN digital cameras \citep{souchon2012large}. It is then possible to obtain four band ortho-images by the combination of the two ortho-images type. \\
