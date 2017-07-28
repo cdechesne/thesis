@@ -102,15 +102,6 @@ The forest mapping is given by a national forest LC database (see Figure~\ref{fi
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width=\textwidth]{Figures/BD_foret_France}
-\end{center}
-\caption{The French forest LC.}
-\label{fig:FLC}
-\end{figure}
-
-
-\begin{figure}[htbp]
-\begin{center}
 \begin{tikzpicture}
 \def\rb{3}
 \def\re{4}
@@ -126,7 +117,7 @@ The forest mapping is given by a national forest LC database (see Figure~\ref{fi
 \draw[fill=\co,draw=none] (0,0) -- (\ab:\re) arc (\ab:\ae:\re) -- (0,0);
 }
 
-\definecolor{perso}{RGB}{255,0,0}
+\definecolor{perso}{RGB}{22, 184, 78}
 \renewcommand{\col}{perso}
 
 
@@ -142,7 +133,7 @@ The forest mapping is given by a national forest LC database (see Figure~\ref{fi
 \node[color=\col,text width=50, text centered] at (\px,\py) {European oak};
 
 
-\definecolor{perso}{RGB}{255,0,0}
+\definecolor{perso}{RGB}{20, 148, 20}
 \pgfmathsetmacro\abb{\aee}
 \pgfmathsetmacro\aee{\abb+0.11*360}
 \arccam{\abb+0.5}{\aee-0.5}{\col}
@@ -155,7 +146,7 @@ The forest mapping is given by a national forest LC database (see Figure~\ref{fi
 \node[color=\col,text width=75, text centered, anchor=south west] at (\px,\py) {Sessile oak};
 
 
-\definecolor{perso}{RGB}{255,0,0}
+\definecolor{perso}{RGB}{86, 130, 3}
 \pgfmathsetmacro\abb{\aee}
 \pgfmathsetmacro\aee{\abb+0.10*360}
 \arccam{\abb+0.5}{\aee-0.5}{\col}
@@ -168,7 +159,7 @@ The forest mapping is given by a national forest LC database (see Figure~\ref{fi
 \node[color=\col,text width=50, text centered] at (\px,\py) {Beech};
 
 
-\definecolor{perso}{RGB}{255,0,0}
+\definecolor{perso}{RGB}{24, 57, 30}
 \pgfmathsetmacro\abb{\aee}
 \pgfmathsetmacro\aee{\abb+0.05*360}
 \arccam{\abb+0.5}{\aee-0.5}{\col}
@@ -181,7 +172,7 @@ The forest mapping is given by a national forest LC database (see Figure~\ref{fi
 \node[color=\col,text width=50, text centered, anchor=south east] at (\px,\py) {Chestnut};
 
 
-\definecolor{perso}{RGB}{255,0,0}
+\definecolor{perso}{RGB}{89, 102, 67}
 \pgfmathsetmacro\abb{\aee}
 \pgfmathsetmacro\aee{\abb+0.04*360}
 \arccam{\abb+0.5}{\aee-0.5}{\col}
@@ -194,7 +185,7 @@ The forest mapping is given by a national forest LC database (see Figure~\ref{fi
 \node[color=\col,text width=50, text centered,anchor=south east] at (\px,\py) {Hornbeam};
 
 
-\definecolor{perso}{RGB}{255,0,0}
+\definecolor{perso}{RGB}{1, 121, 111}
 \pgfmathsetmacro\abb{\aee}
 \pgfmathsetmacro\aee{\abb+0.04*360}
 \arccam{\abb+0.5}{\aee-0.5}{\col}
@@ -207,7 +198,7 @@ The forest mapping is given by a national forest LC database (see Figure~\ref{fi
 \node[color=\col,text width=85, text centered,anchor=south east] at (\px,\py) {Pubescent oak};
 
 
-\definecolor{perso}{RGB}{255,0,0}
+\definecolor{perso}{RGB}{88, 111, 45}
 \pgfmathsetmacro\abb{\aee}
 \pgfmathsetmacro\aee{\abb+0.04*360}
 \arccam{\abb+0.5}{\aee-0.5}{\col}
@@ -220,7 +211,7 @@ The forest mapping is given by a national forest LC database (see Figure~\ref{fi
 \node[color=\col,text width=50, text centered] at (\px,\py) {Ash};
 
 
-\definecolor{perso}{RGB}{255,0,0}
+\definecolor{perso}{RGB}{64, 130, 109}
 \pgfmathsetmacro\abb{\aee}
 \pgfmathsetmacro\aee{\abb+0.14*360}
 \arccam{\abb+0.5}{\aee-0.5}{\col}
@@ -232,8 +223,9 @@ The forest mapping is given by a national forest LC database (see Figure~\ref{fi
 \pgfmathsetmacro\py{5*sin(\amid)}
 \node[color=\col,text width=70, text centered] at (\px,\py) {Other hardwood};
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\definecolor{perso}{RGB}{255,0,0}
+\definecolor{perso}{RGB}{136, 77, 167}
 \pgfmathsetmacro\abb{\aee}
 \pgfmathsetmacro\aee{\abb+0.08*360}
 \arccam{\abb+0.5}{\aee-0.5}{\col}
@@ -246,7 +238,7 @@ The forest mapping is given by a national forest LC database (see Figure~\ref{fi
 \node[color=\col,text width=85, text centered, anchor=north east] at (\px,\py) {Pectinated fir};
 
 
-\definecolor{perso}{RGB}{255,0,0}
+\definecolor{perso}{RGB}{102, 0, 255}
 \pgfmathsetmacro\abb{\aee}
 \pgfmathsetmacro\aee{\abb+0.08*360}
 \arccam{\abb+0.5}{\aee-0.5}{\col}
@@ -259,7 +251,7 @@ The forest mapping is given by a national forest LC database (see Figure~\ref{fi
 \node[color=\col,text width=50, text centered] at (\px,\py) {Spruce};
 
 
-\definecolor{perso}{RGB}{255,0,0}
+\definecolor{perso}{RGB}{112, 41, 99}
 \pgfmathsetmacro\abb{\aee}
 \pgfmathsetmacro\aee{\abb+0.06*360}
 \arccam{\abb+0.5}{\aee-0.5}{\col}
@@ -272,7 +264,7 @@ The forest mapping is given by a national forest LC database (see Figure~\ref{fi
 \node[color=\col,text width=75, text centered, anchor=north west] at (\px,\py) {Scots pine};
 
 
-\definecolor{perso}{RGB}{255,0,0}
+\definecolor{perso}{RGB}{46, 0, 108}
 \pgfmathsetmacro\abb{\aee}
 \pgfmathsetmacro\aee{\abb+0.05*360}
 \arccam{\abb+0.5}{\aee-0.5}{\col}
@@ -285,7 +277,7 @@ The forest mapping is given by a national forest LC database (see Figure~\ref{fi
 \node[color=\col,text width=85, text centered, anchor=north west] at (\px,\py) {Maritime pine};
 
 
-\definecolor{perso}{RGB}{255,0,0}
+\definecolor{perso}{RGB}{75, 0, 130}
 \pgfmathsetmacro\abb{\aee}
 \pgfmathsetmacro\aee{\abb+0.04*360}
 \arccam{\abb+0.5}{\aee-0.5}{\col}
@@ -298,7 +290,7 @@ The forest mapping is given by a national forest LC database (see Figure~\ref{fi
 \node[color=\col,text width=75, text centered, anchor=north west] at (\px,\py) {Douglas fir};
 
 
-\definecolor{perso}{RGB}{255,0,0}
+\definecolor{perso}{RGB}{108, 2, 119}
 \pgfmathsetmacro\abb{\aee}
 \pgfmathsetmacro\aee{\abb+0.05*360}
 \arccam{\abb+0.5}{\aee-0.5}{\col}
@@ -313,11 +305,11 @@ The forest mapping is given by a national forest LC database (see Figure~\ref{fi
 
 \draw[fill=white,draw=none] (0,0) circle (\rb);
 
-\definecolor{perso}{RGB}{0,255,0}
-\node[color=\col] at (0,1.5) {\textbf{Conifers: }};
-\node[color=\col] at (0,1) {\textbf{920 millions m$^{2}$}};
-\node[color=\col] at (0,-1) {\textbf{Hardwood: }};
-\node[color=\col] at (0,-1.5) {\textbf{1647 millions m$^{2}$}};
+\definecolor{perso}{RGB}{255,0,0}
+\node[color=\col] at (0,-1) {\textbf{Conifers: }};
+\node[color=\col] at (0,-1.5) {\textbf{920 millions m$^{2}$}};
+\node[color=\col] at (0,1.5) {\textbf{Hardwood: }};
+\node[color=\col] at (0,1) {\textbf{1647 millions m$^{2}$}};
 
 \end{tikzpicture}
 \caption{Distribution wood volume per species.}
@@ -333,8 +325,17 @@ The forest mapping is given by a national forest LC database (see Figure~\ref{fi
 \label{fig:forestation}
 \end{figure}
 
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=\textwidth]{Figures/BD_foret_France_2}
+\end{center}
+\caption{The French forest LC. Each color is associated to a single specie ($\sim$20 species in total), black corresponds to non-labeled zones (not operated or non forested).}
+\label{fig:FLC}
+\end{figure}
+
+
 \section{Objectives}
-Currently, the forest LC is obtained through remote sensing (namely photo-inter\-pretation), an method could be developed to update it automatically. Since an old version of the forest LC is available, it can be used as a ground truth input for subsequent classification \citep{gressin2013updating}. However, the learning process should be carried out carefully \citep{gressin2014updating}. Indeed, some area might have change (e.g. forest cuts). Furthermore, the database is designed generalized \citep{smith1977database}. A simple classification would then not be sufficient in order to retrieve homogeneous patches similar to the forest LC. Such results could be obtained using smoothing methods \citep{schindler2012overview}. Furthermore, an automatic method would allow to enrich the LC, i.e. retrieve homogeneous tree species stands also homogeneous in terms of height \citep{gressin2014unified}.
+Currently, the forest LC is obtained through remote sensing (namely photo-inter\-pretation), an method could be developed to update it automatically. Since an old version of the forest LC is available, it can be used as a ground truth input for subsequent classification \citep{gressin2013updating}. However, the learning process should be carried out carefully \citep{gressin2014updating}. Indeed, some area might have change (e.g. forest cuts). Furthermore, the database is designed generalized \citep{smith1977database}. A simple classification would then not be sufficient in order to retrieve homogeneous patches similar to the forest LC. Indeed, forests are not perfectly homogeneous in term of species and there can be many holes in the canopy, leading to a noisy classification. In order to retrieve homogeneous patches, the classification could be regularized using smoothing methods \citep{schindler2012overview}. Furthermore, an automatic method would allow to enrich the LC, i.e. retrieve homogeneous tree species stands also homogeneous in terms of height \citep{gressin2014unified}.
 
 \section{Strategy}
 Two remote sensing modalities are available for the mapping of forested areas at IGN; VHR optical images and lidar cloud points. The VHR images are a part of a national database. In this thesis, the images used have a spatial resolution of 50$\:$cm. Two type of ortho-images are available, a color image (3 bands; red: 600-720$\:$nm, green: 490-610$\:$nm and blue: 430-550$\:$nm) and and IRC image (3 bands; near infra-red: 750-950$\:$nm, red and green) captured by the IGN digital cameras \citep{souchon2012large}. It is then possible to obtain four band ortho-images by the combination of the two ortho-images type. \\
