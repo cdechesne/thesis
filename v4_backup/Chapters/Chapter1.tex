@@ -71,8 +71,8 @@ Reference & Data processed & Country & Segmentation criteria \\
 Regarding the existing state of the art on the forest stand segmentation, it appears that such task is very complex to implement. Indeed, a simple segmentation is not sufficient since it does not allows to retrieve consistent stands. A classification is mandatory in order to obtain the tree species. However, it is very difficult to discriminate species, since some have a very close looking (e.g. deciduous oak and beech). Eventually, the stands are not totally pure, a certain level of generalization is desired in order to have a consistent mapping at large scale. Thus, a regularization process can be employed for such purpose.
 It also appears that the type of data employed has an impact on the results.
 \begin{itemize}
-\item The VHR optical images permits to obtain information about the tree species and is also very useful for a precise delineation of the stands.
-\item The lidar data provide information about the vertical structure of the forest that can also be useful for the discrimination of tree species \citep{brandtberg2007classifying}. It also brings information about the height that allows to separate forest stands.
+\item The VHR optical images permits to obtain information about the tree species, especially when using texture features.
+\item The lidar data provide information about the vertical structure of the forest that can also be useful for the discrimination of tree species \citep{brandtberg2007classifying}. It also brings information about the height that allows to separate forest stands of different ages.
 \end{itemize}
 
 \section{Segmentation}
@@ -103,7 +103,7 @@ where, $D$ is a measure of goodness-of-fit (how well the segmentation fits to th
 %\end{figurethesis}
 
 \begin{figurethesis}{test}
-\includegraphics[width=0.6\textwidth]{Figures/seg_hierar}
+\includegraphics[width=0.75\textwidth]{Figures/seg_hierar}
 \caption{Graphical depiction of concepts related to hierarchical segmentation. The diagram on the left shows partitions of an image at four different scales $\mu$. The partition at the top has the highest $\mu$ and is therefore the coarsest, the partition at the bottom is the finest.}
 \label{fig:seg_hierar}
 \end{figurethesis}
@@ -245,11 +245,20 @@ Pixel-wise classification is not sufficient for both accurate and smooth land-co
 According to \cite{SCH12}, both local and global methods can provide a regularization framework, with their own advantages and drawbacks.
 
 \subsection{Local methods}
-In local methods, the neighborhood of each element is analyzed by a filtering technique. The labels of the neighboring pixels (or the posterior class probabilities) are combined so as to derive a new label for the central pixel. Majority voting, Gaussian and bilateral filtering can be employed if it is not targeted to smooth class edges.\\
+In local methods, the neighborhood of each element is analyzed by a filtering technique. The labels of the neighboring pixels (or the posterior class probabilities) are combined so as to derive a new label for the central pixel. Majority voting, Gaussian and bilateral filtering can be employed if it is not targeted to smooth class edges. The majority vote can also be used when a segmentation is available: the majority class is assigned to the segment.\\
 The probabilistic relaxation is an other local smoothing method that aims at homogenizing probabilities of a pixel according to its neighboring pixels. The relaxation is an iterative algorithm in which the probability at each pixel is updated at each iteration in order to have it closer to the probabilities of its neighbors \citep{Gong198933}. It reports good accuracies with decent computing time and offers an alternative to edge aware/gradient-based techniques that may not be adapted in semantically unstructured environments.
 
 \subsection{Global methods}
-Global methods consider the full area of interest at the same time. They are based on Markov Random Fields (MRF), the labels at different locations are not considered to be independent. The optimal configuration of labels is retrieved when finding the Maximum A Posteriori over the entire field \cite{Gab_MRF}. The problem is therefore considered as the minimization procedure of an energy $E$ over the full image $I$. Despite a simple neighborhood encoding (pairwise relations are often preferred), the optimization procedure propagates over large distances. Depending on the formulation of the energy, the global minimum may be reachable. However, a large range of optimization techniques allow to reach local minima close to the real solution, in particular for random fields with pairwise terms \cite{kolmogorov2004energy}. For genuine structured predictions, in the family of graphical probabilistic models, Conditional Random Fields (CRF) have been massively adopted during the last decade. Interactions between neighboring objects, and subsequently the local context can be modeled and learned. In particular, Discriminative Random Fields (DRF, \cite{DRF}) are CRF defined over 2D regular grids, and both unary/association and binary/interaction potentials are based on labeling procedure outputs. Many techniques extending this concept or focusing on the learning or inference steps have been proposed in the literature \cite{ijcv_kohli09,Ladicky2012}. A very recent trend even consists in jointly considering CRF and deep-learning techniques for the labeling task \cite{CNN_CRF}.\\
+Global methods consider the full area of interest at the same time. They are based on Markov Random Fields (MRF, see Figure~\ref{fig:graph_cut}), the labels at different locations are not considered to be independent. The optimal configuration of labels is retrieved when finding the Maximum A Posteriori over the entire field \cite{Gab_MRF}. The problem is therefore considered as the minimization procedure of an energy $E$ over the full image $I$. Despite a simple neighborhood encoding (pairwise relations are often preferred), the optimization procedure propagates over large distances. Depending on the formulation of the energy, the global minimum may be reachable. However, a large range of optimization techniques allow to reach local minima close to the real solution, in particular for random fields with pairwise terms \cite{kolmogorov2004energy}. For genuine structured predictions, in the family of graphical probabilistic models, Conditional Random Fields (CRF, see Figure~\ref{fig:graph_cut}) have been massively adopted during the last decade. Interactions between neighboring objects, and subsequently the local context can be modeled and learned. In particular, Discriminative Random Fields (DRF, \cite{DRF}) are CRF defined over 2D regular grids, and both unary/association and binary/interaction potentials are based on labeling procedure outputs. Many techniques extending this concept or focusing on the learning or inference steps have been proposed in the literature \cite{ijcv_kohli09,Ladicky2012}. A very recent trend even consists in jointly considering CRF and deep-learning techniques for the labeling task \cite{CNN_CRF}.\\
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=\textwidth]{Figures/graph_cut}
+\caption{8-connected MRF and CRF. The MRF only take into account the posterior probabilities to compute the graph, while CRF also include contextual information (the features).}
+\label{fig:graph_cut}
+\end{center}
+\end{figure}
+
 In standard LC classification tasks, global methods are known to provide significantly more accurate results \cite{SCH12} since contextual knowledge is integrated. This is all the more true for VHR remote sensing data, especially in case of a large number of classes (e.g., 10, \cite{isprs-archives-XLI-B4-11-2016}), but presents two disadvantages. For large datasets, their learning and inference steps are expensive to compute. Furthermore, parameters should often be carefully chosen for optimal performance, and authors that managed to alleviate the latter problem still report a significant computation cost \cite{Lucchi_ICCV2011}.
 
 \stopcontents[chapters]
