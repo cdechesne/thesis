@@ -37,7 +37,7 @@ The automatic segmentation process of forests in \citep{diedershagen2004automati
 In \citep{leppanen2008automatic} a stand segmentation technique for a forest composed of \textit{Scots Pine}, \textit{Norway Spruce} and \textit{Hardwood} is defined. A hierarchical segmentation on the Crown Height Model followed by a restricted iterative region growing approach is performed on images composed of rasterized lidar data and Colored Infra-Red images. The process was only applied on a limited area of Finland and prevents from drawing strong conclusions. However, the quantitative analysis carried out by the authors shows that lidar data can help to define statistically meaningful stands (here the criterion was the timber volume) and that multispectral images are inevitable inputs for tree species discrimination. \\
 
 \subsection{Challenges of stand segmentation}
-The Table~\ref{table:methods} summarize the presented methods of forest stands segmentation. 
+The Table~\ref{table:methods} summarize the presented methods of forest stands segmentation. Firstly, it appears that the fusion of the remote sensing modalitie (optical images and lidar) improve the results for the problematic of forest stand delineation. However, the stands are not defined the same way in the different proposed methods, preventing from drawing general conclusion.
 \begin{sidewaystable}[htbp]
 \begin{center}
 \begin{tabular}{|l|c|c|c|}
@@ -70,46 +70,47 @@ Reference & Data processed & Country & Segmentation criteria \\
 \end{center}
 \end{sidewaystable}
 
-Regarding the existing state of the art on the forest stand segmentation, it appears that such task is very complex to implement. Indeed, a simple segmentation is not sufficient since it does not allows to retrieve consistent stands. A classification is mandatory in order to obtain the tree species. However, it is very difficult to discriminate species, since some have a very close looking (e.g. deciduous oak and beech). Eventually, the stands are not totally pure, a certain level of generalization is desired in order to have a consistent mapping at large scale. Thus, a regularization process can be employed for such purpose.
+Regarding the existing state of the art on the forest stand segmentation, it appears that such task is very complex to implement. Indeed, a simple segmentation (without semantic information) is not sufficient since it does not allows to retrieve consistent stands. A classification is mandatory in order to obtain the tree species. However, it is very difficult to discriminate species, since some have a very close looking (e.g. deciduous oak and beech), and the intra-class variability might be important (depending on age, maturity). Eventually, the desired stands are not totally pure, a certain level of generalization is desired in order to have a consistent mapping at large scale. Thus, a regularization process can be employed for such purpose.
 It also appears that the type of data employed has an impact on the results.
 \begin{itemize}
-\item The VHR optical images permits to obtain information about the tree species, especially when using texture features.
-\item The lidar data provide information about the vertical structure of the forest that can also be useful for the discrimination of tree species \citep{brandtberg2007classifying}. It also brings information about the height that allows to separate forest stands of different ages. Most of the time, lidar is deeply under exploited since it is used only as a simple DSM.
+\item The VHR optical images permits to obtain information about the tree species, especially when using texture features \citep{franklin2000incorporating}.
+\item The lidar data provides information about the vertical structure of the forest that can also be useful for the discrimination of tree species \citep{brandtberg2007classifying}. It also brings information about the height that allows to separate forest stands of different ages. Most of the time, lidar is deeply under exploited since it is used only as a simple DSM.
 \end{itemize}
 
 \section{Segmentation}
 \label{sec:C1_seg}
 The direct segmentation of the optical image and/or the lidar point clouds is not sufficient in order to retrieve forest stands. Indeed, such segmentation methods can not take into account the information needed to define the stand.  However, with adapted parameters, segmentations algorithms might be useful to obtain relevant segmentation of the data \citep{clement_IJPRS}. They can be divide in two categories:
 \begin{itemize}
-\item The pure segmentation methods, in these methods, a specific attention must be paid to the choice of the parameters in order to obtain a relevant over-segmentation. Such segmentation can be applied on an image or a point cloud. Specific methods have also been developed for the segmentation of lidar point cloud \citep{nguyen20133d}.
+\item The pure segmentation methods; in these methods, a specific attention must be paid to the choice of the parameters in order to obtain relevant results. Such segmentation can be applied on an image or a point cloud. Specific methods have also been developed for the segmentation of lidar point cloud \citep{nguyen20133d}.
 \item The superpixels segmentation methods, they natively produce an over-segmentation of the image. The parameters control the size and the shape of the resulting segments.
 \end{itemize}
 
-\subsection{Traditional segmentation methods}
+\subsection{"Traditional" segmentation methods}
 The segmentation of an image can be performed using number of techniques \citep{pal1993review}. \\
 
 The easiest way to segment an image is the thresholding of a gray level histogram of the image \citep{taxt1989segmentation}. When the image is noisy or the background is uneven and illumination is poor, such thresholding is not sufficient. Thus, adaptive thresholding methods have been developed \citep{yanowitz1989new}. \\
+
+The watershed transformation is also a simple segmentation method that considers the gradient magnitude of an image as a topographic surface. Pixels having the highest gradient magnitude intensities correspond to watershed lines, which represent the region boundaries. Water placed on any pixel enclosed by a common watershed line flows downhill to a common local intensity minimum. Pixels draining to a common minimum form a catch basin, which represents a segment.
 
 The segmentation can be considered as an unsupervised classification problem. Algorithms dealing with such problems use iterative process. The most popular algorithm is the k-means algorithm. Segmentation methods using the spatial interaction models like Markov Random Field (CRF) \citep{hansen1982image} or Gibbs Random Field (GRF) \citep{derin1987modeling}. Neural networks are also interesting for  image segmentation \citep{ghosh1991image} as they take into account the contextual information. \\
 
 The segmentation of an image can also be obtained by the detection of the edges of the image \citep{peli1982study}. The idea is to extract points of significant changes in depth values. Edges are local features and are determined based on local information. \\
 
-Eventually, hierarchical segmentation algorithms can be employed. They analyze simultaneously the image at several different scales of analysis. Their output is not a single partition, but a hierarchy of regions or data structure that captures different partitions for different scales of analysis \citep{trias2006semi, guigues2006scale, baatz2004method}. The algorithm starts with an initial over-segmentation (e.g. segmenting almost each pixel on a different own region) and uses this level as a base for the construction of subsequent significant levels. The segmentation process is guided by an energy $E$ of the form:
+Eventually, hierarchical segmentation algorithms can be employed. They analyze simultaneously the image at several different scales of analysis. Their output is not a single partition, but a hierarchy of regions or data structure that captures different partitions for different scales of analysis \citep{trias2006semi, guigues2006scale, baatz2004method}. These methods allow to control the complexity of the segmentation, which was not the case for the previous methods. The algorithm is a bottom-up approach that starts with an initial over-segmentation (e.g. segmenting almost each pixel on a different own region) and uses this level as a base for the construction of subsequent significant levels. The segmentation process is guided by an energy $E$ of the form:
 \begin{equation}
 E = D + \mu C
 \end{equation}
-where, $D$ is a measure of goodness-of-fit (how well the segmentation fits to the original image, better fits give lower values of $D$); $C$ is a measure of segmentation complexity (less complex solutions give lower values of $C$); and $\mu$ is a dimensional parameter, the scale parameter. The parameter balances between a perfect $\mu$ fit to the original data, consisting of one segmentation region for each pixel in the original image, and the simplest segmentation, consisting of a single region containing the whole image \citep{guigues2006scale} (see Figure~\ref{fig:seg_hierar}). The level of segmentation can be adjusted gradually from the finest to the coarsest depending of the image complexity.
+where, $D$ is a fit-to-data measure (how well the segmentation fits to the original image, better fits give lower values of $D$); $C$ is a measure of segmentation complexity (less complex solutions give lower values of $C$); and $\mu$ is a dimensional parameter, the scale parameter. The parameter $\mu$ balances between a perfect fit to the original data ($\mu=0$), consisting of one segmentation region for each pixel in the original image, and the simplest segmentation, consisting of a single region containing the whole image \citep{guigues2006scale} (see Figure~\ref{fig:seg_hierar}). The level of segmentation can be adjusted gradually from the finest to the coarsest depending of the image complexity.
 
-%\begin{figurethesis}{Graphical depiction of concepts related to hierarchical segmentation. The diagram on the left shows partitions of an image at four different scales $\mu$. The partition at the top has the highest $\mu$ and is therefore the coarsest, the partition at the bottom is the finest.}
-%\includegraphics[width=0.5\textwidht]{Figures/seg_hierar}
-%\end{figurethesis}
-
-\begin{figurethesis}{test}
+\begin{figure}[htbp]
+\begin{center}
 \includegraphics[width=0.75\textwidth]{Figures/seg_hierar}
 \caption{Graphical depiction of concepts related to hierarchical segmentation. The diagram on the left shows partitions of an image at four different scales $\mu$. The partition at the top has the highest $\mu$ and is therefore the coarsest, the partition at the bottom is the finest.}
 \label{fig:seg_hierar}
-\end{figurethesis}
+\end{center}
+\end{figure}
 
+Top-down approaches can also be employed for image segmentation. In \cite{landrieu2016cut} working-set/greedy algorithms to efficiently solve problems penalized respectively by the total variation on a general weighted graph are proposed. The algorithms exploit this structure by recursively splitting the level-sets of a piecewise-constant candidate solution using graph cuts.
 
 \subsection{Superpixels methods}
 Several superpixels algorithms have been developed \citep{achanta2012slic}. They group pixels into perceptually meaningful atomic regions. Many traditional segmentation algorithms have been employed with more or less success to generate superpixels \citep{shi2000normalized, felzenszwalb2004efficient, comaniciu2002mean, vedaldi2008quick, vincent1991watersheds}. These algorithms produce satisfactory results, however, they may be relatively slow and the number, size and shape of the superpixels might not be specified. \\
