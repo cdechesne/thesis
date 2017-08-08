@@ -1,0 +1,135 @@
+%%% Avoid pages jump (comment for final version)
+
+%\let\cleardoublepageold\cleardoublepage
+%\let\clearpageold\clearpage
+
+%\renewcommand{\cleardoublepage}{}
+%\renewcommand{\clearpage}{}
+
+%%%
+
+\newcommand{\openchapter}{%\pagebreak
+\thispagestyle{empty}
+\vspace*{1pt}
+\pagebreak
+}
+
+\newcommand{\includetex}[1]{\openchapter\include{#1}}
+
+%%%
+
+\usetikzlibrary{arrows,shapes,snakes,spy,trees,decorations,shadows,positioning}
+%\usetikzlibrary{shadows}
+%\usetikzlibrary{arrows}
+
+%%%
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{rotating}
+\usepackage{multirow}
+
+%%%
+
+\newenvironment{figurethesis}[1]
+{
+\begin{figure}[htbp]
+\begin{center}
+}
+{
+\end{center}
+\end{figure}
+}
+%%%
+
+% Mise en forme Tikz (schéma général + logo lupin)
+\definecolor{IGNVert}{RGB}{148, 192,  22}
+\definecolor{IGNGris}{RGB}{112, 119, 122}
+\definecolor{IGNRouge}{RGB}{255, 100, 100}
+\definecolor{IGNFonce}{RGB}{55, 58, 60}
+
+
+\tikzset{
+    myArrowIGNGris/.style={->, >=latex,rounded corners, color = IGNGris, thick,font=\scriptsize},
+    myArrowDotIGNGris/.style={->, >=latex, densely dashed, shorten >=1pt, rounded corners, color = IGNGris, thick,font=\scriptsize},
+    myArrowIGNRouge/.style={-, >=latex, densely dashed, shorten >=1pt, rounded corners, color = IGNRouge, thick,font=\scriptsize},
+    myNodeIGNGris/.style={rectangle,rounded corners,draw=black, top color=white, bottom color=IGNGris!80, inner sep=0.5em, minimum size=0.5em, text centered,font=\normalsize },
+    myNodeIGNVert/.style={rectangle,rounded corners,draw=black, top color=white, bottom color=IGNVert!80, inner sep=0.5em, minimum size=0.5em, text centered,font=\normalsize },
+    myNodeIGNRouge/.style={rectangle,rounded corners,draw=black, top color=white, bottom color=IGNRouge!80, inner sep=0.5em, minimum size=0.5em, text centered,font=\normalsize },
+    myNodeIGNRouge1/.style={rectangle,rounded corners, top color=IGNRouge!50, bottom color=IGNRouge, inner sep=0.5em, minimum size=0.5em, text centered,font=\normalsize }
+}
+
+%%% Minitoc
+
+\newcommand\ToCrule{\noindent\rule[5pt]{\textwidth}{1.5pt}}
+
+\newcommand\ToCrulev{\tikz\draw[line width=1.5pt, black] (0,0) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1)  arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1);}
+
+\newcommand\ToCruleiv{\tikz\draw[line width=1.5pt, black] (0,0) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1)  arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1) arc (110:70:1) arc (-110:-70:1);}
+
+
+\makeatletter
+\newcommand\Mprintcontents{%
+  \vspace*{-1cm}
+  \vfill
+  \begin{center}\ToCrulev\end{center}
+  \begin{center}\ttl@printlist[chapters]{toc}{}{1}{}\par\nobreak\end{center}
+  \begin{center}\ToCruleiv\end{center}
+  \vfill
+  \pagebreak}
+\makeatother
+
+
+\newcommand{\keyword}[1]{\textbf{#1}}
+\newcommand{\tabhead}[1]{\textbf{#1}}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\file}[1]{\texttt{\bfseries#1}}
+\newcommand{\option}[1]{\texttt{\itshape#1}}
+
+%%% Colors
+
+\definecolor{t1}{RGB}{255, 0, 0 }
+\definecolor{t2}{RGB}{0, 255, 0 }
+\definecolor{t3}{RGB}{0, 0, 255 }
+\definecolor{t4}{RGB}{255, 255, 0 }
+\definecolor{t4}{RGB}{200, 200, 0 }
+\definecolor{t4b}{RGB}{200, 200, 0 }
+\definecolor{t5}{RGB}{255, 127, 0 }
+\definecolor{t6}{RGB}{255, 0, 255 }
+\definecolor{t7}{RGB}{0, 255, 255 }
+\definecolor{t8}{RGB}{200, 0, 100 }
+\definecolor{t9}{RGB}{160, 60, 10 }
+\definecolor{t10}{RGB}{0, 160, 160 }
+\definecolor{t11}{RGB}{135, 135, 0 }
+\definecolor{t12}{RGB}{145, 0, 0 }
+
+\definecolor{l0}{RGB}{000, 000, 000}
+\definecolor{l1}{RGB}{255, 000, 000}
+\definecolor{l2}{RGB}{000, 255, 000}
+\definecolor{l3}{RGB}{000, 000, 255}
+\definecolor{l4}{RGB}{255, 255, 000}
+\definecolor{l5}{RGB}{255, 000, 255}
+\definecolor{l6}{RGB}{000, 255, 255}
+\definecolor{l7}{RGB}{255, 127, 000}
+\definecolor{l8}{RGB}{255, 000, 127}
+\definecolor{l9}{RGB}{127, 255, 000}
+\definecolor{l10}{RGB}{000, 255, 127}
+\definecolor{l11}{RGB}{127, 000, 255}
+\definecolor{l12}{RGB}{000, 127, 255}
+\definecolor{l13}{RGB}{127, 000, 000}
+\definecolor{l14}{RGB}{000, 127, 000}
+\definecolor{l15}{RGB}{000, 000, 127}
+\definecolor{l16}{RGB}{127, 127, 000}
+\definecolor{l17}{RGB}{127, 000, 127}
+\definecolor{l18}{RGB}{000, 127, 127}
+\definecolor{l19}{RGB}{127, 127, 127}
+
+%%% Colored shapes
+
+\newcommand{\p[1]}{\tikz\draw[#1,fill=#1] (0,0) circle (1.5mm);}
+\newcommand{\li[1]}{\tikz\draw[#1,fill=#1] (0,0) -- (0.25,0) -- (0.25,0.25) -- (0,0.25) -- (0,0);}
+
+
+
+\usepackage{indentfirst}
+%\setlength{\parindent}{0pt} % remove indent
