@@ -20,7 +20,7 @@
 
 \section{General flowchart}
 
-With respect to the methods mentioned above, it appears that there are no forest stand segmentation method, based on tree species, that can satisfactorily handle a large number of classes ($>$5). The proposed framework is a fully automatic and modular method for species-based forest stand segmentation. The method is composed of four main steps; over-segmentation feature computation, vegetation type (mainly tree species) classification and regularization (see Figure \ref{fig:flowchart}).
+With respect to the methods mentioned above, it appears that there are no forest stand segmentation method, based on tree species, that can satisfactorily handle a large number of classes ($>$5). The proposed framework is a fully automatic and modular method for species-based forest stand segmentation. The method is composed of four main steps. An over-segmentation is firstly performed in order to retrieve relevant objects. Features are then computed at the pixel level for the optical images and at the point level for the lidar data. The object extracted from the over-segmentation and the computed features allows to derive features at the object level. A classification of the vegetation type (mainly tree species) is then performed at the object level, since it significantly improve the discrimination results. Here, the training set is automatically derived from an existing forest LC database. Specific attention is paid to the extraction of the most relevant training pixels, which is highly challenging with outdated and generalized vector databases. Because of the high number of features, a feature selection is also carried out in order to increase the classification accuracy, reduce the computational load and time, but also to assess the complementarity of the features (multispectral optical images/lidar point cloud). Finally, a regularization is performed in order to retrieve homogeneous forest stands. The flowchart of the method is presented in Figure \ref{fig:flowchart}.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -30,14 +30,8 @@ With respect to the methods mentioned above, it appears that there are no forest
 \end{center}
 \end{figure}
 
-Features are first derived at the pixel and at the object level. The most relevant ones are subsequently selected in a supervised way. The objects are extracted using various segmentation methods, since they appear to be sufficient for subsequent steps. A classification is performed at the object level as it significantly improves the discrimination results (about $10\%$ better than the pixel-based approach). This classification is then smoothed. The smoothing may produce homogeneous vegetation type (mainly tree species) areas with smooth borders. The contributions of this method are two-fold:
-\begin{itemize}
-\item Such framework can be fed with specific constraints allowing to tailor the results to specific criteria (height, age, specie, maturity, density,~\ldots).
-\item Here, the training set is automatically derived from an existing forest land-cover geodatabase. Specific attention is paid to the extraction of the most relevant training pixels, which is highly challenging with outdated and generalized vector databases.
-\end{itemize}
-
 \section{Over-segmentation}
-The over-segmentation aims to extract small object that are consistent according to the input data. They are detected so as to ease or strengthen subsequent classification task. A precise extraction is not mandatory since the labels would be refined after.
+The over-segmentation aims to extract small object that are consistent according to the input data. They are detected so as to ease and strengthen subsequent classification task. A precise extraction is not mandatory since the labels would be refined after.
 
 \subsection{Segmentation of lidar data}
 Two approaches could be envisaged: the direct segmentation of the point cloud or the segmentation of a rasterized lidar feature using image-based segmentation algorithms. \\
@@ -49,7 +43,7 @@ The image-based segmentation are also very efficient for the over-segmentation o
 \subsection{Segmentation of optical images}
 Several algorithms have been developed for the over-segmentation of optical RGB (Red-Green-Blue) images. The most common are the superpixels methods \citep{achanta2012slic}. Superpixels can be generated using segmentation algorithms \citep{shi2000normalized, felzenszwalb2004efficient, comaniciu2002mean, vedaldi2008quick, vincent1991watersheds}. A special attention must be paid to the parameters in order to obtain relevant superpixels. These methods produces superpixels that might not be homogeneous in terms of size and shape but delineate precisely objects.
 Superpixels algorithms have then been developed, they allow to control the number of superpixel, their size and their shape \citep{moore2008superpixel, veksler2010superpixels, levinshtein2009turbopixels, achanta2012slic}.
-For the over-segmentation of the optical images, we will use both traditional and superpixels methods.
+For the over-segmentation of the optical images, we will use both "traditional" and superpixels methods.
 
 \section{Feature extraction}
 \subsection{Point-based lidar features.}
@@ -95,11 +89,11 @@ The classification is performed using a supervised classifier, in order to discr
 In order to reduce the computation times, a feature selection is carried out to identify an "optimal" feature subset. Additionally, a strategy is proposed in order to select the most suitable training pixels for an existing land-cover forest maps, subsequently improving the classification accuracy.
 
 \subsection{Training set design}
-Using an existing forest land-cover (LC) database for training a model is not straightforward \citep{isprsannals-II-3-W2-13-2013,rs6053965,isprs-annals-III-7-133-2016}. First, locally it can suffer from a lack of information (not all the classes of interest are present). Secondly, this database may also be semantically and, more frequently, geometrically incorrect: changes may have happened (forest cut or grow) and the geodatabase may have been generalized, resulting in sharp polygon vertices that do not exactly correspond to the class borders. Thirdly, in many forest LC databases, polygons of a given vegetation type (mainly tree species) may contain other vegetation type (mainly tree species) in a small proportion. Two strategies are employed to overcome these problems: 
+Using an existing forest land-cover (LC) database for training a model is not straightforward \citep{isprsannals-II-3-W2-13-2013,rs6053965,isprs-annals-III-7-133-2016}. First, locally it can suffer from a lack of information (not all the classes of interest are present). Secondly, this database may also be semantically and, more frequently, geometrically incorrect: changes may have happened (forest cut or grow) and the geodatabase may have been generalized, resulting in sharp polygon vertices that do not exactly correspond to the class borders. Thirdly, in many forest LC databases, polygons of a given vegetation type (mainly tree species) may contain other vegetation type (mainly tree species) in a small proportion.
 
-Firstly, in order to increase the knowledge on existing class labels, the model could be trained on a larger area. The size of the training area has been chosen arbitrarily. However, when it is too large, we observe that the quality of the classification decreases. The optimal choice of the training area has not been investigated yet. {The model has therefore been trained on a larger area than the ones of interest}. The areas selected for the training are the ones maximizing the number of classes within a 5$\:$km search zone.
+%Firstly, in order to increase the knowledge on existing class labels, the model could be trained on a larger area. The size of the training area has been chosen arbitrarily. However, when it is too large, we observe that the quality of the classification decreases. The optimal choice of the training area has not been investigated yet. The model has therefore been trained on a larger area than the ones of interest. The areas selected for the training are the ones maximizing the number of classes within a 5$\:$km search zone.
 
-Secondly, in order to correct the potential errors of the LC database, a k-means clustering has been therefore performed on each of the labels in the training area. We assume that erroneous pixels are present in a small proportion and that therefore the main cluster corresponds to the class of interest. Let $p_{i-c,t}$ be the $i^{\text{th}}$ pixel of the vegetation type (mainly tree species) $t$ in the cluster $c$ of the k-means. The pixels $P_{t}$ used to train the model for the vegetation type (mainly tree species) $t$ correspond to the set:
+In order to correct the potential errors of the LC database, a k-means clustering has been therefore performed on each of the labels in the training area. We assume that erroneous pixels are present in a small proportion and that therefore the main cluster corresponds to the class of interest. Let $p_{i-c,t}$ be the $i^{\text{th}}$ pixel of the vegetation type (mainly tree species) $t$ in the cluster $c$ of the k-means. The pixels $P_{t}$ used to train the model for the vegetation type (mainly tree species) $t$ correspond to the set:
 \begin{equation}
 P_{t} = \{{p_{i-c,t} \quad | \quad \underset{c \in [1,k]}{c=\text{argmax }}\text{Card} ( \cup_{i} p_{i-c,t} ) } \}.
 \end{equation}
@@ -153,7 +147,7 @@ P_{k}^{t+1}(\mathbf{u})=\frac{Q_{k}^{t+1}(\mathbf{u})}{\sum_{l=1}^{n_{c}}Q_{l}^{
 \end{equation}
 
 \subsection{Global smoothing}
-The global smoothing method uses only a small number of pairwise cliques between neighboring pixels (4-neighbors or 8-neighbors) to describe the smoothness. Over the entire resulting first order random fields, the maximization of the posterior probability leads to a smoothed results. This can be done by finding the minimum of the negative log-likelihood, $\underset{C}{\text{arg min}}E(I,C,A)$ with
+The global smoothing method uses only a small number of pairwise cliques between neighboring pixuseels (4-neighbors or 8-neighbors) to describe the smoothness. Over the entire resulting first order random fields, the maximization of the posterior probability leads to a smoothed results. This can be done by finding the minimum of the negative log-likelihood, $\underset{C}{\text{arg min}}E(I,C,A)$ with
 \begin{equation}
 \begin{aligned}
 & E(I,C,A)=\sum_{\mathbf{u}\in I}E_{\text{data}}(\mathbf{u},P(\mathbf{u})) + \\
