@@ -88,13 +88,9 @@ The first segmentation algorithm is the one proposed in \cite{guigues2006scale}.
 
 The second segmentation algorithm (called PFF) employed is presented in \cite{felzenszwalb2004efficient}. It is a method for image segmentation based on pairwise region comparison considering the minimum weight edge between two regions in measuring the difference between them. 3 simples parameters need to be tuned in order to obtain relevant segmentation. $\sigma$ is the standard deviation of the gaussian filter employed to smooth the image as a pre-processing (the authors recommend $\sigma=0.8$). $k$ is a second parameter that set a scale of observation (a larger $k$ will lead to larger segments). Finally, the parameter $m$ permits to define the minimum size of a segment.
 
-Two strategies are employed to apply the segmentation:
-\begin{itemize}
-\item The segmentation is applied to the VHR optical images, thus the resulting segment will correspond to "stands" that are homogeneous in terms of spectral reflectance. Since the optical images are employed by photo-interpreters in order to derive the forest LC, such segmentation should produce results similar to the forest LC.
-\item The segmentation is also applied to the rasterized normalized digital surface model (nDSM) (canopy height without ground relief). Such segmentation would produce "stands" that are homogeneous in term of height.
-\end{itemize}
+Such segmentation could allow to retrieve the stands borders easily. Furthermore, one the segmentation is performed, one can add semantic information using classification results.
 
-These experiments have been performed only on one area presented in Figure~\ref{fig:data_direct_seg}. It is a 1$\:$km$^{2}$ area, the spatial resolution of the VHR optical image is 0.5$\:$m, and the nDSM has been rasterized at the same resolution. It is obvious tha
+These experiments have been performed only on one area presented in Figure~\ref{fig:data_direct_seg}. It is a 1$\:$km$^{2}$ area, the spatial resolution of the VHR optical image is 0.5$\:$m, and the nDSM has been rasterized at the same resolution. From these data one can see that a stand is composed of zones that are not homogeneous in term of reflectance and/or height. Furthermore, one can also note that the variability between two stands in terms of reflectance and/or height might not be important.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -118,7 +114,15 @@ These experiments have been performed only on one area presented in Figure~\ref{
 \end{center}
 \end{figure}
 
-The results of the segmentation of the VHR optical image using the two segmentation algorithm is presented in Figure~\ref{fig:seg_im}.
+\subsection{Retrieve stands borders}
+
+Two strategies are employed to apply the segmentation in order to retrieve the forest stands borders from the forest LC database:
+\begin{itemize}
+\item The segmentation is applied to the VHR optical images, thus the resulting segment will correspond to "stands" that are homogeneous in terms of spectral reflectance. Since the optical images are employed by photo-interpreters in order to derive the forest LC, such segmentation should produce results similar to the forest LC.
+\item The segmentation is also applied to the rasterized normalized digital surface model (nDSM) (canopy height without ground relief). Such segmentation would produce "stands" that are homogeneous in term of height.
+\end{itemize}
+
+The results of the segmentation of the VHR optical image using the two segmentation algorithm is presented in Figure~\ref{fig:seg_im}. In both cases, most of the borders found are not consistent with the forest LC database. Visually, the hierarchical segmentation seems to be more relevant than the PFF segmentation. However, the hierarchical segmentation produces small segments due to high variation of illumination in the image, while the PFF segments are all relatively large. 
 
 \begin{figure}[htbp]
 \begin{center}
@@ -139,7 +143,8 @@ The results of the segmentation of the VHR optical image using the two segmentat
 \end{center}
 \end{figure}
 
-The results of the segmentation of rasterized nDSM using the two segmentation algorithm is presented in Figure~\ref{fig:seg_nDSM}.
+The results of the segmentation of rasterized nDSM using the two segmentation algorithm is presented in Figure~\ref{fig:seg_nDSM}. Just like the segmentation of the VHR optical image, most of the borders found are not consistent with the forest LC database. Here, the PFF segmentation seems to perform better than the hierarchical segmentation visually.
+
 
 \begin{figure}[htbp]
 \begin{center}
@@ -159,6 +164,8 @@ The results of the segmentation of rasterized nDSM using the two segmentation al
 \label{fig:seg_nDSM}
 \end{center}
 \end{figure}
+
+Since the segmentation on the VHR optical image and the nDSM does not allow to retrieve the borders from the forest LC database, different values of the parameter $\mu$ for the hierarchical segmentation on the VHR optical images (see Figure~\ref{fig:hierar}). It appears that decreasing $\mu$ does not allow to obtain the borders of the forest LC. It only leads to and over-segmentation of the image. Such over-segmentation is employed in the proposed method but is not employed as a relevant segmentation for stand delineation but as an input for object based classification.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -199,11 +206,19 @@ The results of the segmentation of rasterized nDSM using the two segmentation al
 \end{center}
 \end{figure}
 
+The two proposed segmentation algorithms are very efficient for image segmentation tasks \citep{guigues2006scale, felzenszwalb2004efficient} but are not adapted to retrieve forest stands borders. However, they can produce interesting over-segmentation since they are able to retrieve some relevant borders.
+
+\subsection{Add semantic information}
+
+
 \section{Results of the method}
 \subsection{Over-segmentation}
 \subsection{Feature selection}
 \subsection{Classification}
 \subsection{Regularization}
+\section{Co-products of the method}
+\section{Semi-automatic update}
+\section{Inventory}
 %----------------------------------------------------------------------------------------
 
 % Define some commands to keep the formatting separated from the content 
