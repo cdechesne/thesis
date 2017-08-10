@@ -53,9 +53,9 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 
 %%%
 
-%\usepackage[maxbibnames=99, maxcitenames=1, backend=bibtex,style=alphabetic-verb,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
+\usepackage[maxbibnames=99, maxcitenames=1, backend=bibtex,style=alphabetic-verb,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
 
-\usepackage[maxbibnames=99, maxcitenames=1, backend=bibtex,style=authoryear,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
+%\usepackage[maxbibnames=99, maxcitenames=1, backend=bibtex,style=authoryear,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
 
 %\usepackage[maxbibnames=99, maxcitenames=1, backend=bibtex,style=numeric,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
 
@@ -185,8 +185,13 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 % Include the appendices of the thesis as separate files from the Appendices folder
 % Uncomment the lines as you write the Appendices
 
+\openchapter
+\include{Appendices/AppendixA}
+\openchapter
+\include{Appendices/AppendixB}
+
 %\includetex{Appendices/AppendixA}
-\includetex{Appendices/AppendixB}
+%\includetex{Appendices/AppendixB}
 
 %----------------------------------------------------------------------------------------
 %	BIBLIOGRAPHY
