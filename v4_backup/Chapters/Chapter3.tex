@@ -178,27 +178,27 @@ Since the segmentation on the VHR optical image and the nDSM does not allow to r
 \hspace*{0.05\textwidth}
 \subfloat[Hierarchical segmentation with $\mu=6$.]{
 \includegraphics[width=0.45\textwidth]{Figures/C3/S2/seg_herarchical_6border_hierarchical}
-\label{subfig:hierar3}
+\label{subfig:hierar6}
 }
 \\
 \subfloat[Hierarchical segmentation with $\mu=8$.]{
 \includegraphics[width=0.45\textwidth]{Figures/C3/S2/seg_herarchical_8border_hierarchical}
-\label{subfig:hierar3}
+\label{subfig:hierar8}
 }
 \hspace*{0.05\textwidth}
 \subfloat[Hierarchical segmentation with $\mu=10$.]{
 \includegraphics[width=0.45\textwidth]{Figures/C3/S2/seg_herarchical_10border_hierarchical}
-\label{subfig:hierar3}
+\label{subfig:hierar10}
 }
 \\
 \subfloat[Hierarchical segmentation with $\mu=12$.]{
 \includegraphics[width=0.45\textwidth]{Figures/C3/S2/seg_herarchical_12border_hierarchical}
-\label{subfig:hierar3}
+\label{subfig:hierar12}
 }
 \hspace*{0.05\textwidth}
 \subfloat[Hierarchical segmentation with $\mu=15$.]{
 \includegraphics[width=0.45\textwidth]{Figures/C3/S2/seg_herarchical_15border_hierarchical}
-\label{subfig:hierar3}
+\label{subfig:hierar15}
 }
 \endgroup
 \caption{Result of the segmentation of the VHR optical image using different values of $\mu$ for the hierarchical segmentation. Blue lines correspond to the borders of the segments, red lines correspond to the borders of the forest LC.}
@@ -209,6 +209,29 @@ Since the segmentation on the VHR optical image and the nDSM does not allow to r
 The two proposed segmentation algorithms are very efficient for image segmentation tasks \citep{guigues2006scale, felzenszwalb2004efficient} but are not adapted to retrieve forest stands borders. However, they can produce interesting over-segmentation since they are able to retrieve some relevant borders.
 
 \subsection{Add semantic information}
+The classification proposed in the method give information about the species at the object level. Since the segments extracted below are large than the small objects, a majority vote can be applied for each segment. The obtained label map could be compared with the forest LC.
+The result of the classification for the area of interest is presented in Figure~\ref{fig:C3_S2_classif}, the confusion matrix and other accuracy metrics for this classification are presented in Table~\ref{table:C
+_S2_classif}.
+
+\begin{figure}[htbp]
+\begin{center}
+\begingroup
+\captionsetup[subfigure]{width=0.375\textwidth}
+\subfloat[Forest LC.]{
+\includegraphics[width=0.45\textwidth]{Figures/C3/S2/BD}
+\label{subfig:hierar3}
+}
+\hspace*{0.05\textwidth}
+\subfloat[Classification results (overall accuracy: 81.75\%, $\kappa$:0.67).]{
+\includegraphics[width=0.45\textwidth]{Figures/C3/S2/classif}
+\label{subfig:hierar3}
+}
+\endgroup
+\caption{Forest LC and classification results.}
+\label{fig:C3_S2_classif}
+\end{center}
+\end{figure}
+
 
 
 \section{Results of the method}
