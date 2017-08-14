@@ -86,7 +86,7 @@ Produced by department in metropolitan France, the version 2 of the forest LC da
 A naive method to retrieve forest stands is to segment the input data. Such segmentation algorithms do not take into account the species information. Two algorithms were employed in order to obtain relevant stands only through the segmentation of the data.
 The first segmentation algorithm is the one proposed in \cite{guigues2006scale}. It is a hierarchical segmentation algorithm that allows to control the level of segmentation through a unique scale parameter $\mu$.
 
-The second segmentation algorithm (called PFF) employed is presented in \cite{felzenszwalb2004efficient}. It is a method for image segmentation based on pairwise region comparison considering the minimum weight edge between two regions in measuring the difference between them. 3 simples parameters need to be tuned in order to obtain relevant segmentation. $\sigma$ is the standard deviation of the gaussian filter employed to smooth the image as a pre-processing (the authors recommend $\sigma=0.8$). $k$ is a second parameter that set a scale of observation (a larger $k$ will lead to larger segments). Finally, the parameter $m$ permits to define the minimum size of a segment.
+The second segmentation algorithm (called here PFF) employed is presented in \cite{felzenszwalb2004efficient}. It is a method for image segmentation based on pairwise region comparison considering the minimum weight edge between two regions in measuring the difference between them. 3 simples parameters need to be tuned in order to obtain relevant segmentation. $\sigma$ is the standard deviation of the gaussian filter employed to smooth the image as a pre-processing (the authors recommend $\sigma=0.8$). $k$ is a second parameter that set a scale of observation (a larger $k$ will lead to larger segments). Finally, the parameter $m$ permits to define the minimum size of a segment.
 
 Such segmentation could allow to retrieve the stands borders easily. Furthermore, one the segmentation is performed, one can add semantic information using classification results.
 
@@ -98,15 +98,15 @@ These experiments have been performed only on one area presented in Figure~\ref{
 \captionsetup[subfigure]{width=0.16\textwidth}
 \subfloat[VHR IRC optical image.]{
 \includegraphics[width=0.3\textwidth]{Figures/C3/S2/IRC}
-\label{subfig:hierar3}
+\label{subfig:data_direct_sega}
 }
 \subfloat[nDSM.]{
 \includegraphics[width=0.3\textwidth]{Figures/C3/S2/nDSM}
-\label{subfig:hierar3}
+\label{subfig:data_direct_segb}
 }
 \subfloat[Forest LC database.]{
 \includegraphics[width=0.3\textwidth]{Figures/C3/S2/BD}
-\label{subfig:hierar3}
+\label{subfig:data_direct_segc}
 }
 \endgroup
 \caption{VHR IRC optical image, rasterized nDSM and forest LC of the proposed area for the direct segmentation tests.}
@@ -130,12 +130,12 @@ The results of the segmentation of the VHR optical image using the two segmentat
 \captionsetup[subfigure]{width=0.4\textwidth}
 \subfloat[Hierarchical segmentation with $\mu=15$.]{
 \includegraphics[width=0.45\textwidth]{Figures/C3/S2/border_hierar}
-\label{subfig:hierar3}
+\label{subfig:seg_ima}
 }
 \hspace*{0.05\textwidth}
 \subfloat[PFF segmentation with $\sigma=0.8$, $k=500$ and $m=40000$.]{
 \includegraphics[width=0.45\textwidth]{Figures/C3/S2/border_PFF_IRC}
-\label{subfig:hierar3}
+\label{subfig:seg_imb}
 }
 \endgroup
 \caption{Result of the segmentation of the VHR optical image for the two segmentation algorithms. Blue lines correspond to the borders of the segments, red lines correspond to the borders of the forest LC.}
@@ -152,12 +152,12 @@ The results of the segmentation of rasterized nDSM using the two segmentation al
 \captionsetup[subfigure]{width=0.4\textwidth}
 \subfloat[Hierarchical segmentation with $\mu=15$.]{
 \includegraphics[width=0.45\textwidth]{Figures/C3/S2/border_hierar_z}
-\label{subfig:hierar3}
+\label{subfig:seg_nDSMa}
 }
 \hspace*{0.05\textwidth}
 \subfloat[PFF segmentation with $\sigma=0.8$, $k=500$ and $m=40000$.]{
 \includegraphics[width=0.45\textwidth]{Figures/C3/S2/border_PFF_z}
-\label{subfig:hierar3}
+\label{subfig:seg_nDSMb}
 }
 \endgroup
 \caption{Result of the segmentation of the nDSM for the two segmentation algorithms. Blue lines correspond to the borders of the segments, red lines correspond to the borders of the forest LC.}
@@ -210,8 +210,7 @@ The two proposed segmentation algorithms are very efficient for image segmentati
 
 \subsection{Add semantic information}
 The classification proposed in the method give information about the species at the object level. Since the segments extracted below are large than the small objects, a majority vote can be applied for each segment. The obtained label map could be compared with the forest LC.
-The result of the classification for the area of interest is presented in Figure~\ref{fig:C3_S2_classif}, the confusion matrix and other accuracy metrics for this classification are presented in Table~\ref{table:C
-_S2_classif}.
+The result of the classification for the area of interest is presented in Figure~\ref{fig:C3_S2_classif}, the confusion matrix and other accuracy metrics for this classification are presented in Table~\ref{table:C3_S2_classif}.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -219,12 +218,12 @@ _S2_classif}.
 \captionsetup[subfigure]{width=0.375\textwidth}
 \subfloat[Forest LC.]{
 \includegraphics[width=0.45\textwidth]{Figures/C3/S2/BD}
-\label{subfig:hierar3}
+\label{subfig:C3_S2_classifa}
 }
 \hspace*{0.05\textwidth}
 \subfloat[Classification results (overall accuracy: 81.75\%, $\kappa$:0.67).]{
 \includegraphics[width=0.45\textwidth]{Figures/C3/S2/classif}
-\label{subfig:hierar3}
+\label{subfig:C3_S2_classifb}
 }
 \endgroup
 \caption{Forest LC and classification results.}
@@ -232,7 +231,33 @@ _S2_classif}.
 \end{center}
 \end{figure}
 
+The results of the majority vote for the segmentation of the VHR optical images is presented in Figure~\ref{fig:seg_im_sem}, the confusion matrices and other metrics are presented in Tables~\ref{table:C3_S2_seg_hierar} \& \ref{table:C3_S2_seg_PFF}.
 
+\begin{figure}[htbp]
+\begin{center}
+\begingroup
+\captionsetup[subfigure]{width=0.3\textwidth}
+\subfloat[Forest LC database.]{
+\includegraphics[width=0.3\textwidth]{Figures/C3/S2/BD}
+\label{subfig:seg_im_sema}
+}
+\hspace*{0.025\textwidth}
+\subfloat[Semantic information for the hierarchical segmentation with $\mu=15$.]{
+\includegraphics[width=0.3\textwidth]{Figures/C3/S2/seg_hierar_colored}
+\label{subfig:seg_im_semb}
+}
+\hspace*{0.025\textwidth}
+\subfloat[Semantic information for the PFF segmentation with $\sigma=0.8$, $k=500$ and $m=40000$.]{
+\includegraphics[width=0.3\textwidth]{Figures/C3/S2/seg_PFF_colored}
+\label{subfig:seg_im_semc}
+}
+\endgroup
+\caption{Results of the majority vote on the segmentation of the VHR optical images.}
+\label{fig:seg_im_sem}
+\end{center}
+\end{figure}
+
+From a visual inspection, it appears that adding semantic information to the obtained segments does not allow to retrieve a relevant mapping. Indeed, some classes are not represented. For the hierarchical segmentation, the overall accuracy increases when adding semantic information through majority vote (81.94\%, versus 81.75\% for the classification). The $\kappa$ (0.64) is also revealing a good agreement. This shows the limitation of the two metrics: the result appears to be good when inspecting them, while it is not. The Intersection over Union is more relevant in order to underline the irrelevance of the majority vote on a segmentation (41.1\%). The F-score (50.68\%) also concurs to this conclusion.
 
 \section{Results of the method}
 \subsection{Over-segmentation}
