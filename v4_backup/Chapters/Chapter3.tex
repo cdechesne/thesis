@@ -19,38 +19,7 @@ A prerequisite for data fusion is the most accurate alignment of the two data \c
 The registration between airborne lidar point clouds and VHR multispectral images was performed by IGN itself using ground control points. This is a standard procedure in the French mapping agency since IGN operates both sensors and has also a strong expertise in data georeferencing (this is in fact the national institute responsible for that in France for both airborne and spaceborne sensors). \\
 
 \paragraph{National Forest Land Cover database \\}
-%Le référentiel géographique forestier de l'IGN est un outil de référence pour les professionnels de la filière bois et pour les acteurs de l'environnement et de l'aménagement du territoire.
-%
-%La BD Forêt® est une base de données vecteur de référence pour l’espace forestier et les milieux semi-naturels. Elaborée par photo-interprétation d'images en infrarouge couleurs de la BD ORTHO®, la BD Forêt® est réalisée par emprises départementales sur le territoire métropolitain. Ce produit n'est pas disponible sur les territoires d'outre-mer.
-%
-%BD forêt® V1 
-%
-%La BD Forêt® version 1, prédécesseur de la BD Forêt® version 2, a été élaborée par photo-interprétation d’images aériennes en infrarouge couleurs.
-%
-%Sa surface minimale cartographiée est de 2,25 ha.
-%
-%La BD Forêt® version 1 présente la couverture du sol (par description de la structure et de la composition dominante des formations boisées ou naturelles) en s’appuyant sur une nomenclature départementale qui varie d’une quinzaine à une soixantaine de postes selon la diversité forestière du département cartographié.
-%
-%Constituée, jusqu’en 2006, par emprises départementales, elle est disponible sur l’ensemble du territoire métropolitain.
-%
-%Pour plus de la moitié des départements, plusieurs versions de la BD Forêt® version 1 sont disponibles.
-%
-%BD Forêt® V2
-%
-%La BD Forêt® (bd foret) version 2 est élaborée depuis 2007 par photo-interprétation d’images en infrarouge couleurs de la BD ORTHO®.
-%
-%Elle attribue à chaque plage cartographiée de plus de 5000m² un type de formation végétale.
-%
-%Ses principales caractéristiques sont les suivantes :
-%
-%    une nomenclature nationale de 32 postes qui repose sur une décomposition hiérarchique des critères, distinguant par exemple les peuplements purs des principales essences forestières de la forêt françaises
-%    un type de formation végétale attribué à chaque plage cartographiée supérieure ou égale à 50 ares (5 000 m²)
-%    une couche géométriquement compatible avec le RGE® et donc en parfaite cohérence avec la couche végétation de la BDTOPO®
-%
-%Réalisée par emprises départementales sur le territoire métropolitain, aujourd’hui, la BD Forêt® version 2 est disponible sur une trentaine de départements.
-
-
-The IGN's forestry reference frame is a reference tool for professionals in the wood industry and for environmental and spatial planning stakeholders.
+The IGN's forestry reference database is a reference tool for professionals in the wood industry and for environmental and spatial planning stakeholders.
 
 The forest LC database is a reference vector database for forest and semi-natural environments. Developed by photo-interpretation of VHR IRC optical images, The forest LC database is realized by departmental authorities in the metropolitan territory.
 
@@ -259,14 +228,494 @@ The results of the majority vote for the segmentation of the VHR optical images 
 
 From a visual inspection, it appears that adding semantic information to the obtained segments does not allow to retrieve a relevant mapping. Indeed, some classes are not represented. For the hierarchical segmentation, the overall accuracy increases when adding semantic information through majority vote (81.94\%, versus 81.75\% for the classification). The $\kappa$ (0.64) is also revealing a good agreement. This shows the limitation of the two metrics: the result appears to be good when inspecting them, while it is not. The Intersection over Union is more relevant in order to underline the irrelevance of the majority vote on a segmentation (41.1\%). The F-score (50.68\%) also concurs to this conclusion.
 
+The results of the majority vote for the segmentation of the nDSM is presented in Figure~\ref{fig:seg_z_sem}, the confusion matrices and other metrics are presented in Tables~\ref{table:C3_S2_seg_hierar_z} \& \ref{table:C3_S2_seg_PFF_z}.
+
+\begin{figure}[htbp]
+\begin{center}
+\begingroup
+\captionsetup[subfigure]{width=0.3\textwidth}
+\subfloat[Forest LC database.]{
+\includegraphics[width=0.3\textwidth]{Figures/C3/S2/BD}
+\label{subfig:seg_z_sema}
+}
+\hspace*{0.025\textwidth}
+\subfloat[Semantic information for the hierarchical segmentation with $\mu=15$.]{
+\includegraphics[width=0.3\textwidth]{Figures/C3/S2/seg_hierar_z_colored}
+\label{subfig:seg_im_semb}
+}
+\hspace*{0.025\textwidth}
+\subfloat[Semantic information for the PFF segmentation with $\sigma=0.8$, $k=500$ and $m=40000$.]{
+\includegraphics[width=0.3\textwidth]{Figures/C3/S2/seg_PFF_z_colored}
+\label{subfig:seg_z_semc}
+}
+\endgroup
+\caption{Results of the majority vote on the segmentation of the VHR optical images.}
+\label{fig:seg_z_sem}
+\end{center}
+\end{figure}
+
+The same results are observed, a majority vote applied to a segmentation equivalent to stands (in term of size) does not allow to retrieve a relevant mapping of forested areas. \\
+
+From this section, two main conclusions can be drawn: firstly, the direct segmentation of the data does not allow to retrieve relevant forest stands in terms of species. Even with an addition of semantic information from a classification, the results are not sufficient for a mapping of the forest. Secondly, some metrics are not relevant in order to evaluate the results. Indeed, the overall accuracy or the $\kappa$ are not sufficient, other metrics are needed for the correct evaluation of the results.
+
 \section{Results of the method}
+The proposed method is composed of different steps (defined above). Each step will be evaluated at 2 levels; the direct output will be first considered and the impact on the final segmentation will also be investigated.
 \subsection{Over-segmentation}
+The results of the over-segmentation of proposed segmentation algorithms are presented in Figure~\ref{fig:C3_S3_ss1_seg}.
+
+\begin{figure}[htbp]
+\begin{center}
+\begingroup
+\captionsetup[subfigure]{width=0.45\textwidth}
+\subfloat[IRC VHR optical image.]{
+\includegraphics[width=0.465\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss1_sega}
+}
+\hspace*{0.025\textwidth}
+\subfloat[nDSM.]{
+\includegraphics[width=0.465\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss1_segb}
+}
+\endgroup
+\\
+\begingroup
+\captionsetup[subfigure]{width=0.3\textwidth}
+\subfloat[Tree extraction.]{
+\includegraphics[width=0.3\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss1_segc}
+}
+\hspace*{0.025\textwidth}
+\subfloat[Watershed.]{
+\includegraphics[width=0.3\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss1_segd}
+}
+\hspace*{0.025\textwidth}
+\subfloat[Hierarchical segmentation.]{
+\includegraphics[width=0.3\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss1_sege}
+}
+\\
+\subfloat[PFF.]{
+\includegraphics[width=0.3\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss1_segf}
+}
+\hspace*{0.025\textwidth}
+\subfloat[Quickshift.]{
+\includegraphics[width=0.3\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss1_segg}
+}
+\hspace*{0.025\textwidth}
+\subfloat[SLIC.]{
+\includegraphics[width=0.3\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss1_segh}
+}
+
+\endgroup
+\caption{Over segmentation results.}
+\label{fig:C3_S3_ss1_seg}
+\end{center}
+\end{figure}
+
+In all the proposed methods, the resulting segments are relevant since the all represent small homogeneous objects. The object are mostly not of the same size and shape, except for the SLIC superpixels (the aims of the methods is to obtain such uniform segments). The PFF algorithm produces objects with rough borders that are following precisely the borders observed on the images. From a visual point of view, it appears that there is no segmentation method that performs better than the others. Furthermore, it is impossible to evaluate the segmentation since no ground truth is available. Thus, the different segmentation methods are compared through the results they produce after the object-based classification (which indicates how the objects are relevant for classification) and after the regularization (how the objects impacts the final results). These results are presented in Figure~\ref{fig:C3_S3_ss1_results}\\
+
+\begin{figure}[htbp]
+\begin{center}
+\begingroup
+\captionsetup[subfigure]{width=0.21\textwidth}
+\subfloat[IRC VHR \hbox{optical image}.]{
+\includegraphics[width=0.3\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss1_resultsa}
+}
+\hspace*{0.025\textwidth}
+\subfloat[nDSM.]{
+\includegraphics[width=0.3\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss1_resultsb}
+}
+\hspace*{0.025\textwidth}
+\subfloat[Forest LC.]{
+\includegraphics[width=0.3\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss1_resultsc}
+}
+\\
+\subfloat[Tree extraction.]{
+\includegraphics[width=0.3\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss1_resultsd}
+}
+\hspace*{0.025\textwidth}
+\subfloat[Watershed.]{
+\includegraphics[width=0.3\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss1_resultse}
+}
+\hspace*{0.025\textwidth}
+\subfloat[Hierarchical \hbox{segmentation}.]{
+\includegraphics[width=0.3\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss1_resultsf}
+}
+\\
+\subfloat[PFF.]{
+\includegraphics[width=0.3\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss1_resultsg}
+}
+\hspace*{0.025\textwidth}
+\subfloat[Quickshift.]{
+\includegraphics[width=0.3\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss1_resultsh}
+}
+\hspace*{0.025\textwidth}
+\subfloat[SLIC.]{
+\includegraphics[width=0.3\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss1_resultsi}
+}
+
+\endgroup
+\caption{Over segmentation results.}
+\label{fig:C3_S3_ss1_results}
+\end{center}
+\end{figure}
+
+
 \subsection{Feature selection}
+
+The feature selection have been carried out for 4 main reasons.
+\begin{itemize}
+\item It allows to determine how many feature are needed for an optimal classification.
+\item It shows the complementarity of the data (optical images and lidar).
+\item It permits to understand which feature are interesting for tree species classification.
+\item It reduces the computational loads and times.
+\end{itemize}
+
+\paragraph{How many features for the classification? \\}
+The idea here is to obtain the number feature for an optimal classification. The idea is to run the feature selection $N$ times using all the feature. Let $a_{n,k}$ be an accuracy metric for the classification of the $n^{\text{th}}$ iteration using the $k$ ($k \in [1,K]$) best features.
+The optimal number of feature $k_{opt}$ is defined as follow:
+\begin{equation}
+\forall k \in [1,K], \quad \sum_{n=1}^{N}a_{n,k} \leq \sum_{n=1}^{N}a_{n,k_{opt}}
+\end{equation}
+Here, $K=95$ and $N=50$. This experiment have been carried out on different areas, and the optimal number of feature found is $k_{opt}=20$. Thus, in all the following experiments, the classification is performed using only 20 features.
+
+\paragraph{Complementarity of the data. \\}
+Once the optimal number of features was determined, the feature selection was performed 40 times over all the test areas in order to retrieve the most relevant features. The retained attributes are presented in Figures~\ref{fig:sel_lidar},\ref{fig:sel_spectral} and~\ref{fig:sel_indices}. On average, 61\% of the selected features are derived from the spectral information and 39\% from the lidar information for a single selection (i.e., in a random selection of 20 features, 12 are derived from VHR optical images and 8 from lidar). This shows the complementarity of both remote sensing data. 
+
+\paragraph{Features for tree species classification. \\}
+For the spectral information, the features derived from the original band set are more relevant than the vegetation indices: the near-infrared derived features represent 18\% of the spectral selected features, 16\% for the red and the green, 15\% for the blue and the DVI, only 11\% for the NDVI and 10\% for the RVI. 
+
+The most relevant statistical feature for the spectral information is the minimum (17\% of the spectral selection). The maximum (12\%), the median (11\%), the mean (11\%) and the standard deviation (10\%) are also relevant. The other statistics are selected at less than 9\% each. For more details see Figure~\ref{fig:sel_spectral} and~\ref{fig:sel_indices}. \\
+
+For the lidar information, the most relevant feature is surprisingly the intensity, selected in each of the 40 selections (12\% of the lidar selection, 5\% of the total selection). The standard deviation (8\% of the lidar selection), the maximum (7\%) and the densities (5\% and 6\%) are also relevant. The other lidar derived features count for less than 4\% each. For more details, see Figure~\ref{fig:sel_lidar}.
+
+\paragraph{Reduce computational loads and times. \\}
+It is obvious that processing a reduced number of features (20 instead of 95) reduces the computational loads and times. Furthermore, if an optimal subset of feature is found, only the concerned features need to be computed. Thus, the feature computation step would be reduced to a minimum step by computing only the relevant features.
+
+
+
+\pgfplotstableread[col sep=comma,header=true]{
+Sel, n
+z,11
+density1,16
+density2,20
+planarity,11
+scatter,6
+min,10
+max,23
+mean,7
+median,9
+standard deviation,24
+medADmed,14
+meanADmed,14
+skewness,4
+kurtosis,7
+10$^{\text{th}}$percentile,8
+20$^{\text{th}}$percentile,9
+30$^{\text{th}}$percentile,10
+40$^{\text{th}}$percentile,9
+50$^{\text{th}}$percentile,7
+60$^{\text{th}}$percentile,11
+70$^{\text{th}}$percentile,12
+80$^{\text{th}}$percentile,8
+90$^{\text{th}}$percentile,11
+95$^{\text{th}}$percentile,8
+intensity,40
+}\datalidar
+
+\begin{figure} [htbp]%
+\begin{center}
+    \begin{tikzpicture}     
+        \begin{axis}[    
+            width=0.75\textwidth,
+            xbar,                                 
+            xtick={0,5,10,...,45},    
+            xmin=0,
+            xmax=45,       
+            grid=major,
+            nodes near coords, nodes near coords align={horizontal},
+            symbolic y coords={intensity,95$^{\text{th}}$percentile,90$^{\text{th}}$percentile,80$^{\text{th}}$percentile,70$^{\text{th}}$percentile,60$^{\text{th}}$percentile,50$^{\text{th}}$percentile,40$^{\text{th}}$percentile,30$^{\text{th}}$percentile,20$^{\text{th}}$percentile,10$^{\text{th}}$percentile,kurtosis,skewness,meanADmed,medADmed,standard deviation,median,mean,max,min,scatter,planarity,density2,density1,z},
+            ylabel={Features},
+            ytick=data,
+            xlabel={Number of selections},
+            y label style={at={(-0.33,0.5)}},
+            enlarge x limits={abs=0},
+            y=0.025\textheight,
+            reverse legend,
+        ]
+        \addplot[color=black, fill=black!80!white] table [x=n, y=Sel] {\datalidar};
+        %\legend{2011,1996}
+        \end{axis}
+    \end{tikzpicture}
+\caption{Result of the feature selection for the lidar features over 40 trials of 20 optimal features.}
+\label{fig:sel_lidar}
+\end{center}
+\end{figure}
+
+\pgfplotstableread[col sep=comma,header=true]{
+Sel, R, G, B, NIR
+Band,8,5,8,6
+min,15,15,11,18
+max,15,6,8,14
+mean,8,11,13,13
+median,7,9,7,9
+standard deviation,5,6,9,6
+meanADmed,6,7,7,3
+meanADmean,4,3,5,9
+medADmed,8,6,5,6
+medADmean,4,6,4,4
+}\dataspectral
+
+\begin{figure} [htbp]%
+\begin{center}
+    \begin{tikzpicture}     
+        \begin{axis}[    
+            width=0.75\textwidth,
+            xbar,                                 
+            xtick={0,5,10,...,20},    
+            xmin=0,
+            xmax=20,       
+            grid=major,
+            nodes near coords, nodes near coords align={horizontal},
+            symbolic y coords={medADmean,medADmed,meanADmean,meanADmed,standard deviation,median,mean,max,min,Band},
+            ylabel={Features},
+            ytick=data,
+            xlabel={Number of selections},
+            y label style={at={(-0.33,0.5)}},
+            enlarge x limits={abs=0},
+            y=0.09\textheight,
+            reverse legend,
+        ]
+        \addplot[color=black, fill=gray!80!white] table [x=NIR, y=Sel] {\dataspectral};
+        \addplot[color=black, fill=blue!80!white] table [x=B, y=Sel] {\dataspectral};  
+        \addplot[color=black, fill=green!80!white] table [x=G, y=Sel] {\dataspectral};
+        \addplot[color=black, fill=red!80!white] table [x=R, y=Sel] {\dataspectral};
+        \legend{NIR band, Blue band, Green band, Red band}
+        \end{axis}
+    \end{tikzpicture}
+\caption{Result of the feature selection for the spectral features over 40 trials of 20 optimal features.}
+\label{fig:sel_spectral}
+\end{center}
+\end{figure}
+
+\pgfplotstableread[col sep=comma,header=true]{
+Sel, NDVI, DVI, RVI
+Band,6,3,2
+min,7,11,8
+max,6,5,5
+mean,2,3,3
+median,6,11,6
+standard deviation,8,11,5
+meanADmed,9,4,6
+meanADmean,5,3,4
+medADmed,3,10,6
+medADmean,3,7,5
+}\dataindices
+
+\begin{figure} [htbp]%
+\begin{center}
+    \begin{tikzpicture}     
+        \begin{axis}[    
+            width=0.75\textwidth,
+            xbar,                                 
+            xtick={0,5,10,...,15},    
+            xmin=0,
+            xmax=15,       
+            grid=major,
+            nodes near coords, nodes near coords align={horizontal},
+            symbolic y coords={medADmean,medADmed,meanADmean,meanADmed,standard deviation,median,mean,max,min,Band},
+            ylabel={Features},
+            ytick=data,
+            xlabel={Number of selections},
+            y label style={at={(-0.33,0.5)}},
+            enlarge x limits={abs=0},
+            y=0.075\textheight,
+            reverse legend,
+        ]
+        \addplot[color=black, fill=i2!80!white] table [x=RVI, y=Sel] {\dataindices};  
+        \addplot[color=black, fill=i1!80!white] table [x=DVI, y=Sel] {\dataindices};
+        \addplot[color=black, fill=i0!80!white] table [x=NDVI, y=Sel] {\dataindices};
+        \legend{RVI, DVI, NDVI}
+        \end{axis}
+    \end{tikzpicture}
+\end{center}
+\caption{Result of the feature selection for the vegetation indices features over 40 trials of 20 optimal features.}
+\label{fig:sel_indices}
+\end{figure}
+
+
 \subsection{Classification}
+The classification is composed of two steps, the selection of training samples and the classification itself.
+The classification is mainly performed using standard RF classifier \citep{opencv}. Tests have also been conducted using a SVM classifier with RBF kernel \citep{vapnik2013nature}. The classification can be impacted by two factors:
+\begin{itemize}
+\item The selection or non-selection of training pixels.
+\item The object-based or pixel-based analysis.
+\end{itemize}
+The four scenarii are investigated
+
+\paragraph{Pixel-based classification versus object-based classification. \\}
+The results of pixel-based and object-based classification is presented in Figure~\ref{fig:C3_S3_ss3_po}.
+
+\begin{figure}[htbp]
+\begin{center}
+\begingroup
+\captionsetup[subfigure]{width=0.45\textwidth}
+\subfloat[IRC VHR optical image.]{
+\includegraphics[width=0.45\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss3_poa}
+}
+\hspace*{0.025\textwidth}
+\subfloat[Forest Lc.]{
+\includegraphics[width=0.45\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss3_pob}
+}
+\\
+\subfloat[Pixel-based classification.]{
+\includegraphics[width=0.45\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss3_poc}
+}
+\hspace*{0.025\textwidth}
+\subfloat[Object-based classification (PFF).]{
+\includegraphics[width=0.45\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss3_pod}
+}
+\endgroup
+\caption{Classification results; pixel-based versus object-based.}
+\label{fig:C3_S3_ss3_po}
+\end{center}
+\end{figure}
+
+The pixel-based classification (Figure~\ref{subfig:C3_S3_ss3_poc}) appears more noisy than the object-based classification (Figure~\ref{subfig:C3_S3_ss3_pod}). However, the pixel-based classification already provide good discrimination results. Conversely, even if the object are roughly extracted (no specific attention is paid to the relevance of the extracted objects), the object-based classification produces more spatially consistent labels. Such results impacts the final output (see Figure~\ref{fig:C3_S3_ss3_rpo}).
+
+\begin{figure}[htbp]
+\begin{center}
+\begingroup
+\captionsetup[subfigure]{width=0.45\textwidth}
+\subfloat[Regularization using pixel-based classification.]{
+\includegraphics[width=0.45\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss3_rpoa}
+}
+\hspace*{0.025\textwidth}
+\subfloat[Regularization using object-based classification (PFF).]{
+\includegraphics[width=0.45\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss3_rpob}
+}
+\endgroup
+\caption{Regularization results; pixel-based classification versus object-based classification.}
+\label{fig:C3_S3_ss3_rpo}
+\end{center}
+\end{figure}
+
+\paragraph{Training set design. \\}.
+
+\begin{figure}[htbp]
+\begin{center}
+\begingroup
+\captionsetup[subfigure]{width=0.45\textwidth}
+\subfloat[Selected pixels; random selection.]{
+\includegraphics[width=0.45\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss_sela}
+}
+\hspace*{0.025\textwidth}
+\subfloat[Selected pixels; automatic selection.]{
+\includegraphics[width=0.45\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss3_selb}
+}
+\endgroup
+\caption{Selection of the training pixels.}
+\label{fig:C3_S3_ss3_sel}
+\end{center}
+\end{figure}
+
 \subsection{Regularization}
+The smoothing of the classification can be performed using local or global methods.
+
+\subsubsection{Local methods}
+Two methods have been investigated for the local smoothing of the classification. They are very easy to implement and have low computation times.
+Firstly, the use of a majority filter have been employed. Since it does not take into account the probabilities, a probabilistic relaxation have then also been tested. For both method, the main problem is to defined a relevant neighborhood size. If if is too small, the results will remain noisy, and if it is too important, the results will be over generalized and the computational times will explode.
+
+\paragraph{Majority filter. \\}
+The results for the majority filter is presented in Figure~\ref{fig:C3_S3_ss4_maj}.  The filtering method performs the worse with a gain of less than 1\% compared to the classification, even with large filters. Furthermore,the larger the filter is,the longer are the computation times. 
+
+\paragraph{Probabilistic relaxation. \\}
+The results for the probabilistic relaxation is presented in Figure~\ref{fig:C3_S3_ss4_prob}. The probabilistic relaxation has also poor results (+5\% than the classification) and has also important computation times, since the iterative process runs until the convergence has been reached.
+
+\subsubsection{Global methods}
+The regularization is the final step that smooth the former classification. In the formulation of the energy, 3 aspect are taken into account. The two most important are the integration of the information from the classification (unary term) and how the feature are integrated into the smoothing process (prior). The last aspect is the integration of other constraints, allowed by the use of the QPBO algorithm.
+
+The global methods produce significantly better results than the local methods.
+
+The effect of the parameter $\gamma$ is presented in Figure~\ref{fig:C3_S3_ss4_gamma}. When $\gamma$ is low, the borders are rough and small regions might appear (Figure~\ref{subfig:C3_S3_ss4_gammac}). Increasing $\gamma$ smooth the borders, however, a too high value have a negative impact on the results, reducing the size of meaningful segments (Figure~\ref{subfig:C3_S3_ss4_gammae}) or even removing them (Figure~\ref{subfig:C3_S3_ss4_gammaf}). The tuning of the parameter $\gamma$ is an important issue, since different values of $\gamma$ might be acceptable depending on the level of detail expected for the segmentation. In forest inventory, having small regions of pure species is interesting for the understanding of the behavior of the forest. For generalization purposes (such as forest LC), the segments must have a decent size and may exhibit variability.
+
+\begin{figure}[htbp]
+\begin{center}
+\begingroup
+\captionsetup[subfigure]{width=0.45\textwidth}
+\subfloat[IRC VHR optical image.]{
+\includegraphics[width=0.45\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss4_gammaa}
+}
+\hspace*{0.025\textwidth}
+\subfloat[Forest LC.]{
+\includegraphics[width=0.45\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss4_gammab}
+}
+\\
+\subfloat[Regularization ($\gamma=5$).]{
+\includegraphics[width=0.45\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss4_gammac}
+}
+\hspace*{0.025\textwidth}
+\subfloat[Regularization ($\gamma=10$).]{
+\includegraphics[width=0.45\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss4_gammad}
+}
+\\
+\subfloat[Regularization ($\gamma=15$).]{
+\includegraphics[width=0.45\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss4_gammae}
+}
+\hspace*{0.025\textwidth}
+\subfloat[Regularization ($\gamma=20$).]{
+\includegraphics[width=0.45\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss4_gammaf}
+}
+\endgroup
+\caption{Regularization results, effect of the parameter $\gamma$.}
+\label{fig:C3_S3_ss4_gamma}
+\end{center}
+\end{figure}
+
+\paragraph{Unary term. \\}
+
+The unary term have the major impact on the regularization results (see Figure~\ref{fig:C3_S3_ss4_unary}). Indeed, the log-inverse formulation highly penalize pixels with low probability, thus, small areas with high probabilities will be kept, even with an important $\gamma$. Contrarily, the linear formulation have a stronger smoothing effect.
+
+Both are interesting for the analysis of forest. The log-inverse allows to obtain small areas that keep an important class confidence. Such areas are useful for forest inventory since they give information about large forested areas with small islets of pure species. Conversely, the linear formulation produces smooth segments that are more relevant for a national mapping.
+
+\paragraph{Prior. \\}
+
+The \textit{z-Potts model} tends to have slightly worse results than the other methods. The \textit{Potts model} and the \textit{Distance-features model} have very close results regardless of the unary term. The \textit{Exponential-features model} have the greatest results with the linear unary, but have poor results with the log-inverse unary.
+
+\paragraph{Adding constraints. \\}
+
+\subsection{Importance of fusion}
+
 \section{Co-products of the method}
-\section{Semi-automatic update}
-\section{Inventory}
+\subsection{Semi-automatic update}
+\subsection{Inventory}
 %----------------------------------------------------------------------------------------
 
 % Define some commands to keep the formatting separated from the content 

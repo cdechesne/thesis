@@ -40,12 +40,43 @@ The tree extraction from the point cloud is a complex task that has been widely 
 
 The image-based segmentation are also very efficient for the over-segmentation of lidar data. They are mainly applied on the normalized digital surface model (height). Thus a method using a single band is needed. The watershed algorithm \citep{vincent1991watersheds} with specific parameters allow to obtain quickly a consistent over-segmentation of the image. A hierarchical segmentation \citep{guigues2006scale} is more adapted since only one parameter that control the segmentation level needs to be provided.
 
-\subsection{Segmentation of optical images}
+\subsection{Segmentation of images}
 Several algorithms have been developed for the over-segmentation of optical RGB (Red-Green-Blue) images. The most common are the superpixels methods \citep{achanta2012slic}. Superpixels can be generated using segmentation algorithms \citep{shi2000normalized, felzenszwalb2004efficient, comaniciu2002mean, vedaldi2008quick, vincent1991watersheds}. A special attention must be paid to the parameters in order to obtain relevant superpixels. These methods produces superpixels that might not be homogeneous in terms of size and shape but delineate precisely objects.
 Superpixels algorithms have then been developed, they allow to control the number of superpixel, their size and their shape \citep{moore2008superpixel, veksler2010superpixels, levinshtein2009turbopixels, achanta2012slic}.
 For the over-segmentation of the optical images, we will use both "traditional" and superpixels methods.
 
+Five methods have been employed for the segmentation of images (VHR optical images or rasterized lidar features):
+\begin{itemize}
+\item The watershed algorithm \citep{vincent1991watersheds},
+\item A segmentation algorithm based on graph-cut (called here PFF) \citep{felzenszwalb2004efficient},
+\item A multilevel hierarchical segmentation algorithms \citep{guigues2006scale},
+\item A segmentation algorithm based on the mean shift algorithm (called quickshift) \citep{vedaldi2008quick},
+\item A superpixel algorithm (called SLIC) \citep{achanta2012slic}.
+\end{itemize}
+
+\paragraph{Watershed. \\}
+Watershed segmentation "classifies" pixels into regions using gradient descent on image features and analysis of weak points along region boundaries. It has been proposed after the observation natural observation of water raining onto a landscape topology and flowing with gravity to collect in low basins. The size of those basins will grow with increasing amounts of precipitation until they spill into one another, causing small basins to merge together into larger basins. Regions (catchment basins) are formed by using local geometric structure to associate points in the image domain with local extrema in some feature measurement such as curvature or gradient magnitude. This technique is less sensitive to user-defined thresholds than classic region-growing methods, and may be better suited for fusing different types of features from different data sets. The watersheds technique is also more flexible in that it does not produce a single image segmentation, but rather a hierarchy of segmentations from which a single region or set of regions can be extracted a-priori.
+
+\paragraph{PFF. \\}
+This algorithm define a predicate for measuring the evidence for a boundary between two regions using a graph-based representation of the image. An efficient segmentation algorithm based on this predicate is employed, and show that although this algorithm makes greedy decisions it produces a segmentation that satisfy global properties. The algorithm runs in time nearly linear in the number of graph edges and is also fast in practice. An important characteristic of the method is its ability to preserve detail in low-variability image regions while ignoring detail in high-variability regions.
+
+\paragraph{Hierarchical segmentation. \\}
+This segmentation method introduces a multi-scale theory of piecewise image modeling, called the scale-sets theory, and which can be regarded as a region-oriented scale-space theory. A general formulation of the partitioning problem which involves minimizing a two-term-based energy, of the form $D + \mu C$, where $D$ is a goodness-of-fit term and $C$ is a regularization term. Such energies arise from basic principles of approximate modeling and relate them to operational rate/distortion problems involved in lossy compression problems. An important subset of these energies constitutes a class of multi-scale energies in that the minimal cut of a hierarchy gets coarser and coarser as parameter $\mu$ increases. This allows to devise a procedure to find the complete scale-sets representation of this family of minimal cuts. Considering then the construction of the hierarchy from which the minimal cuts are extracted, ending up with an exact and parameter-free algorithm to build scale-sets image descriptions whose sections constitute a monotone sequence of upward global minima of a multi-scale energy, which is called the "scale climbing" algorithm. This algorithm can be viewed as a continuation method along the scale dimension or as a minimum pursuit along the operational rate/distortion curve. Furthermore, the solution verifies a linear scale invariance property which allows to completely postpone the tuning of the scale parameter to a subsequent stage.
+
+\paragraph{Quickshift \\}
+Quickshift \citep{vedaldi2008quick} is a kernelized version of a mode seeking algorithm similar in concept to mean shift \citep{comaniciu2002mean, fukunaga1975estimation} or medoid shift \citep{sheikh2007mode}. Given $N$ data points $x_{1} , \hdots , x_{N}$, it computes a Parzen density estimate around each point using, for example, an isotropic Gaussian window:
+\begin{equation}
+P(x)=\frac{1}{2 \pi \sigma^{2} N}\sum_{i=1}^{N}e^{\frac{-||x-x_{i}||^{2}}{2 \sigma^{2}}}
+\end{equation}
+Once the density estimate $P(x)$ has been computed, quick shift connects each point to the nearest point in the feature space which has a higher density estimate. Each connection has a distance $d_{x}$ associated with it, and the set of connections for all pixels forms a tree, where the root of the tree is the point with the highest density estimate. 
+To obtain a segmentation from a tree of links formed by quick shift, a threshold $\tau$ is chosen and break all links in the tree with $d_ {x} > \tau$ . The pixels which are a member of each resulting disconnected tree form each segment.
+
+\paragraph{SLIC superpixels. \\}
+The SLIC superpixel algorithm \citep{achanta2012slic} clusters pixels in the combined five-dimensional color (CIELAB color space) and image plane (xy) space to efficiently generate compact, nearly uniform superpixels. It is basically based on the k-mean algorithm. The number of desired cluster corresponds to the number of desired superpixels. The employed distance is based on a weighted sum of a color based distance and a plane space distance. This method produces superpixels achieving a good segmentation quality measured by boundary recall and under-segmentation error. The benefits of superpixel approaches have already been shown, as they increase performance over pixel-based methods.
+
+
 \section{Feature extraction}
+The extraction of feature is an important step in order to obtain an accurate classification. The feature can be handcrafted. Such feature have been extensively employed for remote sensing application. The features could also be learned for a specific classification task using convolutional neural networks \citep{demuth2014neural}. Here, the proposed features have been derived manually, most are standards of the literature.
 \subsection{Point-based lidar features.}
 Lidar-derived features require a consistent neighborhood for their computation. For each lidar point, 3 cylindrical neighborhoods, aligned with the vertical axis, are used (1$\:$m, 3$\:$m and 5$\:$m radii, infinite height). A cylinder appears to be the most relevant environment in forested areas so as to take into account the variance of altitudes of the lidar points. Three radius values are considered so as to handle the various sizes of the trees and assuming a feature selection step will prune the initial set of attributes. Two vegetation density features, $\mathcal{D}_{1}$ and $\mathcal{D}_{2}$, are computed: the first one based on the number of local maxima within the neighborhoods, and the second one related to the number of non-ground points within the neighborhoods (ground points were previously determined by a filtering step). $\mathcal{D}_{1}$ and $\mathcal{D}_{2}$ are calculated as follows:
 \begin{eqnarray}
@@ -85,7 +116,7 @@ If a pixel does not belong to a tree, it keeps the value of the pixel-based feat
 Other morphological features could also be directly derived from the lidar cloud point at the object-level. For instance, an alpha-shape can be performed on the individual trees \citep{vauhkonen2010imputation} and a penetration feature can be derived as it can help to classify vegetation type (mainly tree species). However, low point densities (1-5 points/m$^{2}$) compatible with large-scale lidar surveys are not sufficient in order to derive a significant penetration indicator.
 
 \section{Classification}
-The classification is performed using a supervised classifier, in order to discriminate the vegetation type (mainly tree species) provided by an existing forest land-cover database. The classifier used in this study is the Random Forest (RF), implemented in OpenCV \citep{opencv}, as it has been shown relevant in the literature \citep{belgiu2016random} and in a previous study compared to SVM \citep{dechesne2016forest}, since it provide similar results while being faster. The outputs of the classification are (i) label map and (ii) probability map (posterior class probabilities for each pixel/object). This probability map is the main input for the subsequent regularization step. \\
+The classification is performed using a supervised classifier, in order to discriminate the vegetation type (mainly tree species) provided by an existing forest land-cover database. The classifier used in this study is the Random Forest (RF), implemented in OpenCV \citep{opencv}, as it has been shown relevant in the literature \citep{belgiu2016random} and in a previous study compared to SVM \citep{dechesne2016forest}, since it provide similar results while being faster. Indeed, the SVM classifier very efficient \citep{vapnik2013nature}, however, the training of such classifier is time consuming, especially when the number of training sample increases (which is the case when the learning is based on a database). Furthermore, when using different type of feature (here spectral and lidar features) a special attention should pe paid to the employed kernel. The RF classifier is therefore preferred because is natively handle features of different type and works better when the number of samples increases. The outputs of the classification are (i) label map and (ii) probability map (posterior class probabilities for each pixel/object). This probability map is the main input for the subsequent regularization step. \\
 In order to reduce the computation times, a feature selection is carried out to identify an "optimal" feature subset. Additionally, a strategy is proposed in order to select the most suitable training pixels for an existing land-cover forest maps, subsequently improving the classification accuracy.
 
 \subsection{Training set design}
@@ -98,7 +129,12 @@ In order to correct the potential errors of the LC database, a k-means clusterin
 P_{t} = \{{p_{i-c,t} \quad | \quad \underset{c \in [1,k]}{c=\text{argmax }}\text{Card} ( \cup_{i} p_{i-c,t} ) } \}.
 \end{equation}
 That is to say, only samples belonging to the main k-mean cluster among training pixels for one class are kept in the training dataset. \\
-In practice, $k=3$: the main cluster corresponds to the label of interest whereas the two other ones correspond to the ground and minority vegetation type (mainly tree species) within the polygons. 1000 samples per class are then randomly selected in order to design the final training set.
+In practice, $k=3$: the main cluster corresponds to the label of interest whereas the two other ones correspond to the ground and minority vegetation type (mainly tree species) within the polygons. 1000 samples per class are then randomly selected in order to design the final training set. Such selection is a bit exclusive and does not allow a lot of variability of the selected training pixels. A more reasonable way to select training pixels is to keep the pixels such as:
+\begin{equation}
+P_{t} = \{p_{i-c,t} \quad | \quad  \frac{\text{Card}\left(\underset{\forall i}{\cup} p_{i-c,t}\right)}{\text{Card}\left(\underset{\forall i, \forall c_{k}}{\cup} p_{i-c_{k},t}\right)} \geq u_{p}\}.
+\end{equation}
+where $u_{p}$ is a proportion defined by the user.
+Such selection is equivalent to select the pixels that are in a cluster which size represent a significant proportion of the total pixels labeled as $t$ in the Forest LC. in this case, the number of clusters for the k-mean can be increased. In the experiments, $u_{p}$ was set to $0.3$ (i.e. 30\%) an $k$ to $4$.
 
 \subsection{Feature selection}
 Due to the high number of features involved, an automatic Feature Selection (FS) has been integrated. This selection is composed of two steps: the choice of the number of features to select and the feature selection itself. Indeed, the choice of the number of features is very important because it enables to greatly decrease the computation times. \\
@@ -216,6 +252,39 @@ To compute such energy, the features need to be first normalized (i.e., zero mea
 In \cite{clement_IJPRS}, a high number of features was extracted from available lidar and optical images ($\sim$ 100) but can be selected. They can also be weighted according to their importance, computed through the Random Forest classification process. Since the most important features (20) are almost all equally weighted, it does not bring additional discriminative information for the global feature sensitive energy.
 
 \subsubsection{Energy minimization}
-The energy minimization is performed using graph-cut methods. The graph-cut algorithm employed is the quadratic pseudo-boolean optimization (QPBO). The QPBO is a popular and efficient graph-cut method as it efficiently solves energy minimization problems (such as the proposed ones) by constructing a graph and computing the min-cut \cite{kolmogorov2007minimizing}. $\alpha$-expansion moves are used, as they are an efficient way to deal with the multi-class problems \cite{kolmogorov2004energy}. \\
+The energy minimization is performed using graph-cut methods. The graph-cut algorithm employed is the quadratic pseudo-boolean optimization (QPBO). The QPBO is a popular and efficient graph-cut method as it efficiently solves energy minimization problems (such as the proposed ones) by constructing a graph and computing the min-cut \cite{kolmogorov2007minimizing}. $\alpha$-expansion moves are used, as they are an efficient way to deal with the multi-class problems \cite{kolmogorov2004energy}. The QPBO is an interesting method since it allows to solve any Markov Random Field optimization problems. Thus the energy formulation can be modified in order to add more constraint to the problem. Such investigation have been envisaged. Two constraints have been tested. \\
+
+\paragraph{Size constraint. \\}
+Firstly, the size of a segment can be taken into account in the energy formulation. This is done by setting the pairwise term to an important value $v_{s}$ (ideally $v_{s}=\infty$) when a pixel belong to a segment defined as too small by the user (in forested area, a minimum stand size is 0.5$\:$ha). Thus the Equation~\ref{eq:prior1} becomes:
+\begin{equation}
+\begin{aligned}
+& E_{\text{pairwise}}(C(\mathbf{u}) = C(\mathbf{v}))=f(\mathbf{u},\mathbf{v}), \\
+& E_{\text{pairwise}}(C(\mathbf{u}) \neq C(\mathbf{v}))=1 + f(\mathbf{u},\mathbf{v}),
+\end{aligned}
+\label{eq:prior1b}
+\end{equation}\\
+with
+\begin{equation}
+\begin{aligned}
+& f(\mathbf{u},\mathbf{v})=0 \text{ if $\mathbf{u}$ and $\mathbf{v}$ are not in a small segment}, \\
+& f(\mathbf{u},\mathbf{v})=v_{s} \text{ if $\mathbf{u}$ or $\mathbf{v}$ are in a small segment}.
+\end{aligned}
+\label{eq:prior1bf}
+\end{equation}
+Such constraint can be applied to the other proposed priors.
+
+\paragraph{Border constraint. \\}
+The second constraint that can easily added is a related to the borders. Indeed, it is possible the set the energy to a specific value in order  to ensure that a border will be created. However, an a priori border need to be defined. Let $b(\mathbf{u},\mathbf{v})$ be a binary function that define if a border between a pixel $\mathbf{u}$ an $\mathbf{v}$ wants to be set. If $b(\mathbf{u},\mathbf{v})=0$, no borders want to be set, thus Equation~\ref{eq:prior1} remains the same. Otherwise, if $b(\mathbf{u},\mathbf{v})=1$, Equation~\ref{eq:prior1} becomes:
+\begin{equation}
+\begin{aligned}
+& E_{\text{pairwise}}(C(\mathbf{u}) = C(\mathbf{v}))=v_{b}, \\
+& E_{\text{pairwise}}(C(\mathbf{u}) \neq C(\mathbf{v}))=0,
+\end{aligned}
+\label{eq:prior1c}
+\end{equation}\\
+with $v_{b}$ an important value (ideally $v_{b}=\infty$).
+
+Adding constraints increases the computational load and time but might be interesting in order to refine even more the results. However, adding such constraints also leads to some issues. Firstly, even if the minimum size of a forest stand is clearly defined in the specifications of the forest LC database, forcing segment to have a minimum size could suppress some information (such as pure islets). Such generalization could be obtained by increasing the $\gamma$ parameter. Secondly, adding borders means that predetermined relevant borders could be retrieved, however, in practice, such borders can not be straightforward  extracted. Thus, adding these constraint have been considered in a limited way.
+
 
 \stopcontents[chapters]

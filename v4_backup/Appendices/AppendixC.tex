@@ -11,7 +11,7 @@ In this section, the different accuracy metrics presented in the following table
 
 They are based on the confusion matrix. In this section, the metrics are defined using the $r$-class confusion matrix presented in Table~\ref{table:confusion_ref}.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \begin{center}
 \begin{tabular}{c|c c c c| c}
 
@@ -74,10 +74,12 @@ IoU_{i}=\frac{n_{ii}}{n_{i.}+n_{.i}-n_{ii}}
 
 \section{Segmentation methods}
 \input{Results/S2_classif.tex}
+\subsection{VHR optical images}
 \input{Results/S2_seg_hierar.tex}
 \input{Results/S2_seg_PFF.tex}
-\input{Results/S2_seg_PFF_z.tex}
+\subsection{nDSM}
 \input{Results/S2_seg_hierar_z.tex}
+\input{Results/S2_seg_PFF_z.tex}
 
 \section{Results of the method}
 \subsection{Classification}
