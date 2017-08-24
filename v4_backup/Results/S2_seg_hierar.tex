@@ -1,5 +1,6 @@
 \begin{table}[H]
 \begin{center}
+\footnotesize
 \begin{tabular}{|l|c|c|c|c|r|}
 \hline
 \multicolumn{6}{|c|}{Confusion matrix} \\
@@ -14,7 +15,7 @@
 \hline
 4 (13) & 108307 & 0 & 25382 & 958661 & 87.76 \\
 \hline
-Recall & 90.37 & 0 & 58.62 & 70.42 &  \\
+Recall & 90.37 & - & 58.62 & 70.42 &  \\
 \hline
 \multicolumn{6}{c}{ } \\
 \hline
@@ -24,18 +25,18 @@ Recall & 90.37 & 0 & 58.62 & 70.42 &  \\
 \hline
 IU & 77.22 & 0 & 23.03 & 64.13 & 41.1 \\
 \hline
-F-score & 87.15 & 0 & 37.44 & 78.14 & 50.68 \\
+F-score & 87.15 & - & 37.44 & 78.14 & 50.68 \\
 \hline
-Accuracy & 84.27 & 0 & 95.76 & 84.7 & 81.94 \\
+Accuracy & 84.27 & 99.15 & 95.76 & 84.7 & 81.94 \\
 \hline
-P0 & 84.27 & 0 & 95.76 & 84.7 & 81.94 \\
+P0 & 0.84 & 0.99 & 0.96 & 0.85 & 0.82 \\
 \hline
-Pe & 52.41 & 0 & 93.42 & 54.21 & 49.59 \\
+Pe & 0.52 & 0.99 & 0.93 & 0.54 & 0.5 \\
 \hline
 $\kappa$ & 0.6695 & 0 & 0.3555 & 0.6659 & 0.6417 \\
 \hline
 \end{tabular}
-\caption{Confusion Matrix and accuracy metrics when adding semantic information to a direct hierarchical segmentation ($\mu=15$).}
-\label{table:C3_S2_seg_hierar}
+\caption{Confusion Matrix and accuracy metrics when adding semantic information to a direct PFF segmentation ($\sigma=0.8$, $k=500$ and $m=40000$).}
+\label{table:C3_S2_seg_PFF}
 \end{center}
 \end{table}

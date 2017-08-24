@@ -190,7 +190,7 @@ The result of the classification for the area of interest is presented in Figure
 \label{subfig:C3_S2_classifa}
 }
 \hspace*{0.05\textwidth}
-\subfloat[Classification results (overall accuracy: 81.75\%, $\kappa$:0.67).]{
+\subfloat[Classification results (overall accuracy: 81.75\%, $\kappa$: 0.67).]{
 \includegraphics[width=0.45\textwidth]{Figures/C3/S2/classif}
 \label{subfig:C3_S2_classifb}
 }
@@ -241,7 +241,7 @@ The results of the majority vote for the segmentation of the nDSM is presented i
 \hspace*{0.025\textwidth}
 \subfloat[Semantic information for the hierarchical segmentation with $\mu=15$.]{
 \includegraphics[width=0.3\textwidth]{Figures/C3/S2/seg_hierar_z_colored}
-\label{subfig:seg_im_semb}
+\label{subfig:seg_z_semb}
 }
 \hspace*{0.025\textwidth}
 \subfloat[Semantic information for the PFF segmentation with $\sigma=0.8$, $k=500$ and $m=40000$.]{
@@ -266,14 +266,14 @@ The results of the over-segmentation of proposed segmentation algorithms are pre
 \begin{figure}[htbp]
 \begin{center}
 \begingroup
-\captionsetup[subfigure]{width=0.45\textwidth}
-\subfloat[IRC VHR optical image.]{
-\includegraphics[width=0.465\textwidth]{Figures/empty}
+\captionsetup[subfigure]{width=0.325\textwidth}
+\subfloat[RGB VHR optical image (250$\:$m$\times$250$\:$m).]{
+\includegraphics[width=0.465\textwidth]{Figures/C3/S3/ss1/RGB}
 \label{subfig:C3_S3_ss1_sega}
 }
 \hspace*{0.025\textwidth}
 \subfloat[nDSM.]{
-\includegraphics[width=0.465\textwidth]{Figures/empty}
+\includegraphics[width=0.465\textwidth]{Figures/C3/S3/ss1/nDSM}
 \label{subfig:C3_S3_ss1_segb}
 }
 \endgroup
@@ -281,37 +281,37 @@ The results of the over-segmentation of proposed segmentation algorithms are pre
 \begingroup
 \captionsetup[subfigure]{width=0.3\textwidth}
 \subfloat[Tree extraction.]{
-\includegraphics[width=0.3\textwidth]{Figures/empty}
+\includegraphics[width=0.3\textwidth]{Figures/C3/S3/ss1/nDSM_tree}
 \label{subfig:C3_S3_ss1_segc}
 }
 \hspace*{0.025\textwidth}
 \subfloat[Watershed.]{
-\includegraphics[width=0.3\textwidth]{Figures/empty}
+\includegraphics[width=0.3\textwidth]{Figures/C3/S3/ss1/nDSM_watershed}
 \label{subfig:C3_S3_ss1_segd}
 }
 \hspace*{0.025\textwidth}
 \subfloat[Hierarchical segmentation.]{
-\includegraphics[width=0.3\textwidth]{Figures/empty}
+\includegraphics[width=0.3\textwidth]{Figures/C3/S3/ss1/nDSM_hierarchical}
 \label{subfig:C3_S3_ss1_sege}
 }
 \\
 \subfloat[PFF.]{
-\includegraphics[width=0.3\textwidth]{Figures/empty}
+\includegraphics[width=0.3\textwidth]{Figures/C3/S3/ss1/PFF}
 \label{subfig:C3_S3_ss1_segf}
 }
 \hspace*{0.025\textwidth}
 \subfloat[Quickshift.]{
-\includegraphics[width=0.3\textwidth]{Figures/empty}
+\includegraphics[width=0.3\textwidth]{Figures/C3/S3/ss1/quickshift}
 \label{subfig:C3_S3_ss1_segg}
 }
 \hspace*{0.025\textwidth}
 \subfloat[SLIC.]{
-\includegraphics[width=0.3\textwidth]{Figures/empty}
+\includegraphics[width=0.3\textwidth]{Figures/C3/S3/ss1/SLIC}
 \label{subfig:C3_S3_ss1_segh}
 }
 
 \endgroup
-\caption{Over segmentation results.}
+\caption{Over segmentation results, red corresponds to the borders found by the segmentation algorithm.}
 \label{fig:C3_S3_ss1_seg}
 \end{center}
 \end{figure}
@@ -406,39 +406,39 @@ For the lidar information, the most relevant feature is surprisingly the intensi
 It is obvious that processing a reduced number of features (20 instead of 95) reduces the computational loads and times. Furthermore, if an optimal subset of feature is found, only the concerned features need to be computed. Thus, the feature computation step would be reduced to a minimum step by computing only the relevant features.
 
 
-
 \pgfplotstableread[col sep=comma,header=true]{
 Sel, n
-z,11
-density1,16
-density2,20
-planarity,11
-scatter,6
-min,10
-max,23
-mean,7
-median,9
-standard deviation,24
-medADmed,14
-meanADmed,14
-skewness,4
-kurtosis,7
-10$^{\text{th}}$percentile,8
-20$^{\text{th}}$percentile,9
-30$^{\text{th}}$percentile,10
-40$^{\text{th}}$percentile,9
-50$^{\text{th}}$percentile,7
-60$^{\text{th}}$percentile,11
-70$^{\text{th}}$percentile,12
-80$^{\text{th}}$percentile,8
-90$^{\text{th}}$percentile,11
-95$^{\text{th}}$percentile,8
-intensity,40
+{z},11
+{density1},16
+{density2},20
+{planarity},11
+{scatter},6
+{min},10
+{max},23
+{mean},7
+{median},9
+{standard deviation},24
+{medADmed},14
+{meanADmed},14
+{skewness},4
+{kurtosis},7
+{10th percentile},8
+{20th percentile},9
+{30th percentile},10
+{40th percentile},9
+{50th percentile},7
+{60th percentile},11
+{70th percentile},12
+{80th percentile},8
+{90th percentile},11
+{95th percentile},8
+{intensity},40
 }\datalidar
 
-\begin{figure} [htbp]%
+\begin{figure}[htbp]
 \begin{center}
-    \begin{tikzpicture}     
+    \begin{tikzpicture}
+    {
         \begin{axis}[    
             width=0.75\textwidth,
             xbar,                                 
@@ -447,24 +447,83 @@ intensity,40
             xmax=45,       
             grid=major,
             nodes near coords, nodes near coords align={horizontal},
-            symbolic y coords={intensity,95$^{\text{th}}$percentile,90$^{\text{th}}$percentile,80$^{\text{th}}$percentile,70$^{\text{th}}$percentile,60$^{\text{th}}$percentile,50$^{\text{th}}$percentile,40$^{\text{th}}$percentile,30$^{\text{th}}$percentile,20$^{\text{th}}$percentile,10$^{\text{th}}$percentile,kurtosis,skewness,meanADmed,medADmed,standard deviation,median,mean,max,min,scatter,planarity,density2,density1,z},
+            symbolic y coords={intensity, 95th percentile, 90th percentile, 80th percentile, 70th percentile, 60th percentile, 50th percentile, 40th percentile, 30th percentile, 20th percentile, 10th percentile, kurtosis, skewness, meanADmed, medADmed, standard deviation, median, mean, max, min, scatter, planarity, density2, density1, z},
             ylabel={Features},
             ytick=data,
             xlabel={Number of selections},
             y label style={at={(-0.33,0.5)}},
             enlarge x limits={abs=0},
             y=0.025\textheight,
-            reverse legend,
+            reverse legend
         ]
         \addplot[color=black, fill=black!80!white] table [x=n, y=Sel] {\datalidar};
-        %\legend{2011,1996}
         \end{axis}
+    }
     \end{tikzpicture}
 \caption{Result of the feature selection for the lidar features over 40 trials of 20 optimal features.}
 \label{fig:sel_lidar}
 \end{center}
 \end{figure}
 
+%\pgfplotstableread[col sep=comma,header=true]{
+%Sel, n
+%{z},11
+%{density1},16
+%{density2},20
+%{planarity},11
+%{scatter},6
+%{min},10
+%{max},23
+%{mean},7
+%{median},9
+%{standard deviation},24
+%{medADmed},14
+%{meanADmed},14
+%{skewness},4
+%{kurtosis},7
+%{10$^{\text{th}}$percentile},8
+%{20$^{\text{th}}$percentile},9
+%{30$^{\text{th}}$percentile},10
+%{40$^{\text{th}}$percentile},9
+%{50$^{\text{th}}$percentile},7
+%{60$^{\text{th}}$percentile},11
+%{70$^{\text{th}}$percentile},12
+%{80$^{\text{th}}$percentile},8
+%{90$^{\text{th}}$percentile},11
+%{95$^{\text{th}}$percentile},8
+%{intensity},40
+%}\datalidar
+%
+%\begin{figure}[htbp]
+%\begin{center}
+%    \begin{tikzpicture}
+%    {
+%        \begin{axis}[    
+%            width=0.75\textwidth,
+%            xbar,                                 
+%            xtick={0,5,10,...,45},    
+%            xmin=0,
+%            xmax=45,       
+%            grid=major,
+%            nodes near coords, nodes near coords align={horizontal},
+%            symbolic y coords={intensity, 95$^{\text{th}}$percentile, 90$^{\text{th}}$percentile, 80$^{\text{th}}$percentile, 70$^{\text{th}}$percentile, 60$^{\text{th}}$percentile, 50$^{\text{th}}$percentile, 40$^{\text{th}}$percentile, 30$^{\text{th}}$percentile, 20$^{\text{th}}$percentile, 10$^{\text{th}}$percentile, kurtosis, skewness, meanADmed, medADmed, standard deviation, median, mean, max, min, scatter, planarity, density2, density1, z},
+%            ylabel={Features},
+%            ytick=data,
+%            xlabel={Number of selections},
+%            y label style={at={(-0.33,0.5)}},
+%            enlarge x limits={abs=0},
+%            y=0.025\textheight,
+%            reverse legend
+%        ]
+%        \addplot[color=black, fill=black!80!white] table [x=n, y=Sel] {\datalidar};
+%        \end{axis}
+%    }
+%    \end{tikzpicture}
+%\caption{Result of the feature selection for the lidar features over 40 trials of 20 optimal features.}
+%\label{fig:sel_lidar}
+%\end{center}
+%\end{figure}
+%
 \pgfplotstableread[col sep=comma,header=true]{
 Sel, R, G, B, NIR
 Band,8,5,8,6
@@ -564,32 +623,31 @@ The classification is mainly performed using standard RF classifier \citep{openc
 \item The selection or non-selection of training pixels.
 \item The object-based or pixel-based analysis.
 \end{itemize}
-The four scenarii are investigated
 
 \paragraph{Pixel-based classification versus object-based classification. \\}
-The results of pixel-based and object-based classification is presented in Figure~\ref{fig:C3_S3_ss3_po}.
+The results of pixel-based and object-based classification is presented in Figure~\ref{fig:C3_S3_ss3_po}. The corresponding confusion matrices and accuracy metrics are presented in Tables~\ref{table:C3_S3_ss3_classif_pixel} and~\ref{table:C3_S3_ss3_classif_PFF}.
 
 \begin{figure}[htbp]
 \begin{center}
 \begingroup
-\captionsetup[subfigure]{width=0.45\textwidth}
+\captionsetup[subfigure]{width=0.425\textwidth}
 \subfloat[IRC VHR optical image.]{
-\includegraphics[width=0.45\textwidth]{Figures/empty}
+\includegraphics[width=0.45\textwidth]{Figures/C3/S3/ss3/IRC}
 \label{subfig:C3_S3_ss3_poa}
 }
 \hspace*{0.025\textwidth}
-\subfloat[Forest Lc.]{
-\includegraphics[width=0.45\textwidth]{Figures/empty}
+\subfloat[Forest LC.]{
+\includegraphics[width=0.45\textwidth]{Figures/C3/S3/ss3/BD}
 \label{subfig:C3_S3_ss3_pob}
 }
 \\
-\subfloat[Pixel-based classification.]{
-\includegraphics[width=0.45\textwidth]{Figures/empty}
+\subfloat[Pixel-based classification (overall accuracy: 70.48\%, $\kappa$: 0.50).]{
+\includegraphics[width=0.45\textwidth]{Figures/C3/S3/ss3/classif_pixel}
 \label{subfig:C3_S3_ss3_poc}
 }
 \hspace*{0.025\textwidth}
-\subfloat[Object-based classification (PFF).]{
-\includegraphics[width=0.45\textwidth]{Figures/empty}
+\subfloat[Object-based classification (PFF) (overall accuracy: 90.22\%, $\kappa$: 0.81).]{
+\includegraphics[width=0.45\textwidth]{Figures/C3/S3/ss3/classif_PFF}
 \label{subfig:C3_S3_ss3_pod}
 }
 \endgroup
@@ -598,19 +656,19 @@ The results of pixel-based and object-based classification is presented in Figur
 \end{center}
 \end{figure}
 
-The pixel-based classification (Figure~\ref{subfig:C3_S3_ss3_poc}) appears more noisy than the object-based classification (Figure~\ref{subfig:C3_S3_ss3_pod}). However, the pixel-based classification already provide good discrimination results. Conversely, even if the object are roughly extracted (no specific attention is paid to the relevance of the extracted objects), the object-based classification produces more spatially consistent labels. Such results impacts the final output (see Figure~\ref{fig:C3_S3_ss3_rpo}).
+The pixel-based classification (Figure~\ref{subfig:C3_S3_ss3_poc}) appears more noisy than the object-based classification (Figure~\ref{subfig:C3_S3_ss3_pod}). However, the pixel-based classification already provide good discrimination results. Conversely, even if the object are roughly extracted (no specific attention is paid to the relevance of the extracted objects), the object-based classification produces more spatially consistent labels. Such results impacts the final output (see Figure~\ref{fig:C3_S3_ss3_rpo} and Tables~\ref{table:C3_S3_ss3_regul_pixel} and~\ref{table:C3_S3_ss3_regul_PFF}).
 
 \begin{figure}[htbp]
 \begin{center}
 \begingroup
-\captionsetup[subfigure]{width=0.45\textwidth}
-\subfloat[Regularization using pixel-based classification.]{
-\includegraphics[width=0.45\textwidth]{Figures/empty}
+\captionsetup[subfigure]{width=0.425\textwidth}
+\subfloat[Regularization using pixel-based classification (overall accuracy: 91.94\%, $\kappa$: 0.85).]{
+\includegraphics[width=0.45\textwidth]{Figures/C3/S3/ss3/regul_pixel}
 \label{subfig:C3_S3_ss3_rpoa}
 }
 \hspace*{0.025\textwidth}
-\subfloat[Regularization using object-based classification (PFF).]{
-\includegraphics[width=0.45\textwidth]{Figures/empty}
+\subfloat[Regularization using object-based classification (PFF) (overall accuracy: 96.58\%, $\kappa$: 0.93).]{
+\includegraphics[width=0.45\textwidth]{Figures/C3/S3/ss3/regul_PFF}
 \label{subfig:C3_S3_ss3_rpob}
 }
 \endgroup
@@ -619,7 +677,13 @@ The pixel-based classification (Figure~\ref{subfig:C3_S3_ss3_poc}) appears more 
 \end{center}
 \end{figure}
 
-\paragraph{Training set design. \\}.
+\paragraph{Training set design. \\}
+
+The selection of the training pixels is an important step for the classification. It is a two sided problem:
+\begin{itemize}
+\item If the selected pixels are randomly taken from the polygons of the forest LC, some might not correspond to the target class, leading to confusion in the final classification.
+\item If the pixels are selected using a too discriminative criteria, the variability of the target class will not be taken into account, also leading to confusion in the final classification.
+\end{itemize}
 
 \begin{figure}[htbp]
 \begin{center}

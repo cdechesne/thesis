@@ -9,7 +9,7 @@
 \section{Accuracy metrics}
 In this section, the different accuracy metrics presented in the following tables are detailed. Most are standard metrics for classification evaluation. 
 
-They are based on the confusion matrix. In this section, the metrics are defined using the $r$-class confusion matrix presented in Table~\ref{table:confusion_ref}.
+They are based on the confusion matrix. The metrics can be computed at the global level, or for each class. In this section, the metrics are defined using the $r$-class confusion matrix presented in Table~\ref{table:confusion_ref1}. In order to compute the metrics at the local level a confusion matrix can be derived. In this section such confusion matrix is presented in Table~\ref{table:confusion_ref2}.
 
 \begin{table}[H]
 \begin{center}
@@ -27,28 +27,109 @@ $r$ & $n_{r1}$ & $n_{r2}$ & $\hdots$ & $n_{rr}$ & $n_{r.}$\\
 Total & $n_{.1}$ & $n_{.2}$ & $\hdots$ & $n_{.r}$ & $n$\\
 \end{tabular}
 \caption{Confusion Matrix.}
-\label{table:confusion_ref}
+\label{table:confusion_ref1}
 \end{center}
 \end{table}
 
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{c|c c| c}
 
+\multicolumn{4}{c}{Confusion matrix} \\
+ & $i$ & \st{$i$} & Total \\
+\hline
+$i$ & TP & FP & Pp \\
+\st{$i$} & FN & TN & Np \\
+\hline
+Total & P & N & n
+\end{tabular}
+\caption{Confusion Matrix at for the local level of the class $i$.}
+\label{table:confusion_ref2}
+\end{center}
+\end{table}
+
+The relation between the elements of Table~\ref{table:confusion_ref1} and Table~\ref{table:confusion_ref2} are the following:
+
+\begin{equation}
+\begin{aligned}
+& \text{TP}=n_{ii} & 
+& \text{FP}=n_{i.}-n_{ii} & 
+& \text{Pp}=n_{i.} \\
+& \text{FN}=n_{.i}-n_{ii} & 
+& \text{TN}=n-n_{.i}-n_{i.}+n_{ii} & 
+& \text{Np}=n-n_{i.}\\
+& \text{P}=n_{.i} & 
+& \text{N}=n-n_{.i} & 
+\end{aligned}
+\label{eq:relation_matrix}
+\end{equation}\\
+
+\subsection{Metrics at the local level}
 \paragraph{Precision \\}
 For the class $i \in [1,r]$, the precision (or producer's accuracy) $p_{i}$ is defined as follow:
 \begin{equation}
-p_{i}=\frac{n_{ii}}{n_{i.}}.
+p_{i}=\frac{n_{ii}}{n_{i.}}=\frac{\text{TP}}{\text{Pp}}.
 \end{equation}
 It is the accuracy from the point of view of the map maker (the producer). This is how often are real features on the ground correctly shown on the classified map or the probability that a certain land cover of an area on the ground is classified as such. The Producer's Accuracy is complement of the Omission Error, Producer's Accuracy = 100\%-Omission Error. It is also the number of reference sites classified accurately divided by the total number of reference sites for that class
 
 \paragraph{Recall \\}
 For the class $i \in [1,r]$, the recall (or user's accuracy) $r_{i}$ is defined as follow:
 \begin{equation}
-r_{i}=\frac{n_{ii}}{n_{.i}}.
+r_{i}=\frac{n_{ii}}{n_{.i}}=\frac{\text{TP}}{\text{P}}.
 \end{equation}
 It is the accuracy from the point of view of a map user, not the map maker. The User's accuracy essentially tells use how often the class on the map will actually be present on the ground. This is referred to as reliability. The User's Accuracy is complement of the Commission Error, User's Accuracy = 100\%-Commission Error. When a class is not represented in the classification map, the recall can not be computed.
 
+\paragraph{Intersection over Union \\}
+The Intersection over Union (or Jaccard index) \citep{jaccard1912distribution} measures similarity between finite sample sets, and is defined as the size of the intersection divided by the size of the union of the sample sets. For a class $i$, the Intersection over Union ($IoU_{i}$) is defined as follow:
+\begin{equation}
+IoU_{i}=\frac{n_{ii}}{n_{i.}+n_{.i}-n_{ii}}=\frac{\text{TP}}{\text{Pp}+\text{P}-\text{TP}}
+\end{equation}
 
-\paragraph{Kappa coefficient \citep{cohen1960coefficient}\\} % kappa: http://kappa.chez-alice.fr/Kappa_2juges_Def.htm
-The Kappa coefficient ($\kappa$) is generated from a statistical test to evaluate the accuracy of a classification. Kappa essentially evaluate how well the classification performed as compared to just randomly assigning values (i.e. did the classification do better than random.) The Kappa Coefficient can range from -1 to 1. A value of 0 indicated that the classification is no better than a random classification. A negative number indicates the classification is significantly worse than random. A value close to 1 indicates that the classification is significantly better than random.
+\paragraph{F-score \\}
+It considers both the precision p and the recall r of the test to compute the score. The F-score can be interpreted as a weighted average of the precision and recall, where an F-score reaches its best value at 1 and worst at 0. The F-score ($F_{1}$) of the class $i$ is defined as follow
+\begin{equation}
+F_{1,i}=2\frac{p_{i}r_{i}}{p_{i}+r_{i}}
+\end{equation}
+
+\paragraph{Accuracy \\}
+The accuracy ($A_{i}$) (or relative observed agreement among raters) of the class $i$ is computed as follow:
+\begin{equation}
+A_{i}=\frac{\text{TP}+\text{TN}}{n}
+\end{equation}
+
+\paragraph{Kappa coefficient \\}
+The Kappa coefficient  \citep{cohen1960coefficient} ($\kappa_{i}$) is generated from a statistical test to evaluate the accuracy of a classification. Kappa essentially evaluate how well the classification performed as compared to just randomly assigning values (i.e. did the classification do better than random.) The Kappa Coefficient can range from -1 to 1. A value of 0 indicated that the classification is no better than a random classification. A negative number indicates the classification is significantly worse than random. A value close to 1 indicates that the classification is significantly better than random.
+The Kappa coefficient is computed as follow:
+\begin{equation}
+\kappa_{i}=\frac{P_{0,i}-P_{e,i}}{1-P_{e,i}},
+\end{equation}
+where $P_{0}$ is the relative observed agreement among raters, and $P_{e}$ is the hypothetical probability of chance agreement. They are defined as follow:
+\begin{eqnarray}
+P_{0,i} & = & \frac{\text{TP}+\text{TN}}{n} \\
+P_{e,i} & = & \frac{\text{P} \times \text{Pp} + \text{N} \times \text{Np}}{n^{2}}
+\end{eqnarray}
+
+\subsection{Metrics at the global level}
+
+\paragraph{Intersection over Union \\}
+The overall Intersection over Union score ($IoU$) is defined as the mean of the local Intersection over Union scores:
+\begin{equation}
+IoU=\frac{1}{r}\sum_{i=1}^{r}IoU_{i}
+\end{equation}
+
+\paragraph{F-score \\}
+The overall F-score ($F_{1}$) is defined as the mean of the local F-scores. If a $F_{1,i}$ can not be computed, it is considered as zero.
+\begin{equation}
+F_{1}=\frac{1}{r}\sum_{i=1}^{r}F_{1,i}
+\end{equation}
+
+\paragraph{Overall Accuracy \\}
+The overall accuracy ($OA$) is defined as follow:
+\begin{equation}
+OA=\frac{1}{n}\sum_{i=1}^{r}n_{ii}
+\end{equation}
+
+\paragraph{Kappa coefficient\\} % kappa: http://kappa.chez-alice.fr/Kappa_2juges_Def.htm
 The Kappa coefficient is computed as follow:
 \begin{equation}
 \kappa=\frac{P_{0}-P_{e}}{1-P_{e}},
@@ -59,30 +140,30 @@ P_{0} & = & \frac{1}{n}\sum_{i=1}^{r}n_{ii} \\
 P_{e} & = & \frac{1}{n^{2}}\sum_{i=1}^{r}n_{i.}n_{.i}
 \end{eqnarray}
 
-\paragraph{F-score \\}
-It considers both the precision p and the recall r of the test to compute the score. The F-score can be interpreted as a weighted average of the precision and recall, where an F-score reaches its best value at 1 and worst at 0. The F-score ($F_{1}$) of the class $i$ is defined as follow
-\begin{equation}
-F_{1,i}=2\frac{p_{i}r_{i}}{p_{i}+r_{i}}
-\end{equation}
-
-\paragraph{Intersection over Union \\}
-The Intersection over Union (or Jaccard index) \citep{jaccard1912distribution} measures similarity between finite sample sets, and is defined as the size of the intersection divided by the size of the union of the sample sets. For a class $i$, the Intersection over Union ($IoU_{i}$) is defined as follow:
-\begin{equation}
-IoU_{i}=\frac{n_{ii}}{n_{i.}+n_{.i}-n_{ii}}
-\end{equation}
-
-
 \section{Segmentation methods}
 \input{Results/S2_classif.tex}
+
 \subsection{VHR optical images}
 \input{Results/S2_seg_hierar.tex}
 \input{Results/S2_seg_PFF.tex}
+
 \subsection{nDSM}
 \input{Results/S2_seg_hierar_z.tex}
 \input{Results/S2_seg_PFF_z.tex}
 
 \section{Results of the method}
 \subsection{Classification}
+\subsubsection{Pixel-based classification versus object-based classification}
+\input{Results/S3_ss3_classif_pixel.tex}
+\input{Results/S3_ss3_classif_PFF.tex}
+
+\input{Results/S3_ss3_regul_pixel.tex}
+\input{Results/S3_ss3_regul_PFF.tex}
+
+\paragraph{Training set design. \\}
+
+
+
 \subsection{Regularization}
 
 \stopcontents[chapters]
