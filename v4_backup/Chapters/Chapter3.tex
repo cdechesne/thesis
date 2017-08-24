@@ -685,24 +685,76 @@ The selection of the training pixels is an important step for the classification
 \item If the pixels are selected using a too discriminative criteria, the variability of the target class will not be taken into account, also leading to confusion in the final classification.
 \end{itemize}
 
+The Figure~\ref{fig:C3_S3_ss3_sel} shows the pixels that have been selected by the k-mean algorithm for the training. Most of the pixel from the forest LC are retained. However, the pixels that are excluded from the training are visually relevant. Indeed, they mostly correspond to:
+\begin{itemize}
+\item Shadows from the optical images,
+\item gaps in the canopy (retrieved from the lidar data)
+\item pixels that are visually different from the other pixels of the considered class (i.e. other species).
+\end{itemize}
+
+The selection of training pixels is beneficial since it allows to remove the obviously irrelevant pixels from the training set while maintaining a certain variability within classes.
+
 \begin{figure}[htbp]
 \begin{center}
 \begingroup
 \captionsetup[subfigure]{width=0.45\textwidth}
-\subfloat[Selected pixels; random selection.]{
-\includegraphics[width=0.45\textwidth]{Figures/empty}
+\subfloat[RGB VHR optical image.]{
+\includegraphics[width=0.45\textwidth]{Figures/C3/S3/ss3/RGB}
 \label{subfig:C3_S3_ss_sela}
 }
 \hspace*{0.025\textwidth}
-\subfloat[Selected pixels; automatic selection.]{
-\includegraphics[width=0.45\textwidth]{Figures/empty}
+\subfloat[nDSM.]{
+\includegraphics[width=0.45\textwidth]{Figures/C3/S3/ss3/nDSM}
 \label{subfig:C3_S3_ss3_selb}
+}
+\\
+\subfloat[Forest LC.]{
+\includegraphics[width=0.45\textwidth]{Figures/C3/S3/ss3/BD}
+\label{subfig:C3_S3_ss_selc}
+}
+\hspace*{0.025\textwidth}
+\subfloat[Retained pixels for training.]{
+\includegraphics[width=0.45\textwidth]{Figures/C3/S3/ss3/training_set}
+\label{subfig:C3_S3_ss3_seld}
 }
 \endgroup
 \caption{Selection of the training pixels.}
 \label{fig:C3_S3_ss3_sel}
 \end{center}
 \end{figure}
+
+The results of the classification and regularization using different training set is presented in Figure~\ref{fig:C3_S3_ss3_sel_results}. The confusion matrices and accuracy metrics when the training pixels are not selected are presented in Tables~\ref{table:C3_S3_ss3_classif_without_training} and~\ref{table:C3_S3_ss3_regul_without_training}.
+
+\begin{figure}[htbp]
+\begin{center}
+\begingroup
+\captionsetup[subfigure]{width=0.45\textwidth}
+\subfloat[Classification with selection of training pixels  (overall accuracy: 90.22\%, $\kappa$: 0.81).]{
+\includegraphics[width=0.45\textwidth]{Figures/C3/S3/ss3/classif_PFF}
+\label{subfig:C3_S3_ss3_sel_resultsa}
+}
+\hspace*{0.025\textwidth}
+\subfloat[Regularization  with selection of training pixels (overall accuracy: 96.58\%, $\kappa$: 0.93).]{
+\includegraphics[width=0.45\textwidth]{Figures/C3/S3/ss3/regul_PFF}
+\label{subfig:C3_S3_ss3_sel_resultsb}
+}
+\\
+\subfloat[Classification without selection of training pixels (overall accuracy: 78.98\%, $\kappa$: 0.62).]{
+\includegraphics[width=0.45\textwidth]{Figures/C3/S3/ss3/classif_without_training}
+\label{subfig:C3_S3_ss3_sel_resultsc}
+}
+\hspace*{0.025\textwidth}
+\subfloat[Regularization without selection of training pixels (overall accuracy: 94.67\%, $\kappa$: 0.89).]{
+\includegraphics[width=0.45\textwidth]{Figures/C3/S3/ss3/regul_without_training}
+\label{subfig:C3_S3_ss3_sel_resultsd}
+}
+\endgroup
+\caption{Selection of the training pixels.}
+\label{fig:C3_S3_ss3_sel_results}
+\end{center}
+\end{figure}
+
+The selection of training pixels greatly increases the classification results. Indeed, without any selection, the classification is very noisy (even when working at the object level) and many confusion are reported. The regularization attenuates the errors, but the result remains worse than the one obtained with the selection of training pixels.
 
 \subsection{Regularization}
 The smoothing of the classification can be performed using local or global methods.
