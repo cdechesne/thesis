@@ -766,8 +766,51 @@ Firstly, the use of a majority filter have been employed. Since it does not take
 \paragraph{Majority filter. \\}
 The results for the majority filter is presented in Figure~\ref{fig:C3_S3_ss4_maj}.  The filtering method performs the worse with a gain of less than 1\% compared to the classification, even with large filters. Furthermore,the larger the filter is,the longer are the computation times. 
 
+\begin{figure}[htbp]
+\begin{center}
+\begingroup
+\captionsetup[subfigure]{width=0.3\textwidth}
+\subfloat[Forest LC database.]{
+\includegraphics[width=0.3\textwidth]{Figures/C3/S2/BD}
+\label{subfig:C3_S3_ss4_maja}
+}
+\hspace*{0.025\textwidth}
+\subfloat[Majority filter ($r=5$).]{
+\includegraphics[width=0.3\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss4_majb}
+}
+\hspace*{0.025\textwidth}
+\subfloat[Majority filter ($r=25$).]{
+\includegraphics[width=0.3\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss4_majc}
+}
+\endgroup
+\caption{Results of the majority filters.}
+\label{fig:C3_S3_ss4_maj}
+\end{center}
+\end{figure}
+
 \paragraph{Probabilistic relaxation. \\}
 The results for the probabilistic relaxation is presented in Figure~\ref{fig:C3_S3_ss4_prob}. The probabilistic relaxation has also poor results (+5\% than the classification) and has also important computation times, since the iterative process runs until the convergence has been reached.
+
+\begin{figure}[htbp]
+\begin{center}
+\begingroup
+\captionsetup[subfigure]{width=0.425\textwidth}
+\subfloat[Forest LC database.]{
+\includegraphics[width=0.45\textwidth]{Figures/C3/S2/BD}
+\label{subfig:C3_S3_ss4_proba}
+}
+\hspace*{0.025\textwidth}
+\subfloat[Probabilistic relaxation ($r=5$).]{
+\includegraphics[width=0.45\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss4_probb}
+}
+\endgroup
+\caption{Results of the probabilistic relaxation.}
+\label{fig:C3_S3_ss4_prob}
+\end{center}
+\end{figure}
 
 \subsubsection{Global methods}
 The regularization is the final step that smooth the former classification. In the formulation of the energy, 3 aspect are taken into account. The two most important are the integration of the information from the classification (unary term) and how the feature are integrated into the smoothing process (prior). The last aspect is the integration of other constraints, allowed by the use of the QPBO algorithm.
@@ -819,9 +862,69 @@ The effect of the parameter $\gamma$ is presented in Figure~\ref{fig:C3_S3_ss4_g
 
 The unary term have the major impact on the regularization results (see Figure~\ref{fig:C3_S3_ss4_unary}). Indeed, the log-inverse formulation highly penalize pixels with low probability, thus, small areas with high probabilities will be kept, even with an important $\gamma$. Contrarily, the linear formulation have a stronger smoothing effect.
 
+\begin{figure}[htbp]
+\begin{center}
+\begingroup
+\captionsetup[subfigure]{width=0.3\textwidth}
+\subfloat[Forest LC database.]{
+\includegraphics[width=0.3\textwidth]{Figures/C3/S2/BD}
+\label{subfig:C3_S3_ss4_unarya}
+}
+\hspace*{0.025\textwidth}
+\subfloat[Regularization results using the log-inverse data formulation.]{
+\includegraphics[width=0.3\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss4_unaryb}
+}
+\hspace*{0.025\textwidth}
+\subfloat[Regularization results using the linear data formulation.]{
+\includegraphics[width=0.3\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss4_unaryc}
+}
+\endgroup
+\caption{Results of the majority filters.}
+\label{fig:C3_S3_ss4_unary}
+\end{center}
+\end{figure}
+
 Both are interesting for the analysis of forest. The log-inverse allows to obtain small areas that keep an important class confidence. Such areas are useful for forest inventory since they give information about large forested areas with small islets of pure species. Conversely, the linear formulation produces smooth segments that are more relevant for a national mapping.
 
 \paragraph{Prior. \\}
+
+The prior have a weak impact on the regularization results (see Figure~\ref{fig:C3_S3_ss4_prior}).
+
+\begin{figure}[htbp]
+\begin{center}
+\begingroup
+\captionsetup[subfigure]{width=0.3\textwidth}
+\subfloat[Forest LC database.]{
+\includegraphics[width=0.3\textwidth]{Figures/C3/S2/BD}
+\label{subfig:C3_S3_ss4_priora}
+}
+\hspace*{0.025\textwidth}
+\subfloat[Regularization results using the \textit{Potts model}.]{
+\includegraphics[width=0.3\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss4_priorb}
+}
+\hspace*{0.025\textwidth}
+\subfloat[Regularization results using the \textit{z-Potts model}.]{
+\includegraphics[width=0.3\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss4_priorc}
+}
+\\
+\subfloat[Regularization results using the \textit{Exponential-features model}.]{
+\includegraphics[width=0.3\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss4_priord}
+}
+\hspace*{0.025\textwidth}
+\subfloat[Regularization results using the \textit{Distance-features model}.]{
+\includegraphics[width=0.3\textwidth]{Figures/empty}
+\label{subfig:C3_S3_ss4_priore}
+}
+\endgroup
+\caption{Results of the majority filters.}
+\label{fig:C3_S3_ss4_prior}
+\end{center}
+\end{figure}
 
 The \textit{z-Potts model} tends to have slightly worse results than the other methods. The \textit{Potts model} and the \textit{Distance-features model} have very close results regardless of the unary term. The \textit{Exponential-features model} have the greatest results with the linear unary, but have poor results with the log-inverse unary.
 

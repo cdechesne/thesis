@@ -53,11 +53,11 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 
 %%%
 
-\usepackage[maxbibnames=99, maxcitenames=1, backend=bibtex,style=alphabetic-verb,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
+%\usepackage[maxbibnames=99, maxcitenames=1, backend=bibtex,style=alphabetic-verb,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
 
 %\usepackage[maxbibnames=99, maxcitenames=1, backend=bibtex,style=authoryear,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
 
-%\usepackage[maxbibnames=99, maxcitenames=1, backend=bibtex,style=numeric,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
+\usepackage[maxbibnames=99, maxcitenames=1, backend=bibtex,style=numeric,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
 
 
 \addbibresource{example.bib} % The filename of the bibliography
@@ -180,6 +180,18 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 %	THESIS CONTENT - APPENDICES
 %----------------------------------------------------------------------------------------
 
+\openchapter
+\pagestyle{plain}
+\begin{changemargin}{-2.5cm}{-3.5cm}
+~
+\vfill
+\begin{center}
+{\fontsize{50}{1}\selectfont {Appendices}}
+\end{center}
+\vfill
+\end{changemargin}
+\pagestyle{thesis}
+
 \appendix % Cue to tell LaTeX that the following "chapters" are Appendices
 
 % Include the appendices of the thesis as separate files from the Appendices folder
@@ -202,6 +214,11 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 \openchapter
 \setlength\bibitemsep{1.5\itemsep}
 \printbibliography[heading=bibintoc]
+
+%\printbibliography[heading=bibintoc,title={Bibliography}]
+%\printbibliography[heading=subbibintoc,type=book,title={Books}]
+%\printbibliography[heading=subbibintoc,type=article,title={Articles}]
+%\printbibliography[heading=subbibintoc,type=inproceedings,title={Proceedings}]
 
 %\renewcommand{\clearpage}{\clearpageold}
 %\renewcommand{\cleardoublepage}{\cleardoublepageold}

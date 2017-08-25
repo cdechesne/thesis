@@ -34,6 +34,20 @@
 }
 %%%
 
+
+%%%% Margin %%%%
+\newenvironment{changemargin}[2]{\begin{list}{}{%
+\setlength{\topsep}{0pt}%
+\setlength{\leftmargin}{0pt}%
+\setlength{\rightmargin}{0pt}%
+\setlength{\listparindent}{\parindent}%
+\setlength{\itemindent}{\parindent}%
+\setlength{\parsep}{0pt plus 1pt}%
+\addtolength{\leftmargin}{#1}%
+\addtolength{\rightmargin}{#2}%
+}\item }{\end{list}}
+%%%% end %%%%
+
 % Mise en forme Tikz (schéma général + logo lupin)
 \definecolor{IGNVert}{RGB}{148, 192,  22}
 \definecolor{IGNGris}{RGB}{112, 119, 122}
