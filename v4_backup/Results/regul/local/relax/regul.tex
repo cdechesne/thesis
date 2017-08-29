@@ -1,0 +1,42 @@
+\begin{table}[H]
+\begin{center}
+\footnotesize
+\begin{tabular}{|l|c|c|c|c|r|}
+\hline
+\multicolumn{6}{|c|}{Confusion matrix} \\
+\hline
+ Classes & 1 (1) & 2 (4) & 3 (5) & 4 (13) & Precision \\
+\hline
+1 (1) & 2122380 & 2802 & 43233 & 53593 & 95.52 \\
+\hline
+2 (4) & 11 & 29880 & 0 & 64 & 99.75 \\
+\hline
+3 (5) & 9862 & 0 & 150745 & 1104 & 93.22 \\
+\hline
+4 (13) & 32943 & 2299 & 17229 & 1039879 & 95.2 \\
+\hline
+Recall & 98.02 & 85.42 & 71.37 & 95 &  \\
+\hline
+\multicolumn{6}{c}{ } \\
+\hline
+\multicolumn{6}{|c|}{Accuracy metrics} \\
+\hline
+ Classes & 1 (1) & 2 (4) & 3 (5) & 4 (13) & Overall \\
+\hline
+IU & 93.71 & 85.24 & 67.85 & 90.65 & 84.36 \\
+\hline
+F-score & 96.75 & 92.03 & 80.85 & 95.1 & 91.18 \\
+\hline
+Accuracy & 95.94 & 99.85 & 97.96 & 96.94 & 95.35 \\
+\hline
+P0 & 0.96 & 1 & 0.98 & 0.97 & 0.95 \\
+\hline
+Pe & 0.53 & 0.98 & 0.9 & 0.57 & 0.49 \\
+\hline
+$\kappa$ & 0.9133 & 0.9196 & 0.7979 & 0.9287 & 0.9085 \\
+\hline
+\end{tabular}
+\caption{Confusion Matrix and accuracy metrics after the probabilistic relaxation ($r=5$).}
+\label{table:}
+\end{center}
+\end{table}

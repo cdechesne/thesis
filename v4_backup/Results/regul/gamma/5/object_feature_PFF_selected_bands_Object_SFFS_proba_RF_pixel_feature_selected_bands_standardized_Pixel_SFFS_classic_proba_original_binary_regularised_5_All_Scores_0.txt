@@ -1,0 +1,29 @@
+Rappel: 98.88%
+Précision: 97.7%
+F-Score: 0.9829
+Accuracy: 97.84%
+Kappa: 0.9537
+Pe: 0.5338
+
+Rappel: 85.47%
+Précision: 99.2%
+F-Score: 0.9182
+Accuracy: 99.85%
+Kappa: 0.9175
+Pe: 0.9817
+
+Rappel: 84.22%
+Précision: 95.35%
+F-Score: 0.8944
+Accuracy: 98.96%
+Kappa: 0.889
+Pe: 0.9065
+
+Rappel: 97.01%
+Précision: 97.04%
+F-Score: 0.9702
+Accuracy: 98.15%
+Kappa: 0.9568
+Pe: 0.571
+
+Kappa total: 0.9483

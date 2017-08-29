@@ -1,0 +1,42 @@
+\begin{table}[H]
+\begin{center}
+\footnotesize
+\begin{tabular}{|l|c|c|c|c|r|}
+\hline
+\multicolumn{6}{|c|}{Confusion matrix} \\
+\hline
+ Classes & 1 (1) & 2 (4) & 3 (5) & 4 (13) & Precision \\
+\hline
+1 (1) & 2171863 & 2951 & 14706 & 32488 & 97.74 \\
+\hline
+2 (4) & 2144 & 27578 & 0 & 233 & 92.06 \\
+\hline
+3 (5) & 2633 & 0 & 157920 & 1158 & 97.66 \\
+\hline
+4 (13) & 23487 & 1544 & 11976 & 1055343 & 96.61 \\
+\hline
+Recall & 98.72 & 85.99 & 85.55 & 96.89 &  \\
+\hline
+\multicolumn{6}{c}{ } \\
+\hline
+\multicolumn{6}{|c|}{Accuracy metrics} \\
+\hline
+ Classes & 1 (1) & 2 (4) & 3 (5) & 4 (13) & Overall \\
+\hline
+IU & 96.52 & 80.05 & 83.82 & 93.71 & 88.52 \\
+\hline
+F-score & 98.23 & 88.92 & 91.2 & 96.75 & 93.77 \\
+\hline
+Accuracy & 97.76 & 99.8 & 99.13 & 97.98 & 97.34 \\
+\hline
+P0 & 0.98 & 1 & 0.99 & 0.98 & 0.97 \\
+\hline
+Pe & 0.53 & 0.98 & 0.91 & 0.57 & 0.5 \\
+\hline
+$\kappa$ & 0.952 & 0.8882 & 0.9075 & 0.9528 & 0.9471 \\
+\hline
+\end{tabular}
+\caption{Confusion Matrix and accuracy metrics of the regularization  using the \textit{Distance-feature model}.}
+\label{table:}
+\end{center}
+\end{table}

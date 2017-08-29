@@ -140,32 +140,83 @@ P_{0} & = & \frac{1}{n}\sum_{i=1}^{r}n_{ii} \\
 P_{e} & = & \frac{1}{n^{2}}\sum_{i=1}^{r}n_{i.}n_{.i}
 \end{eqnarray}
 
-\section{Segmentation methods}
-\input{Results/S2_classif.tex}
+\section{Segmentation methods}~\vspace*{-1cm}
+\input{Results/S2_classif.tex}~\vspace*{-1cm}
 
-\subsection{VHR optical images}
-\input{Results/S2_seg_hierar.tex}
-\input{Results/S2_seg_PFF.tex}
+\subsection{VHR optical images}~\vspace*{-1cm}
+\input{Results/S2_seg_hierar.tex}~\vspace*{-1cm}
+\input{Results/S2_seg_PFF.tex}~\vspace*{-1cm}
 
-\subsection{nDSM}
-\input{Results/S2_seg_hierar_z.tex}
-\input{Results/S2_seg_PFF_z.tex}
+\subsection{nDSM}~\vspace*{-1cm}
+\input{Results/S2_seg_hierar_z.tex}~\vspace*{-1cm}
+\input{Results/S2_seg_PFF_z.tex}~\vspace*{-1cm}
 
-\section{Results of the method}
-\subsection{Classification}
-\paragraph{Pixel-based classification versus object-based classification. \\}~
+\section{Results of the method}~\vspace*{-1cm}
+\subsection{Over-segmentation}~\vspace*{-1cm}
+\paragraph{Trees. \\}~\vspace*{-1cm}
+\input{Results/os/trees/classif.tex}~\vspace*{-1cm}
+\input{Results/os/trees/regul.tex}~\vspace*{-1cm}
 
-\input{Results/S3_ss3_classif_pixel.tex}
-\input{Results/S3_ss3_classif_PFF.tex}
+\paragraph{Watershed. \\}~\vspace*{-1cm}
+\input{Results/os/watershed/classif.tex}~\vspace*{-1cm}
+\input{Results/os/watershed/regul.tex}~\vspace*{-1cm}
 
-\input{Results/S3_ss3_regul_pixel.tex}
-\input{Results/S3_ss3_regul_PFF.tex}
+\paragraph{Hierarchical segmentation. \\}~\vspace*{-1cm}
+\input{Results/os/hierarchical/classif.tex}~\vspace*{-1cm}
+\input{Results/os/hierarchical/regul.tex}~\vspace*{-1cm}
 
-\paragraph{Training set design. \\}~
+\paragraph{PFF. \\}~\vspace*{-1cm}
+\input{Results/os/PFF/classif.tex}~\vspace*{-1cm}
+\input{Results/os/PFF/regul.tex}~\vspace*{-1cm}
 
-\input{Results/S3_ss3_classif_without_training.tex}
-\input{Results/S3_ss3_regul_without_training.tex}
+\paragraph{Quickshift. \\}~\vspace*{-1cm}
+\input{Results/os/quickshift/classif.tex}~\vspace*{-1cm}
+\input{Results/os/quickshift/regul.tex}~\vspace*{-1cm}
 
-\subsection{Regularization}
+\paragraph{SLIC. \\}~\vspace*{-1cm}
+\input{Results/os/SLIC/classif.tex}~\vspace*{-1cm}
+\input{Results/os/SLIC/regul.tex}~\vspace*{-1cm}
+
+\subsection{Classification}~\vspace*{-1cm}
+\paragraph{Pixel-based classification versus object-based classification. \\}~\vspace*{-1cm}
+
+\input{Results/S3_ss3_classif_pixel.tex}~\vspace*{-1cm}
+\input{Results/S3_ss3_classif_PFF.tex}~\vspace*{-1cm}
+
+\input{Results/S3_ss3_regul_pixel.tex}~\vspace*{-1cm}
+\input{Results/S3_ss3_regul_PFF.tex}~\vspace*{-1cm}
+
+\paragraph{Training set design. \\}~\vspace*{-1cm}
+
+\input{Results/S3_ss3_classif_without_training.tex}~\vspace*{-1cm}
+\input{Results/S3_ss3_regul_without_training.tex}~\vspace*{-1cm}
+
+\subsection{Regularization}~\vspace*{-1cm}
+\subsection{Local methods}~\vspace*{-1cm}
+
+\paragraph{Majority filter. \\}~\vspace*{-1cm}
+\input{Results/regul/local/filter/5/regul.tex}~\vspace*{-1cm}
+\input{Results/regul/local/filter/25/regul.tex}~\vspace*{-1cm}
+
+\paragraph{Probabilistic relaxation. \\}~\vspace*{-1cm}
+\input{Results/regul/local/relax/regul.tex}~\vspace*{-1cm}
+
+\subsubsection{Global methods}~\vspace*{-1cm}
+
+\paragraph{Impact of the parameter $\gamma$. \\}~\vspace*{-1cm}
+\input{Results/regul/gamma/5/regul.tex}~\vspace*{-1cm}
+\input{Results/regul/gamma/10/regul.tex}~\vspace*{-1cm}
+\input{Results/regul/gamma/15/regul.tex}~\vspace*{-1cm}
+\input{Results/regul/gamma/20/regul.tex}~\vspace*{-1cm}
+
+\paragraph{Unary term. \\}~\vspace*{-1cm}
+\input{Results/regul/data/log/regul.tex}~\vspace*{-1cm}
+\input{Results/regul/data/linear/regul.tex}~\vspace*{-1cm}
+
+\paragraph{Prior. \\}~\vspace*{-1cm}
+\input{Results/regul/binary/potts/regul.tex}~\vspace*{-1cm}
+\input{Results/regul/binary/cs/regul.tex}~\vspace*{-1cm}
+\input{Results/regul/binary/ef/regul.tex}~\vspace*{-1cm}
+\input{Results/regul/binary/df/regul.tex}~\vspace*{-1cm}
 
 \stopcontents[chapters]

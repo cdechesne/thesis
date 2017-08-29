@@ -1,0 +1,41 @@
+\begin{table}[!H]
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|r|}
+\hline
+\multicolumn{6}{|c|}{Confusion matrix} \\
+\hline
+ Classes & 1 (1) & 2 (4) & 3 (5) & 4 (13) & Precision \\
+\hline
+1 (1) & 2172018 & 1463 & 19015 & 29512 & 97.75 \\
+\hline
+2 (4) & 536 & 28364 & 0 & 1055 & 94.69 \\
+\hline
+3 (5) & 427 & 0 & 147858 & 13426 & 91.43 \\
+\hline
+4 (13) & 23755 & 1499 & 4103 & 1062993 & 97.31 \\
+\hline
+Recall & 98.87 & 90.54 & 86.48 & 96.03 &  \\
+\hline
+\multicolumn{6}{c}{ } \\
+\hline
+\multicolumn{6}{|c|}{Accuracy metrics} \\
+\hline
+ Classes & 1 (1) & 2 (4) & 3 (5) & 4 (13) & Overall \\
+\hline
+IU & 96.67 & 86.17 & 80 & 93.55 & 89.1 \\
+\hline
+F-score & 98.31 & 92.57 & 88.89 & 96.66 & 94.11 \\
+\hline
+Accuracy & 97.87 & 99.87 & 98.95 & 97.91 & 97.3 \\
+\hline
+P0 & 0.98 & 1 & 0.99 & 0.98 & 0.97 \\
+\hline
+Pe & 0.53 & 0.98 & 0.91 & 0.57 & 0.5 \\
+\hline
+$\kappa$ & 0.9543 & 0.925 & 0.8833 & 0.9514 & 0.9462 \\
+\hline
+\end{tabular}
+\caption{Confusion Matrix and accuracy metrics of the regularization (Quickshift over-segmentation).}
+\label{table:}
+\end{center}
+\end{table}

@@ -1,0 +1,23 @@
+Ground truth: shape_0.tif
+Classification: object_feature_PFF_selected_bands_Object_SFFS_classification_RF.tif
+Regularisation: object_feature_PFF_selected_bands_Object_SFFS_proba_RF_pixel_feature_selected_bands_standardized_Pixel_SFFS_classic_proba_original_binary_regularised_5.tif
+
+Class 1(1) color: (255,0,0)
+Class 2(4) color: (255,255,0)
+Class 3(5) color: (255,0,255)
+Class 4(13) color: (127,0,0)
+
+Classification overall accuracy: 93.141%
+Regularisation overall accuracy: 97.399%
+
+Classification detailed accuracy:
+Class 1(1): 93.259%
+Class 2(4): 97.964%
+Class 3(5): 90.698%
+Class 4(13): 93.132%
+
+Regularisation detailed accuracy:
+Class 1(1): 97.699%
+Class 2(4): 99.199%
+Class 3(5): 95.355%
+Class 4(13): 97.042%

@@ -1,0 +1,42 @@
+\begin{table}[H]
+\begin{center}
+\footnotesize
+\begin{tabular}{|l|c|c|c|c|r|}
+\hline
+\multicolumn{6}{|c|}{Confusion matrix} \\
+\hline
+ Classes & 1 (1) & 2 (4) & 3 (5) & 4 (13) & Precision \\
+\hline
+1 (1) & 2168246 & 2951 & 15896 & 34915 & 97.58 \\
+\hline
+2 (4) & 26 & 29861 & 0 & 68 & 99.69 \\
+\hline
+3 (5) & 6376 & 0 & 154601 & 734 & 95.6 \\
+\hline
+4 (13) & 14023 & 2380 & 12605 & 1063342 & 97.34 \\
+\hline
+Recall & 99.07 & 84.85 & 84.43 & 96.75 &  \\
+\hline
+\multicolumn{6}{c}{ } \\
+\hline
+\multicolumn{6}{|c|}{Accuracy metrics} \\
+\hline
+ Classes & 1 (1) & 2 (4) & 3 (5) & 4 (13) & Overall \\
+\hline
+IU & 96.69 & 84.63 & 81.28 & 94.26 & 89.21 \\
+\hline
+F-score & 98.32 & 91.67 & 89.67 & 97.05 & 94.18 \\
+\hline
+Accuracy & 97.88 & 99.85 & 98.98 & 98.15 & 97.43 \\
+\hline
+P0 & 0.98 & 1 & 0.99 & 0.98 & 0.97 \\
+\hline
+Pe & 0.53 & 0.98 & 0.91 & 0.57 & 0.5 \\
+\hline
+$\kappa$ & 0.9547 & 0.916 & 0.8914 & 0.957 & 0.9491 \\
+\hline
+\end{tabular}
+\caption{Confusion Matrix and accuracy metrics of the regularization.}
+\label{table:}
+\end{center}
+\end{table}

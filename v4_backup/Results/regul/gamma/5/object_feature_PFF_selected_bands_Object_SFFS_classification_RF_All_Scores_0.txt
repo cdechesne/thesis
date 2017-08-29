@@ -1,0 +1,33 @@
+Class 1(1)
+Rappel: 96.98%
+Précision: 93.26%
+F-Score: 0.9508
+Accuracy: 93.89%
+Kappa: 0.8701
+Pe: 0.5293
+
+Class 2(4)
+Rappel: 84.49%
+Précision: 97.96%
+F-Score: 0.9073
+Accuracy: 99.83%
+Kappa: 0.9064
+Pe: 0.9817
+
+Class 3(5)
+Rappel: 62.77%
+Précision: 90.7%
+F-Score: 0.742
+Accuracy: 97.09%
+Kappa: 0.7271
+Pe: 0.8934
+
+Class 4(13)
+Rappel: 92.41%
+Précision: 93.13%
+F-Score: 0.9277
+Accuracy: 95.48%
+Kappa: 0.8948
+Pe: 0.5701
+
+Kappa total: 0.8662

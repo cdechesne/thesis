@@ -55,9 +55,9 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 
 %\usepackage[maxbibnames=99, maxcitenames=1, backend=bibtex,style=alphabetic-verb,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
 
-%\usepackage[maxbibnames=99, maxcitenames=1, backend=bibtex,style=authoryear,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
+\usepackage[maxbibnames=99, maxcitenames=1, backend=bibtex,style=authoryear,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
 
-\usepackage[maxbibnames=99, maxcitenames=1, backend=bibtex,style=numeric,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
+%\usepackage[maxbibnames=99, maxcitenames=1, backend=bibtex,style=numeric,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
 
 
 \addbibresource{example.bib} % The filename of the bibliography
@@ -104,7 +104,7 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 
 
 \begin{document}
-
+\sloppy
 \frontmatter % Use roman page numbering style (i, ii, iii, iv...) for the pre-content pages
 
 \pagestyle{plain} % Default to the plain heading style until the thesis style is called for the body content
@@ -180,17 +180,6 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 %	THESIS CONTENT - APPENDICES
 %----------------------------------------------------------------------------------------
 
-\openchapter
-\pagestyle{plain}
-\begin{changemargin}{-2.5cm}{-3.5cm}
-~
-\vfill
-\begin{center}
-{\fontsize{50}{1}\selectfont {Appendices}}
-\end{center}
-\vfill
-\end{changemargin}
-\pagestyle{thesis}
 
 \appendix % Cue to tell LaTeX that the following "chapters" are Appendices
 

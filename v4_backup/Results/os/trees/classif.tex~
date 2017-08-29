@@ -1,0 +1,41 @@
+\begin{table}[!H]
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|r|}
+\hline
+\multicolumn{6}{|c|}{Confusion matrix} \\
+\hline
+ Classes & 1 (1) & 2 (4) & 3 (5) & 4 (13) & Precision \\
+\hline
+1 (1) & 2020114 & 2556 & 113280 & 86058 & 90.91 \\
+\hline
+2 (4) & 335 & 28093 & 354 & 1173 & 93.78 \\
+\hline
+3 (5) & 2569 & 0 & 143267 & 15875 & 88.59 \\
+\hline
+4 (13) & 36915 & 2886 & 11342 & 1041207 & 95.32 \\
+\hline
+Recall & 98.07 & 83.77 & 53.41 & 90.99 &  \\
+\hline
+\multicolumn{6}{c}{ } \\
+\hline
+\multicolumn{6}{|c|}{Accuracy metrics} \\
+\hline
+ Classes & 1 (1) & 2 (4) & 3 (5) & 4 (13) & Overall \\
+\hline
+IU & 89.31 & 79.37 & 49.97 & 87.1 & 76.44 \\
+\hline
+F-score & 94.36 & 88.5 & 66.64 & 93.1 & 85.65 \\
+\hline
+Accuracy & 93.11 & 99.79 & 95.91 & 95.6 & 92.2 \\
+\hline
+P0 & 0.93 & 1 & 0.96 & 0.96 & 0.92 \\
+\hline
+Pe & 0.52 & 0.98 & 0.88 & 0.57 & 0.48 \\
+\hline
+$\kappa$ & 0.8553 & 0.8839 & 0.6461 & 0.8988 & 0.8507 \\
+\hline
+\end{tabular}
+\caption{Confusion Matrix and accuracy metrics of the classification.}
+\label{table:}
+\end{center}
+\end{table}

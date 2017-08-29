@@ -84,7 +84,7 @@ These experiments have been performed only on one area presented in Figure~\ref{
 \end{figure}
 
 \subsection{Retrieve stands borders}
-
+\label{sec:C3_S2_ss1}
 Two strategies are employed to apply the segmentation in order to retrieve the forest stands borders from the forest LC database:
 \begin{itemize}
 \item The segmentation is applied to the VHR optical images, thus the resulting segment will correspond to "stands" that are homogeneous in terms of spectral reflectance. Since the optical images are employed by photo-interpreters in order to derive the forest LC, such segmentation should produce results similar to the forest LC.
@@ -259,8 +259,29 @@ The same results are observed, a majority vote applied to a segmentation equival
 From this section, two main conclusions can be drawn: firstly, the direct segmentation of the data does not allow to retrieve relevant forest stands in terms of species. Even with an addition of semantic information from a classification, the results are not sufficient for a mapping of the forest. Secondly, some metrics are not relevant in order to evaluate the results. Indeed, the overall accuracy or the $\kappa$ are not sufficient, other metrics are needed for the correct evaluation of the results.
 
 \section{Results of the method}
-The proposed method is composed of different steps (defined above). Each step will be evaluated at 2 levels; the direct output will be first considered and the impact on the final segmentation will also be investigated.
+The proposed method is composed of different steps (defined above). Each step will be evaluated at 2 levels; the direct output will be first considered and the impact on the final segmentation will also be investigated. In order to simplify the reading of captions, when no specific information is provided the method is employed using the following parameters:
+\begin{itemize}
+\item Feature selection:
+\begin{itemize}
+\item Selection of training samples,
+\item Selection of 20 features,
+\item Object-based features (lidar and spectral) obtained from the PFF over-segmentation,
+\item Pixel-based features (lidar and spectral) for the regularization.
+\end{itemize}
+\item Classification performed with:
+\begin{itemize}
+\item Selection of training samples,
+\item Object-based features (lidar and spectral) obtained from the feature selection.
+\end{itemize}
+\item Regularization using global method with:
+\begin{itemize}
+\item $\gamma=10$,
+\item Linear data formulation,
+\item \textit{Exponential-features model} with pixel-based features obtained from the feature selection.
+\end{itemize}
+\end{itemize}
 \subsection{Over-segmentation}
+\label{sec:C3_S3_ss1}
 The results of the over-segmentation of proposed segmentation algorithms are presented in Figure~\ref{fig:C3_S3_ss1_seg}.
 
 \begin{figure}[htbp]
@@ -323,47 +344,47 @@ In all the proposed methods, the resulting segments are relevant since the all r
 \begingroup
 \captionsetup[subfigure]{width=0.21\textwidth}
 \subfloat[IRC VHR \hbox{optical image}.]{
-\includegraphics[width=0.3\textwidth]{Figures/empty}
+\includegraphics[width=0.3\textwidth]{Figures/C3/S3/ss1/classif_regul/IRC}
 \label{subfig:C3_S3_ss1_resultsa}
 }
 \hspace*{0.025\textwidth}
 \subfloat[nDSM.]{
-\includegraphics[width=0.3\textwidth]{Figures/empty}
+\includegraphics[width=0.3\textwidth]{Figures/C3/S3/ss1/classif_regul/nDSM}
 \label{subfig:C3_S3_ss1_resultsb}
 }
 \hspace*{0.025\textwidth}
 \subfloat[Forest LC.]{
-\includegraphics[width=0.3\textwidth]{Figures/empty}
+\includegraphics[width=0.3\textwidth]{Figures/C3/S3/ss1/classif_regul/BD}
 \label{subfig:C3_S3_ss1_resultsc}
 }
 \\
 \subfloat[Tree extraction.]{
-\includegraphics[width=0.3\textwidth]{Figures/empty}
+\includegraphics[width=0.3\textwidth]{Figures/C3/S3/ss1/classif_regul/trees/regul}
 \label{subfig:C3_S3_ss1_resultsd}
 }
 \hspace*{0.025\textwidth}
 \subfloat[Watershed.]{
-\includegraphics[width=0.3\textwidth]{Figures/empty}
+\includegraphics[width=0.3\textwidth]{Figures/C3/S3/ss1/classif_regul/watershed/regul}
 \label{subfig:C3_S3_ss1_resultse}
 }
 \hspace*{0.025\textwidth}
 \subfloat[Hierarchical \hbox{segmentation}.]{
-\includegraphics[width=0.3\textwidth]{Figures/empty}
+\includegraphics[width=0.3\textwidth]{Figures/C3/S3/ss1/classif_regul/hierarchical/regul}
 \label{subfig:C3_S3_ss1_resultsf}
 }
 \\
 \subfloat[PFF.]{
-\includegraphics[width=0.3\textwidth]{Figures/empty}
+\includegraphics[width=0.3\textwidth]{Figures/C3/S3/ss1/classif_regul/PFF/regul}
 \label{subfig:C3_S3_ss1_resultsg}
 }
 \hspace*{0.025\textwidth}
 \subfloat[Quickshift.]{
-\includegraphics[width=0.3\textwidth]{Figures/empty}
+\includegraphics[width=0.3\textwidth]{Figures/C3/S3/ss1/classif_regul/quickshift/regul}
 \label{subfig:C3_S3_ss1_resultsh}
 }
 \hspace*{0.025\textwidth}
 \subfloat[SLIC.]{
-\includegraphics[width=0.3\textwidth]{Figures/empty}
+\includegraphics[width=0.3\textwidth]{Figures/C3/S3/ss1/classif_regul/SLIC/regul}
 \label{subfig:C3_S3_ss1_resultsi}
 }
 
@@ -646,7 +667,7 @@ The results of pixel-based and object-based classification is presented in Figur
 \label{subfig:C3_S3_ss3_poc}
 }
 \hspace*{0.025\textwidth}
-\subfloat[Object-based classification (PFF) (overall accuracy: 90.22\%, $\kappa$: 0.81).]{
+\subfloat[Object-based classification (PFF) (overall accuracy: 93.14\%, $\kappa$: 0.86).]{
 \includegraphics[width=0.45\textwidth]{Figures/C3/S3/ss3/classif_PFF}
 \label{subfig:C3_S3_ss3_pod}
 }
@@ -667,7 +688,7 @@ The pixel-based classification (Figure~\ref{subfig:C3_S3_ss3_poc}) appears more 
 \label{subfig:C3_S3_ss3_rpoa}
 }
 \hspace*{0.025\textwidth}
-\subfloat[Regularization using object-based classification (PFF) (overall accuracy: 96.58\%, $\kappa$: 0.93).]{
+\subfloat[Regularization using object-based classification (PFF) (overall accuracy: 97.44\%, $\kappa$: 0.95).]{
 \includegraphics[width=0.45\textwidth]{Figures/C3/S3/ss3/regul_PFF}
 \label{subfig:C3_S3_ss3_rpob}
 }
@@ -688,7 +709,7 @@ The selection of the training pixels is an important step for the classification
 The Figure~\ref{fig:C3_S3_ss3_sel} shows the pixels that have been selected by the k-mean algorithm for the training. Most of the pixel from the forest LC are retained. However, the pixels that are excluded from the training are visually relevant. Indeed, they mostly correspond to:
 \begin{itemize}
 \item Shadows from the optical images,
-\item gaps in the canopy (retrieved from the lidar data)
+\item gaps in the canopy (retrieved from the lidar data),
 \item pixels that are visually different from the other pixels of the considered class (i.e. other species).
 \end{itemize}
 
@@ -729,12 +750,12 @@ The results of the classification and regularization using different training se
 \begin{center}
 \begingroup
 \captionsetup[subfigure]{width=0.45\textwidth}
-\subfloat[Classification with selection of training pixels  (overall accuracy: 90.22\%, $\kappa$: 0.81).]{
+\subfloat[Classification with selection of training pixels  (overall accuracy: 93.14\%, $\kappa$: 0.86).]{
 \includegraphics[width=0.45\textwidth]{Figures/C3/S3/ss3/classif_PFF}
 \label{subfig:C3_S3_ss3_sel_resultsa}
 }
 \hspace*{0.025\textwidth}
-\subfloat[Regularization  with selection of training pixels (overall accuracy: 96.58\%, $\kappa$: 0.93).]{
+\subfloat[Regularization  with selection of training pixels (overall accuracy: 97.44\%, $\kappa$: 0.95).]{
 \includegraphics[width=0.45\textwidth]{Figures/C3/S3/ss3/regul_PFF}
 \label{subfig:C3_S3_ss3_sel_resultsb}
 }
@@ -929,8 +950,83 @@ The prior have a weak impact on the regularization results (see Figure~\ref{fig:
 The \textit{z-Potts model} tends to have slightly worse results than the other methods. The \textit{Potts model} and the \textit{Distance-features model} have very close results regardless of the unary term. The \textit{Exponential-features model} have the greatest results with the linear unary, but have poor results with the log-inverse unary.
 
 \paragraph{Adding constraints. \\}
+The addition of constraints could be easily carried out with the QPBO algorithm. We can add strong borders that we want to retrieve in the final segmentation. Unfortunately, such borders can not be easily extracted (see Section~\ref{sec:C3_S2_ss1}). It is then not relevant to add such constraints since they will not lead to accurate results. 
+
+A second constraint can be employed in order to ensure a minimal size of the final segments. However, it leads to three issues
+\begin{enumerate}
+\item The minimal size of a segment should be defined. Even if such minimal size is defined by the definition of forest stands (0.5$\:$ha), a segment with a size of 0.5$\:$ha$+$1 pixels will not be considered as a small segment.
+\item If such constraint wants to be employed, the QPBO algorithm have to run until all the segments have reached the minimum size. Such iteration might be long
+\item The final result will be similar to a majority vote. For a small segment, selecting the label of the neighbor segment that have the most neighbor pixels with the small segment will nearly lead to the same results of the regularization using minimal size constraint.
+\end{enumerate}
 
 \subsection{Importance of fusion}
+In this framework, the fusion is performed at multiple levels;
+\begin{itemize}
+\item Choice of data for the over-segmentation,
+\item Features employed for the classification,
+\item Features employed for the regularization.
+\end{itemize}
+
+The impact of the choice of the data for the over-segmentation have already been investigated in Section~\ref{sec:C3_S3_ss1}. When employing an over-segmentation from VHR optical images (e.g. PFF, Quickshift or SLIC) or from a lidar data (e.g. hierarchical segmentation on nDSM or tree extraction) produces similar results. 
+
+Experiments have been conducted in order to determine how the choice of the data impact both the classification and regularization step. In order to evaluate the impact of the data choice on the classification and regularization, 5 scenarii have been investigated:
+\begin{itemize}
+\item A full lidar scenario:
+\begin{itemize}
+\item Hierarchical segmentation on the nDSm,
+\item Object-based classification (with selection of training samples) using the 25 lidar features,
+\item Regularization using the 25 lidar features.
+\end{itemize}
+\item A full spectral scenario:
+\begin{itemize}
+\item PFF segmentation of the VHR optical image,
+\item Object-based classification (with selection of training samples) using a selection of 20 spectral features,
+\item Regularization using a selection of 20 spectral features.
+\end{itemize}
+\item 3 scenarii:
+\begin{itemize}
+\item PFF segmentation of the VHR optical image,
+\item Object-based classification (with selection of training samples) using a selection of 20 features (lidar and spectral),
+\end{itemize}
+\begin{enumerate}
+\item Regularization using the 25 lidar features,
+\item Regularization using a selection of 20 spectral features,
+\item Regularization using a selection of 20 features (lidar and spectral).
+\end{enumerate}
+\end{itemize}
+
+The overall accuracies for these 5 scenarii are presented in Table~\ref{table:fusion_results}.
+
+\begin{table}[htbp]
+\begin{center}
+\begin{footnotesize}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\multirow{2}{*}{Scenario} & \multicolumn{3}{c|}{\textbf{Overall accuracy (\%)}} \\
+\cline{2-4}
+& Classification & Regularization & Gain \\
+\hline
+Full lidar & 74.8 & 92.2 & 17.4 \\
+\hline
+Full spectral & 79.1 & 95.2 & 16.1 \\
+\hline
+Regularization lidar & \multirow{3}{*}{87.6} & 96.0 & 8.4 \\
+\cline{1-1} \cline{3-4}
+Regularization spectral &  & 96.1 & 8.5 \\
+\cline{1-1} \cline{3-4}
+Regularization lidar + spectral &  & 96.2 & 8.6 \\
+\hline
+\end{tabular} \\
+\end{footnotesize}
+\end{center}
+\vspace*{-5mm}
+\caption{Classification and stand segmentation accuracies for the 5 scenarii investigated.}
+\label{table:fusion_results}
+\end{table}
+
+The impact of the choice of the data on the classification is obvious; the classification using a single data source performs worse than when using both. Furthermore, the spectral information tends to be more relevant that the spectral information. Such results are coherent with the results of the feature selection since the spectral feature are selected for 61\% and for 39\% for the lidar.
+
+The impact of the choice of the data on the regularization is less significant. We can first note that the use of a single modality can greatly improve the results from a poor classification (+17.4\% for lidar and +16.1\% for spectral). However, when the classification is already significant, the improvement is more or less the same. The spectral information is a bit more beneficial than the lidar information for the regularization step. Fusing the two data sources or using only the spectral information in the regularization step does not significantly change the final results.
 
 \section{Co-products of the method}
 \subsection{Semi-automatic update}
