@@ -1029,7 +1029,87 @@ The impact of the choice of the data on the classification is obvious; the class
 The impact of the choice of the data on the regularization is less significant. We can first note that the use of a single modality can greatly improve the results from a poor classification (+17.4\% for lidar and +16.1\% for spectral). However, when the classification is already significant, the improvement is more or less the same. The spectral information is a bit more beneficial than the lidar information for the regularization step. Fusing the two data sources or using only the spectral information in the regularization step does not significantly change the final results.
 
 \section{Co-products of the method}
+The outputs of the method can be employed for further investigation in order to extract relevant information about forest. Firstly, the forest stands obtained can be employed for the semi-automatic update of the forest LC. Secondly, the information extracted from the original data can be employed for forest inventory.
 \subsection{Semi-automatic update}
+The semi-automatic update of the forest LC can be performed by the joint analysis of the final stand segmentation and the forest LC employed.
+
+A change map can be derived and changes can be prioritized according to their size and shape.
+Here 3 criteria are employed for an area of change :
+\begin{itemize}
+\item The number of pixels,
+\item The rectangular bounding box (see Figure~\ref{subfig:changesb}),
+\item The circular bounding box (see Figure~\ref{subfig:changesc}).
+\end{itemize}
+
+\begin{figure}[htbp]
+\begin{center}
+\begingroup
+\captionsetup[subfigure]{width=0.3\textwidth}
+\subfloat[Detected change]{
+\includegraphics[width=0.3\textwidth]{Figures/C3/S4/ss1/area}
+\label{subfig:changes}
+}
+\hfill
+\subfloat[Rectangular bounding box of the change.]{
+\includegraphics[width=0.3\textwidth]{Figures/C3/S4/ss1/area_rectangular}
+\label{subfig:changesb}
+}
+\hfill
+\subfloat[Circular bounding box of the change.]{
+\includegraphics[width=0.3\textwidth]{Figures/C3/S4/ss1/area_circular}
+\label{subfig:changesc}
+}
+\endgroup
+\caption{Bounding boxes of the change detection.}
+\label{fig:changes}
+\end{center}
+\end{figure}
+
+The changes are classified using thresholds based on the size (in pixels) of the change $s$, the ratio between the size of the change and the size of the rectangular bounding box $r_{1}$ and  the ratio between the size of the change and the size of the circular bounding box $r_{2}$. An change is defined as major when the condition~(\ref{eq:c1}) or~(\ref{eq:c2}) is verified. 
+\begin{eqnarray}
+s \geq 100 \text{ and } r_{1} \geq 0.3, \label{eq:c1}\\
+s \geq 100 \text{ and } r_{2} \geq 0.2. \label{eq:c2}
+\end{eqnarray}
+
+An "updated" forest LC can be then created, the area of major change are labeled as \textit{no data} (see Figure~\ref{fig:new_BD}). A difference map is also produced with two kinds of differences:
+\begin{itemize}
+\item The minor differences; they correspond to areas where the borders of the Forest LC does not exactly fit with the borders obtained in the method. This type of error is common since the border from the Forest LC are mostly strait lines while the methods tends to follow the natural borders of the forest because of the regularization.
+\item The major differences; they correspond to large patches that differ from the Forest LC. Two cases can be differentiated:
+\begin{itemize}
+\item The method can have produced wrong results,
+\item The forest has changed or has been exploited (cut or plantation).
+\end{itemize}
+\end{itemize}
+
+\begin{figure}[htbp]
+\begin{center}
+\begingroup
+\captionsetup[subfigure]{width=0.5\textwidth}
+\subfloat[Forest LC.]{
+\includegraphics[width=0.45\textwidth]{Figures/C3/S4/ss1/results/BD}
+\label{subfig:new_BDa}
+}
+\hfill
+\subfloat["Updated" Forest LC.]{
+\includegraphics[width=0.45\textwidth]{Figures/C3/S4/ss1/results/BD_new}
+\label{subfig:new_BDb}
+}
+\endgroup
+\caption{Automatic update of the Forest LC.}
+\label{fig:new_BD}
+\end{center}
+\end{figure}
+
+In case of major change, the decision can be taken to keep the original forest LC or to employ the result of the method. An operator can also focus of the change and correct it manually (see Figure~\ref{fig:IRC_change})
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=1.0\textwidth]{Figures/C3/S4/ss1/results/IRC_dif}
+\caption{Detected changes of the Forest LC, green corresponds to major changes, blue corresponds to minor changes.}
+\label{fig:IRC_change}
+\end{center}
+\end{figure}
+
 \subsection{Inventory}
 %----------------------------------------------------------------------------------------
 

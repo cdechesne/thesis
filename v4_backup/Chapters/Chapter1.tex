@@ -16,6 +16,46 @@ Forest are complex areas, the mapping of such environment needs the use of diffe
 
 Several methods have been proposed for the forest stand segmentation (section \ref{sec:C1_stand}). They employ different image processing algorithms. Segmentation (section \ref{sec:C1_seg}) algorithms can be employed for a fine or coarse delineation of the principal components of the forests. Classification is also very useful to discriminate the different elements of the forest and detect tree species (section \ref{sec:C1_classif}). Furthermore, with the growing number of feature that could be derived, feature selection algorithms are mandatory in order to improve the results while decreasing the computational load and times (section \ref{sec:C1_fs}). Eventually, smoothing methods could be employed in order to obtain a minimum of an energy. Such energy minimization processes are used for a refinement of raw results (section \ref{sec:C1_smooth}).
 
+\newpage
+\begin{tikzpicture} 
+\path[mindmap,concept color=black,text=white, 
+grow cyclic,
+level 1/.append style={level distance=5cm,sibling angle=75},
+level 2/.append style={level distance=4cm,sibling angle=45},] 
+node[concept,grow=90] {Forest analysis} 
+[clockwise from=0] 
+child[concept color=green!50!black] { 
+node[concept, text width=3cm] {Stand \\ segmentation} 
+[clockwise from=60] 
+child { node[concept] {Optical} } 
+child { node[concept,grow=90] {Lidar } }
+child { node[concept] {Optical \& Lidar} } 
+}
+child[concept color=blue] { 
+node[concept] {Segmentation} 
+[clockwise from=0] 
+child { node[concept] {Point cloud} }
+child { node[concept] {"Tradidional"} } 
+child { node[concept] {Superpixels} }
+} 
+child[concept color=blue!50!red] { 
+node[concept] {Classification} 
+} 
+child[concept color=red] {
+node[concept] {Dimension reduction}
+[clockwise from=-60] 
+child { node[concept] {Feature extraction} }
+child { node[concept] {Feature selection} }
+}
+child[concept color=orange] {
+node[concept] {Smoothing}
+[clockwise from=90] 
+child { node[concept] {Local } }
+child { node[concept] {Global } }
+};
+\end{tikzpicture} 
+\newpage
+
 \section{Stand segmentation}
 \label{sec:C1_stand}
 A forest stand is defined as a contiguous group of trees that are uniform in specie composition, structure, age and/or height, spatial arrangement, site quality or condition to distinguish it from adjacent other groups of trees.
